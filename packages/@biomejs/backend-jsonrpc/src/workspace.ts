@@ -2162,6 +2162,16 @@ See <https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaratio
 	 */
 	useVueConsistentDefinePropsDeclaration?: UseVueConsistentDefinePropsDeclarationConfiguration;
 	/**
+	* Enforce a consistent style for v-bind in Vue templates. Prefer either shorthand (:prop="...") or longhand (v-bind:prop="...").
+See <https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style> 
+	 */
+	useVueConsistentVBindStyle?: UseVueConsistentVBindStyleConfiguration;
+	/**
+	* Enforce a consistent style for v-on in Vue templates. Prefer either shorthand (@event="...") or longhand (v-on:event="...").
+See <https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style> 
+	 */
+	useVueConsistentVOnStyle?: UseVueConsistentVOnStyleConfiguration;
+	/**
 	* Enforce specific order of Vue compiler macros.
 See <https://biomejs.dev/linter/rules/use-vue-define-macros-order> 
 	 */
@@ -3835,6 +3845,12 @@ export type UseUniqueVariableNamesConfiguration =
 export type UseVueConsistentDefinePropsDeclarationConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueConsistentDefinePropsDeclarationOptions;
+export type UseVueConsistentVBindStyleConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueConsistentVBindStyleOptions;
+export type UseVueConsistentVOnStyleConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueConsistentVOnStyleOptions;
 export type UseVueDefineMacrosOrderConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueDefineMacrosOrderOptions;
@@ -5356,6 +5372,16 @@ export interface RuleWithUseVueConsistentDefinePropsDeclarationOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueConsistentDefinePropsDeclarationOptions;
 }
+export interface RuleWithUseVueConsistentVBindStyleOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueConsistentVBindStyleOptions;
+}
+export interface RuleWithUseVueConsistentVOnStyleOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueConsistentVOnStyleOptions;
+}
 export interface RuleWithUseVueDefineMacrosOrderOptions {
 	fix?: FixKind;
 	level: RulePlainConfiguration;
@@ -6665,6 +6691,20 @@ export type UseUniqueVariableNamesOptions = {};
 export interface UseVueConsistentDefinePropsDeclarationOptions {
 	style?: DeclarationStyle;
 }
+export interface UseVueConsistentVBindStyleOptions {
+	/**
+	* Preferred style for `v-bind` usage: "shorthand" or "longhand".
+If omitted, shorthand is preferred. 
+	 */
+	style?: VueDirectiveStyle;
+}
+export interface UseVueConsistentVOnStyleOptions {
+	/**
+	* Preferred style for `v-on` usage: "shorthand" or "longhand".
+If omitted, shorthand is preferred. 
+	 */
+	style?: VueDirectiveStyle2;
+}
 export interface UseVueDefineMacrosOrderOptions {
 	/**
 	 * The order of the Vue define macros.
@@ -7070,6 +7110,8 @@ export type UseConsistentArrowReturnStyle = "asNeeded" | "always" | "never";
  */
 export type UseConsistentGraphqlDescriptionsStyle = "block" | "inline";
 export type DeclarationStyle = "type" | "runtime";
+export type VueDirectiveStyle = "shorthand" | "longhand";
+export type VueDirectiveStyle2 = "shorthand" | "longhand";
 /**
  * Specifies whether property assignments on function parameters are allowed or denied.
  */
@@ -7488,6 +7530,8 @@ export type Category =
 	| "lint/nursery/useUniqueInputFieldNames"
 	| "lint/nursery/useUniqueVariableNames"
 	| "lint/nursery/useVueConsistentDefinePropsDeclaration"
+	| "lint/nursery/useVueConsistentVBindStyle"
+	| "lint/nursery/useVueConsistentVOnStyle"
 	| "lint/nursery/useVueDefineMacrosOrder"
 	| "lint/nursery/useVueHyphenatedAttributes"
 	| "lint/nursery/useVueMultiWordComponentNames"
