@@ -2177,10 +2177,20 @@ See <https://biomejs.dev/linter/rules/use-vue-multi-word-component-names>
 	 */
 	useVueMultiWordComponentNames?: UseVueMultiWordComponentNamesConfiguration;
 	/**
+	* Enforce valid Vue \<template> root usage.
+See <https://biomejs.dev/linter/rules/use-vue-valid-template-root> 
+	 */
+	useVueValidTemplateRoot?: UseVueValidTemplateRootConfiguration;
+	/**
 	* Forbids v-bind directives with missing arguments or invalid modifiers.
 See <https://biomejs.dev/linter/rules/use-vue-valid-v-bind> 
 	 */
 	useVueValidVBind?: UseVueValidVBindConfiguration;
+	/**
+	* Enforce valid v-cloak Vue directives.
+See <https://biomejs.dev/linter/rules/use-vue-valid-v-cloak> 
+	 */
+	useVueValidVCloak?: UseVueValidVCloakConfiguration;
 	/**
 	* Enforce valid usage of v-else.
 See <https://biomejs.dev/linter/rules/use-vue-valid-v-else> 
@@ -2206,6 +2216,16 @@ See <https://biomejs.dev/linter/rules/use-vue-valid-v-if>
 See <https://biomejs.dev/linter/rules/use-vue-valid-v-on> 
 	 */
 	useVueValidVOn?: UseVueValidVOnConfiguration;
+	/**
+	* Enforce valid v-once Vue directives.
+See <https://biomejs.dev/linter/rules/use-vue-valid-v-once> 
+	 */
+	useVueValidVOnce?: UseVueValidVOnceConfiguration;
+	/**
+	* Enforce valid v-pre Vue directives.
+See <https://biomejs.dev/linter/rules/use-vue-valid-v-pre> 
+	 */
+	useVueValidVPre?: UseVueValidVPreConfiguration;
 	/**
 	* Enforce valid v-text Vue directives.
 See <https://biomejs.dev/linter/rules/use-vue-valid-v-text> 
@@ -3824,9 +3844,15 @@ export type UseVueHyphenatedAttributesConfiguration =
 export type UseVueMultiWordComponentNamesConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueMultiWordComponentNamesOptions;
+export type UseVueValidTemplateRootConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueValidTemplateRootOptions;
 export type UseVueValidVBindConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueValidVBindOptions;
+export type UseVueValidVCloakConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueValidVCloakOptions;
 export type UseVueValidVElseConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueValidVElseOptions;
@@ -3842,6 +3868,12 @@ export type UseVueValidVIfConfiguration =
 export type UseVueValidVOnConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueValidVOnOptions;
+export type UseVueValidVOnceConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueValidVOnceOptions;
+export type UseVueValidVPreConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueValidVPreOptions;
 export type UseVueValidVTextConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueValidVTextOptions;
@@ -5338,9 +5370,19 @@ export interface RuleWithUseVueMultiWordComponentNamesOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueMultiWordComponentNamesOptions;
 }
+export interface RuleWithUseVueValidTemplateRootOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueValidTemplateRootOptions;
+}
 export interface RuleWithUseVueValidVBindOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueValidVBindOptions;
+}
+export interface RuleWithUseVueValidVCloakOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueValidVCloakOptions;
 }
 export interface RuleWithUseVueValidVElseOptions {
 	level: RulePlainConfiguration;
@@ -5361,6 +5403,16 @@ export interface RuleWithUseVueValidVIfOptions {
 export interface RuleWithUseVueValidVOnOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueValidVOnOptions;
+}
+export interface RuleWithUseVueValidVOnceOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueValidVOnceOptions;
+}
+export interface RuleWithUseVueValidVPreOptions {
+	fix?: FixKind;
+	level: RulePlainConfiguration;
+	options?: UseVueValidVPreOptions;
 }
 export interface RuleWithUseVueValidVTextOptions {
 	level: RulePlainConfiguration;
@@ -6635,7 +6687,9 @@ export interface UseVueMultiWordComponentNamesOptions {
 	 */
 	ignores?: string[];
 }
+export type UseVueValidTemplateRootOptions = {};
 export type UseVueValidVBindOptions = {};
+export type UseVueValidVCloakOptions = {};
 export type UseVueValidVElseOptions = {};
 export type UseVueValidVElseIfOptions = {};
 export type UseVueValidVHtmlOptions = {};
@@ -6646,6 +6700,8 @@ export interface UseVueValidVOnOptions {
 	 */
 	modifiers?: string[];
 }
+export type UseVueValidVOnceOptions = {};
+export type UseVueValidVPreOptions = {};
 export type UseVueValidVTextOptions = {};
 export type NoAccumulatingSpreadOptions = {};
 export type NoAwaitInLoopsOptions = {};
@@ -7435,7 +7491,9 @@ export type Category =
 	| "lint/nursery/useVueDefineMacrosOrder"
 	| "lint/nursery/useVueHyphenatedAttributes"
 	| "lint/nursery/useVueMultiWordComponentNames"
+	| "lint/nursery/useVueValidTemplateRoot"
 	| "lint/nursery/useVueValidVBind"
+	| "lint/nursery/useVueValidVCloak"
 	| "lint/nursery/useVueValidVElse"
 	| "lint/nursery/useVueValidVElseIf"
 	| "lint/nursery/useVueValidVFor"
@@ -7443,6 +7501,8 @@ export type Category =
 	| "lint/nursery/useVueValidVIf"
 	| "lint/nursery/useVueValidVModel"
 	| "lint/nursery/useVueValidVOn"
+	| "lint/nursery/useVueValidVOnce"
+	| "lint/nursery/useVueValidVPre"
 	| "lint/nursery/useVueValidVText"
 	| "lint/performance/noAccumulatingSpread"
 	| "lint/performance/noAwaitInLoops"
