@@ -2187,6 +2187,11 @@ See <https://biomejs.dev/linter/rules/use-vue-multi-word-component-names>
 	 */
 	useVueMultiWordComponentNames?: UseVueMultiWordComponentNamesConfiguration;
 	/**
+	* Enforce that elements using v-for also specify a unique key.
+See <https://biomejs.dev/linter/rules/use-vue-v-for-key> 
+	 */
+	useVueVForKey?: UseVueVForKeyConfiguration;
+	/**
 	* Enforce valid Vue \<template> root usage.
 See <https://biomejs.dev/linter/rules/use-vue-valid-template-root> 
 	 */
@@ -3860,6 +3865,9 @@ export type UseVueHyphenatedAttributesConfiguration =
 export type UseVueMultiWordComponentNamesConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueMultiWordComponentNamesOptions;
+export type UseVueVForKeyConfiguration =
+	| RulePlainConfiguration
+	| RuleWithUseVueVForKeyOptions;
 export type UseVueValidTemplateRootConfiguration =
 	| RulePlainConfiguration
 	| RuleWithUseVueValidTemplateRootOptions;
@@ -5396,6 +5404,10 @@ export interface RuleWithUseVueMultiWordComponentNamesOptions {
 	level: RulePlainConfiguration;
 	options?: UseVueMultiWordComponentNamesOptions;
 }
+export interface RuleWithUseVueVForKeyOptions {
+	level: RulePlainConfiguration;
+	options?: UseVueVForKeyOptions;
+}
 export interface RuleWithUseVueValidTemplateRootOptions {
 	fix?: FixKind;
 	level: RulePlainConfiguration;
@@ -6727,6 +6739,7 @@ export interface UseVueMultiWordComponentNamesOptions {
 	 */
 	ignores?: string[];
 }
+export type UseVueVForKeyOptions = {};
 export type UseVueValidTemplateRootOptions = {};
 export type UseVueValidVBindOptions = {};
 export type UseVueValidVCloakOptions = {};
@@ -7535,6 +7548,7 @@ export type Category =
 	| "lint/nursery/useVueDefineMacrosOrder"
 	| "lint/nursery/useVueHyphenatedAttributes"
 	| "lint/nursery/useVueMultiWordComponentNames"
+	| "lint/nursery/useVueVForKey"
 	| "lint/nursery/useVueValidTemplateRoot"
 	| "lint/nursery/useVueValidVBind"
 	| "lint/nursery/useVueValidVCloak"
