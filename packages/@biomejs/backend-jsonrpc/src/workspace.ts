@@ -2018,6 +2018,11 @@ See <https://biomejs.dev/linter/rules/no-useless-undefined>
 	 */
 	noUselessUndefined?: NoUselessUndefinedConfiguration;
 	/**
+	* Disallows using arrow functions when defining a watcher.
+See <https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch> 
+	 */
+	noVueArrowFuncInWatch?: NoVueArrowFuncInWatchConfiguration;
+	/**
 	* Enforce that Vue component data options are declared as functions.
 See <https://biomejs.dev/linter/rules/no-vue-data-object-declaration> 
 	 */
@@ -3766,6 +3771,9 @@ export type NoUselessCatchBindingConfiguration =
 export type NoUselessUndefinedConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoUselessUndefinedOptions;
+export type NoVueArrowFuncInWatchConfiguration =
+	| RulePlainConfiguration
+	| RuleWithNoVueArrowFuncInWatchOptions;
 export type NoVueDataObjectDeclarationConfiguration =
 	| RulePlainConfiguration
 	| RuleWithNoVueDataObjectDeclarationOptions;
@@ -5263,6 +5271,10 @@ export interface RuleWithNoUselessUndefinedOptions {
 	level: RulePlainConfiguration;
 	options?: NoUselessUndefinedOptions;
 }
+export interface RuleWithNoVueArrowFuncInWatchOptions {
+	level: RulePlainConfiguration;
+	options?: NoVueArrowFuncInWatchOptions;
+}
 export interface RuleWithNoVueDataObjectDeclarationOptions {
 	fix?: FixKind;
 	level: RulePlainConfiguration;
@@ -6633,6 +6645,7 @@ Currently empty; reserved for future extensions (e.g. allowlist of names).
 	 */
 export type NoUselessCatchBindingOptions = {};
 export type NoUselessUndefinedOptions = {};
+export type NoVueArrowFuncInWatchOptions = {};
 export type NoVueDataObjectDeclarationOptions = {};
 export type NoVueDuplicateKeysOptions = {};
 export type NoVueReservedKeysOptions = {};
@@ -7509,6 +7522,7 @@ export type Category =
 	| "lint/nursery/noUselessBackrefInRegex"
 	| "lint/nursery/noUselessCatchBinding"
 	| "lint/nursery/noUselessUndefined"
+	| "lint/nursery/noVueArrowFuncInWatch"
 	| "lint/nursery/noVueDataObjectDeclaration"
 	| "lint/nursery/noVueDuplicateKeys"
 	| "lint/nursery/noVueReservedKeys"
