@@ -36,7 +36,8 @@
 use biome_css_parser::{CssParserOptions, parse_css};
 use biome_css_syntax::{
     AnyCssAtRule, AnyCssDeclarationName, AnyCssDeclarationOrRuleBlock, AnyCssProperty, AnyCssRule,
-    CssDeclarationWithSemicolon, CssGenericProperty, CssRoot, TwConfigAtRule, TwThemeAtRule,
+    CssDeclarationWithSemicolon, CssGenericProperty, CssImportAtRule, CssRoot, TwConfigAtRule,
+    TwThemeAtRule,
 };
 use biome_rowan::{AstNode, SyntaxNodeCast};
 use std::collections::BTreeMap;
@@ -74,6 +75,8 @@ pub struct TailwindThemeValues {
     pub easing: BTreeMap<String, String>,
     /// Path to a `@config` JS file if present
     pub config_path: Option<String>,
+    /// Local CSS file paths from `@import` statements (relative paths only, no URLs)
+    pub import_paths: Vec<String>,
 }
 
 impl TailwindThemeValues {
@@ -94,6 +97,60 @@ impl TailwindThemeValues {
             && self.transition_duration.is_empty()
             && self.easing.is_empty()
             && self.config_path.is_none()
+            && self.import_paths.is_empty()
+    }
+
+    /// Merge another TailwindThemeValues into this one.
+    /// Values from `other` are added if they don't already exist.
+    pub fn merge(&mut self, other: TailwindThemeValues) {
+        // Merge maps (existing values take precedence)
+        for (k, v) in other.colors {
+            self.colors.entry(k).or_insert(v);
+        }
+        for (k, v) in other.spacing {
+            self.spacing.entry(k).or_insert(v);
+        }
+        for (k, v) in other.font_size {
+            self.font_size.entry(k).or_insert(v);
+        }
+        for (k, v) in other.font_family {
+            self.font_family.entry(k).or_insert(v);
+        }
+        for (k, v) in other.border_radius {
+            self.border_radius.entry(k).or_insert(v);
+        }
+        for (k, v) in other.z_index {
+            self.z_index.entry(k).or_insert(v);
+        }
+        for (k, v) in other.opacity {
+            self.opacity.entry(k).or_insert(v);
+        }
+        for (k, v) in other.animations {
+            self.animations.entry(k).or_insert(v);
+        }
+        for (k, v) in other.box_shadow {
+            self.box_shadow.entry(k).or_insert(v);
+        }
+        for (k, v) in other.breakpoints {
+            self.breakpoints.entry(k).or_insert(v);
+        }
+        for (k, v) in other.letter_spacing {
+            self.letter_spacing.entry(k).or_insert(v);
+        }
+        for (k, v) in other.line_height {
+            self.line_height.entry(k).or_insert(v);
+        }
+        for (k, v) in other.transition_duration {
+            self.transition_duration.entry(k).or_insert(v);
+        }
+        for (k, v) in other.easing {
+            self.easing.entry(k).or_insert(v);
+        }
+        // Keep first config_path
+        if self.config_path.is_none() {
+            self.config_path = other.config_path;
+        }
+        // Don't merge import_paths - they're for resolution only
     }
 }
 
@@ -124,7 +181,7 @@ pub fn extract_theme_from_root(root: &CssRoot) -> TailwindThemeValues {
     values
 }
 
-/// Process a CSS rule, looking for @theme and @config directives.
+/// Process a CSS rule, looking for @theme, @config, and @import directives.
 fn process_rule(rule: &AnyCssRule, values: &mut TailwindThemeValues) {
     if let AnyCssRule::CssAtRule(at_rule) = rule
         && let Ok(inner) = at_rule.rule()
@@ -136,7 +193,66 @@ fn process_rule(rule: &AnyCssRule, values: &mut TailwindThemeValues) {
             AnyCssAtRule::TwConfigAtRule(config_rule) => {
                 extract_config_path(&config_rule, values);
             }
+            AnyCssAtRule::CssImportAtRule(import_rule) => {
+                extract_import_path(&import_rule, values);
+            }
             _ => {}
+        }
+    }
+}
+
+/// Extract import path from an @import directive.
+/// Only extracts local paths (starting with "./" or "../"), not URLs or npm packages.
+fn extract_import_path(import_rule: &CssImportAtRule, values: &mut TailwindThemeValues) {
+    if let Ok(url) = import_rule.url()
+        && let Some(path_str) = get_import_path_string(&url)
+    {
+        // Only process local paths (relative paths)
+        if path_str.starts_with("./") || path_str.starts_with("../") {
+            values.import_paths.push(path_str);
+        }
+    }
+}
+
+/// Extract the string path from an import URL.
+fn get_import_path_string(url: &biome_css_syntax::AnyCssImportUrl) -> Option<String> {
+    match url {
+        biome_css_syntax::AnyCssImportUrl::CssUrlFunction(url_func) => {
+            // url() syntax: @import url("./file.css")
+            if let Some(value) = url_func.value() {
+                match value {
+                    biome_css_syntax::AnyCssUrlValue::CssString(s) => {
+                        if let Ok(token) = s.value_token() {
+                            let text = token.text_trimmed();
+                            let clean = text.trim_matches('"').trim_matches('\'').to_string();
+                            if !clean.is_empty() {
+                                return Some(clean);
+                            }
+                        }
+                    }
+                    biome_css_syntax::AnyCssUrlValue::CssUrlValueRaw(raw) => {
+                        if let Ok(token) = raw.value_token() {
+                            let text = token.text_trimmed().to_string();
+                            if !text.is_empty() {
+                                return Some(text);
+                            }
+                        }
+                    }
+                }
+            }
+            None
+        }
+        biome_css_syntax::AnyCssImportUrl::CssString(s) => {
+            // String syntax: @import "./file.css"
+            if let Ok(token) = s.value_token() {
+                let text = token.text_trimmed();
+                // Remove quotes
+                let clean = text.trim_matches('"').trim_matches('\'').to_string();
+                if !clean.is_empty() {
+                    return Some(clean);
+                }
+            }
+            None
         }
     }
 }
@@ -562,5 +678,48 @@ mod tests {
         assert!(values.font_family.contains_key("mono"));
         // font_size should NOT contain the font-mono value as a key
         assert!(!values.font_size.values().any(|v| v == "mono"));
+    }
+
+    #[test]
+    fn test_extract_import_paths() {
+        let css = r#"
+            @import "tailwindcss";
+            @import "./custom-theme.css";
+            @import "../shared/base.css";
+            @import "some-package";
+
+            @theme {
+                --color-primary: #3b82f6;
+            }
+        "#;
+
+        let values = extract_theme_from_css(css);
+        // Only relative paths are extracted
+        assert_eq!(values.import_paths.len(), 2);
+        assert!(values.import_paths.contains(&"./custom-theme.css".to_string()));
+        assert!(values.import_paths.contains(&"../shared/base.css".to_string()));
+        // Non-relative paths are not included
+        assert!(!values.import_paths.iter().any(|p| p == "tailwindcss"));
+        assert!(!values.import_paths.iter().any(|p| p == "some-package"));
+    }
+
+    #[test]
+    fn test_merge_theme_values() {
+        let mut base = TailwindThemeValues::default();
+        base.colors.insert("primary".to_string(), "#3b82f6".to_string());
+        base.spacing.insert("4.5rem".to_string(), "18".to_string());
+
+        let mut other = TailwindThemeValues::default();
+        other.colors.insert("primary".to_string(), "#ff0000".to_string()); // Should not override
+        other.colors.insert("secondary".to_string(), "#10b981".to_string()); // Should be added
+        other.spacing.insert("3.25rem".to_string(), "13".to_string()); // Should be added
+
+        base.merge(other);
+
+        // Original value preserved
+        assert_eq!(base.colors.get("primary"), Some(&"#3b82f6".to_string()));
+        // New value added
+        assert_eq!(base.colors.get("secondary"), Some(&"#10b981".to_string()));
+        assert_eq!(base.spacing.get("3.25rem"), Some(&"13".to_string()));
     }
 }

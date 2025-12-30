@@ -46,3 +46,30 @@ Biome parses `@theme` blocks to extract custom theme values for use by lint rule
 #### New CLI Command
 
 Added `biome migrate tailwind` command to migrate Tailwind v3 JavaScript configs to Biome's configuration format.
+
+#### Known Limitations
+
+Biome's Tailwind v4 support uses static CSS analysis rather than loading the full Tailwind design system at runtime. This provides fast, zero-dependency linting but has some limitations:
+
+- **Plugin utilities not detected**: Classes from plugins like DaisyUI, Flowbite, or custom plugins won't be recognized automatically by `noUnregisteredTailwindClasses`. Use the `whitelist` option to allow these classes.
+- **Complex presets**: Dynamic presets that compute values at build time may not be fully captured.
+- **`@import` resolution**: Only local CSS files referenced via `@import` are resolved. Remote URLs and npm packages are not followed.
+
+If you use third-party plugins, configure the `whitelist` option on relevant rules:
+
+```json
+{
+  "linter": {
+    "rules": {
+      "nursery": {
+        "noUnregisteredTailwindClasses": {
+          "level": "warn",
+          "options": {
+            "whitelist": ["btn", "btn-*", "card", "card-*", "daisy-*"]
+          }
+        }
+      }
+    }
+  }
+}
+```

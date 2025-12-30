@@ -8,6 +8,7 @@ use biome_configuration::TailwindConfiguration;
 use biome_css_analyze::tailwind_theme_extractor::{TailwindThemeValues, extract_theme_from_css};
 use biome_fs::FileSystem;
 use camino::{Utf8Path, Utf8PathBuf};
+use rustc_hash::FxHashSet;
 use std::collections::BTreeMap;
 use tracing::debug;
 
@@ -147,18 +148,159 @@ pub fn load_tailwind_v4_config(
         })
     };
 
-    // If we found CSS content, extract and merge theme values
+    // If we found CSS content, extract and merge theme values (with import resolution)
     if let Some(content) = css_content {
-        let theme_values = extract_theme_from_css(&content);
+        // Determine base directory for resolving imports
+        let base_dir = if let Some(css_path) = config.css_path() {
+            // Explicit path - use its parent as base
+            working_directory
+                .join(css_path)
+                .parent()
+                .map(|p| p.to_path_buf())
+                .unwrap_or_else(|| working_directory.to_path_buf())
+        } else {
+            // Auto-discovered - we don't have the path here, use working_directory
+            // Note: This may not resolve relative imports correctly, but it's a best effort
+            working_directory.to_path_buf()
+        };
+
+        let theme_values =
+            extract_theme_with_imports(fs, &content, &base_dir, &mut FxHashSet::default());
 
         if !theme_values.is_empty() {
             debug!(
-                "Extracted {} theme categories from CSS",
+                "Extracted {} theme categories from CSS (with imports)",
                 count_theme_categories(&theme_values)
             );
             merge_theme_into_config(config, theme_values);
         }
     }
+}
+
+/// Maximum depth for @import resolution to prevent infinite loops.
+const MAX_IMPORT_DEPTH: usize = 10;
+
+/// Extract theme values from CSS content, recursively following local @import statements.
+///
+/// # Arguments
+/// * `fs` - The filesystem to use for reading imported files
+/// * `content` - The CSS content to parse
+/// * `base_dir` - The directory to resolve relative imports from
+/// * `visited` - Set of already-visited file paths (to prevent cycles)
+///
+/// # Returns
+/// Merged TailwindThemeValues from this file and all imported files.
+fn extract_theme_with_imports(
+    fs: &dyn FileSystem,
+    content: &str,
+    base_dir: &Utf8Path,
+    visited: &mut FxHashSet<Utf8PathBuf>,
+) -> TailwindThemeValues {
+    extract_theme_with_imports_inner(fs, content, base_dir, visited, 0)
+}
+
+fn extract_theme_with_imports_inner(
+    fs: &dyn FileSystem,
+    content: &str,
+    base_dir: &Utf8Path,
+    visited: &mut FxHashSet<Utf8PathBuf>,
+    depth: usize,
+) -> TailwindThemeValues {
+    // Extract values from this file
+    let mut values = extract_theme_from_css(content);
+
+    // Stop if we've hit the max depth
+    if depth >= MAX_IMPORT_DEPTH {
+        debug!(
+            "Max import depth ({}) reached, stopping import resolution",
+            MAX_IMPORT_DEPTH
+        );
+        return values;
+    }
+
+    // Resolve and merge imported files
+    for import_path in std::mem::take(&mut values.import_paths) {
+        // Resolve the import path relative to the base directory
+        let resolved_path = resolve_import_path(base_dir, &import_path);
+
+        // Skip if already visited (cycle detection)
+        if visited.contains(&resolved_path) {
+            debug!("Skipping already-visited import: {}", resolved_path);
+            continue;
+        }
+
+        // Try to read the imported file
+        match fs.read_file_from_path(&resolved_path) {
+            Ok(imported_content) => {
+                visited.insert(resolved_path.clone());
+
+                // Get the directory of the imported file for nested imports
+                let import_base_dir = resolved_path
+                    .parent()
+                    .map(|p| p.to_path_buf())
+                    .unwrap_or_else(|| base_dir.to_path_buf());
+
+                // Recursively extract from imported file
+                let imported_values = extract_theme_with_imports_inner(
+                    fs,
+                    &imported_content,
+                    &import_base_dir,
+                    visited,
+                    depth + 1,
+                );
+
+                debug!(
+                    "Merged theme values from import: {} (depth {})",
+                    resolved_path, depth
+                );
+
+                // Merge imported values (imported values are lower priority than current file)
+                values.merge(imported_values);
+            }
+            Err(e) => {
+                debug!("Failed to read imported CSS file {}: {}", resolved_path, e);
+            }
+        }
+    }
+
+    values
+}
+
+/// Resolve an import path relative to a base directory.
+fn resolve_import_path(base_dir: &Utf8Path, import_path: &str) -> Utf8PathBuf {
+    // Handle relative paths
+    let path = Utf8Path::new(import_path);
+
+    if path.is_relative() {
+        // Join with base directory
+        let joined = base_dir.join(path);
+        // Normalize the path (handle ../ and ./)
+        normalize_path(&joined)
+    } else {
+        // Absolute path - use as-is (unlikely in CSS imports)
+        Utf8PathBuf::from(import_path)
+    }
+}
+
+/// Normalize a path by resolving . and .. components.
+fn normalize_path(path: &Utf8Path) -> Utf8PathBuf {
+    let mut result = Utf8PathBuf::new();
+
+    for component in path.components() {
+        match component {
+            camino::Utf8Component::ParentDir => {
+                result.pop();
+            }
+            camino::Utf8Component::CurDir => {
+                // Skip current directory markers
+            }
+            _ => {
+                result.push(component);
+            }
+        }
+    }
+
+    result
 }
 
 /// Count how many theme categories have values.
@@ -366,5 +508,43 @@ mod tests {
             .border_radius
             .insert("1rem".to_string(), "xl".to_string());
         assert_eq!(count_theme_categories(&theme), 6);
+    }
+
+    #[test]
+    fn test_resolve_import_path_relative() {
+        let base_dir = Utf8Path::new("/project/src/styles");
+
+        assert_eq!(
+            resolve_import_path(base_dir, "./components.css"),
+            Utf8PathBuf::from("/project/src/styles/components.css")
+        );
+
+        assert_eq!(
+            resolve_import_path(base_dir, "../shared/base.css"),
+            Utf8PathBuf::from("/project/src/shared/base.css")
+        );
+
+        assert_eq!(
+            resolve_import_path(base_dir, "../../root.css"),
+            Utf8PathBuf::from("/project/root.css")
+        );
+    }
+
+    #[test]
+    fn test_normalize_path() {
+        assert_eq!(
+            normalize_path(Utf8Path::new("/a/b/../c")),
+            Utf8PathBuf::from("/a/c")
+        );
+
+        assert_eq!(
+            normalize_path(Utf8Path::new("/a/./b/./c")),
+            Utf8PathBuf::from("/a/b/c")
+        );
+
+        assert_eq!(
+            normalize_path(Utf8Path::new("/a/b/c/../../d")),
+            Utf8PathBuf::from("/a/d")
+        );
     }
 }
