@@ -56,9 +56,9 @@ declare_lint_rule! {
     /// <div class="-translate-x-1/2" />;
     /// ```
     ///
-    pub EnforcesNegativeArbitraryValues {
+    pub NoNegativePrefixInArbitraryValue {
         version: "next",
-        name: "enforcesNegativeArbitraryValues",
+        name: "noNegativePrefixInArbitraryValue",
         language: "jsx",
         recommended: false,
         fix_kind: FixKind::Safe,
@@ -178,7 +178,7 @@ pub struct DashPrefixArbitraryState {
     pub violations: Vec<(String, String)>,
 }
 
-impl Rule for EnforcesNegativeArbitraryValues {
+impl Rule for NoNegativePrefixInArbitraryValue {
     type Query = Ast<AnyClassStringLike>;
     type State = DashPrefixArbitraryState;
     type Signals = Option<Self::State>;

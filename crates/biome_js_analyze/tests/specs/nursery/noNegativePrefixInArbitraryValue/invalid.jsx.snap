@@ -70,7 +70,7 @@ expression: invalid.jsx
 
 # Diagnostics
 ```
-invalid.jsx:4:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:4:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -95,7 +95,7 @@ invalid.jsx:4:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:5:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:5:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -120,7 +120,7 @@ invalid.jsx:5:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:6:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:6:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -145,7 +145,7 @@ invalid.jsx:6:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:7:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:7:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -170,7 +170,7 @@ invalid.jsx:7:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:12:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:12:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -200,7 +200,7 @@ invalid.jsx:12:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:13:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:13:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -230,7 +230,7 @@ invalid.jsx:13:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:14:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:14:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -260,7 +260,7 @@ invalid.jsx:14:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:15:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:15:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -290,7 +290,7 @@ invalid.jsx:15:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:16:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:16:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -320,7 +320,7 @@ invalid.jsx:16:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:17:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:17:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -350,7 +350,7 @@ invalid.jsx:17:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:18:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:18:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -380,7 +380,7 @@ invalid.jsx:18:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:19:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:19:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -410,7 +410,7 @@ invalid.jsx:19:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:24:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:24:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -440,7 +440,7 @@ invalid.jsx:24:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:25:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:25:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -470,7 +470,7 @@ invalid.jsx:25:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:26:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:26:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -500,7 +500,7 @@ invalid.jsx:26:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:31:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:31:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -530,7 +530,7 @@ invalid.jsx:31:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:36:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:36:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -560,7 +560,7 @@ invalid.jsx:36:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:37:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:37:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -590,7 +590,7 @@ invalid.jsx:37:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:38:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:38:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -620,7 +620,7 @@ invalid.jsx:38:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:39:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:39:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -650,7 +650,7 @@ invalid.jsx:39:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:44:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:44:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -680,7 +680,7 @@ invalid.jsx:44:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:45:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:45:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -705,7 +705,7 @@ invalid.jsx:45:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:50:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:50:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -735,7 +735,7 @@ invalid.jsx:50:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:51:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:51:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -765,7 +765,7 @@ invalid.jsx:51:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:52:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:52:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -790,7 +790,7 @@ invalid.jsx:52:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:53:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:53:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -820,7 +820,7 @@ invalid.jsx:53:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:58:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:58:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -850,7 +850,7 @@ invalid.jsx:58:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:59:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:59:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -880,7 +880,7 @@ invalid.jsx:59:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:60:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:60:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   
@@ -905,7 +905,7 @@ invalid.jsx:60:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━�
 ```
 
 ```
-invalid.jsx:61:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.jsx:61:12 lint/nursery/noNegativePrefixInArbitraryValue  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i Avoid using the dash prefix with arbitrary values.
   

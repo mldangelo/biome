@@ -2,7 +2,7 @@
 
 mod shared;
 pub use shared::*;
-pub mod enforces_negative_arbitrary_values;
+pub mod no_negative_prefix_in_arbitrary_value;
 pub mod no_access_key;
 pub mod no_accumulating_spread;
 pub mod no_adjacent_spaces_in_regex;

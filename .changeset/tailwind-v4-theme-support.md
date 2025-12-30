@@ -2,7 +2,7 @@
 "@biomejs/biome": patch
 ---
 
-Added comprehensive Tailwind CSS v4 support with 14 new nursery lint rules and configuration options.
+Added comprehensive Tailwind CSS v4 support with 13 new nursery lint rules and configuration options.
 
 #### New Lint Rules
 
@@ -17,7 +17,7 @@ Added comprehensive Tailwind CSS v4 support with 14 new nursery lint rules and c
 - [`noUnregisteredTailwindClasses`](https://biomejs.dev/linter/rules/no-unregistered-tailwind-classes/): Detect classes not in the Tailwind preset.
 - [`useConsistentTailwindLineWrapping`](https://biomejs.dev/linter/rules/use-consistent-tailwind-line-wrapping/): Auto-wrap long class lists at a configurable width.
 - [`noUnnecessaryArbitraryValue`](https://biomejs.dev/linter/rules/no-unnecessary-arbitrary-value/): Suggest theme values over arbitrary values.
-- [`enforcesNegativeArbitraryValues`](https://biomejs.dev/linter/rules/enforces-negative-arbitrary-values/): Enforce `-m-[10px]` over `m-[-10px]`.
+- [`noNegativePrefixInArbitraryValue`](https://biomejs.dev/linter/rules/no-negative-prefix-in-arbitrary-value/): Enforce `m-[-10px]` over `-m-[10px]`.
 - [`noArbitraryTailwindValue`](https://biomejs.dev/linter/rules/no-arbitrary-tailwind-value/): Disallow arbitrary values entirely.
 
 #### New Rule Options
