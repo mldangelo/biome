@@ -36,6 +36,7 @@ mod eslint_unicorn;
 mod ignorefile;
 mod node;
 mod prettier;
+mod tailwind;
 
 pub(crate) struct MigratePayload<'a> {
     pub(crate) session: CliSession<'a>,
@@ -352,6 +353,69 @@ fn migrate_file(payload: MigrateFile) -> Result<MigrationFileResult, CliDiagnost
             results.write = write;
             console.log(markup! {{PrintDiagnostic::simple(&results)}});
             Ok(result)
+        }
+        Some(MigrateSubCommand::Tailwind) => {
+            let tailwind::Config {
+                path: tailwind_path,
+                data: tailwind_config,
+            } = tailwind::read_config_file(fs, console)?;
+            let biome_config =
+                deserialize_from_json_ast::<Configuration>(&parsed.tree(), "").into_deserialized();
+            let Some(mut biome_config) = biome_config else {
+                return Ok(MigrationFileResult::HasErrors);
+            };
+            let old_biome_config = biome_config.clone();
+
+            // Merge the tailwind configuration (preserving existing values)
+            match &mut biome_config.tailwind {
+                Some(existing) => {
+                    existing.merge_with(tailwind_config);
+                }
+                None => {
+                    biome_config.tailwind = Some(tailwind_config);
+                }
+            }
+
+            if biome_config == old_biome_config {
+                console.log(markup! {
+                    <Info>"No changes to apply to the Biome configuration file."</Info>
+                });
+                Ok(MigrationFileResult::NoMigrationNeeded)
+            } else {
+                let new_content = serde_json::to_string(&biome_config).map_err(|err| {
+                    CliDiagnostic::MigrateError(MigrationDiagnostic {
+                        reason: err.to_string(),
+                    })
+                })?;
+                workspace.change_file(ChangeFileParams {
+                    project_key,
+                    path: biome_path.clone(),
+                    content: new_content,
+                    version: 1,
+                })?;
+                let printed = workspace.format_file(FormatFileParams {
+                    project_key,
+                    path: biome_path,
+                })?;
+                if write {
+                    biome_config_file.set_content(printed.as_code().as_bytes())?;
+                    console.log(markup!{
+                        <Info><Emphasis>{tailwind_path}</Emphasis>" has been successfully migrated."</Info>
+                    });
+                    Ok(MigrationFileResult::Migrated)
+                } else {
+                    let file_name = configuration_file_path.to_string();
+                    let diagnostic = MigrateDiffDiagnostic {
+                        file_name,
+                        diff: ContentDiffAdvice {
+                            old: biome_config_content,
+                            new: printed.as_code().to_string(),
+                        },
+                    };
+                    console.error(markup! {{PrintDiagnostic::simple(&diagnostic)}});
+                    Ok(MigrationFileResult::NeedsMigration)
+                }
+            }
         }
         None => {
             let mut tree = parsed.tree();

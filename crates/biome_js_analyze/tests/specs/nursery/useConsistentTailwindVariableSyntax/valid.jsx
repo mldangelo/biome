@@ -1,0 +1,17 @@
+/* should not generate diagnostics */
+
+// Valid: using modern syntax
+<div class="bg-[--my-color]" />;
+<div class="text-[--brand-primary]" />;
+<div class="border-[--border-color]" />;
+
+// Valid: with variants
+<div class="hover:bg-[--hover-color]" />;
+<div class="dark:text-[--dark-text]" />;
+
+// Valid: var() inside calc() is fine (cannot be simplified)
+<div class="w-[calc(100%-var(--sidebar))]" />;
+<div class="h-[calc(var(--header)+20px)]" />;
+
+// Valid: regular classes
+<div class="bg-blue-500 text-white p-4" />;

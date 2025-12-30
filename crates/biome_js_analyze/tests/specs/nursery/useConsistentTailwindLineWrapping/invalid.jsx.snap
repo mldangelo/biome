@@ -1,0 +1,77 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: multiline class string
+<div class="flex
+  items-center
+  justify-between" />;
+
+// Invalid: multiple spaces
+<div class="flex  items-center   justify-between" />;
+
+// Invalid: tabs and spaces mixed
+<div class="flex	items-center		justify-between" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/useConsistentTailwindLineWrapping  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Tailwind class string contains inconsistent whitespace.
+  
+    1 │ // Invalid: multiline class string
+  > 2 │ <div class="flex
+      │            ^^^^^
+  > 3 │   items-center
+  > 4 │   justify-between" />;
+      │   ^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // Invalid: multiple spaces
+  
+  i Class strings should be on a single line with single spaces between classes.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Normalize whitespace in class string.
+  
+     1 1 │   // Invalid: multiline class string
+     2   │ - <div·class="flex
+     3   │ - ··items-center
+     4   │ - ··justify-between"·/>;
+       2 │ + <div·class="flex·items-center·justify-between"·/>;
+     5 3 │   
+     6 4 │   // Invalid: multiple spaces
+  
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/useConsistentTailwindLineWrapping  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Tailwind class string contains inconsistent whitespace.
+  
+    6 │ // Invalid: multiple spaces
+  > 7 │ <div class="flex  items-center   justify-between" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │ // Invalid: tabs and spaces mixed
+  
+  i Class strings should be on a single line with single spaces between classes.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Normalize whitespace in class string.
+  
+     5  5 │   
+     6  6 │   // Invalid: multiple spaces
+     7    │ - <div·class="flex··items-center···justify-between"·/>;
+        7 │ + <div·class="flex·items-center·justify-between"·/>;
+     8  8 │   
+     9  9 │   // Invalid: tabs and spaces mixed
+  
+
+```

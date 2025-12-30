@@ -15,6 +15,7 @@ use crate::scanner::{
     IndexRequestKind, IndexTrigger, ScanOptions, Scanner, ScannerWatcherBridge, WatcherInstruction,
     WorkspaceScannerBridge,
 };
+use crate::tailwind_discovery::load_tailwind_v4_config;
 use crate::workspace::document::{AnyEmbeddedSnippet, DocumentServices};
 use biome_analyze::{AnalyzerPluginVec, RuleCategory};
 use biome_configuration::bool::Bool;
@@ -1100,6 +1101,11 @@ impl Workspace for WorkspaceServer {
                 .map(|(path, config)| (path.into(), config))
                 .collect(),
         )?;
+
+        // Load Tailwind v4 CSS configuration and merge theme values
+        if let Some(directory) = &workspace_directory {
+            load_tailwind_v4_config(self.fs.as_ref(), directory, &mut settings.tailwind);
+        }
 
         let plugin_diagnostics = self.load_plugins(
             &workspace_directory.clone().unwrap_or_default(),

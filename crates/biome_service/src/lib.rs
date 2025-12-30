@@ -12,6 +12,7 @@ pub mod workspace;
 pub mod workspace_types;
 
 mod scanner;
+pub mod tailwind_discovery;
 mod utils;
 
 #[cfg(test)]

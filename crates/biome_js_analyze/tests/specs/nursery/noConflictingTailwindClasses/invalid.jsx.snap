@@ -1,0 +1,2713 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// ==========================================
+// Spacing conflicts
+// ==========================================
+// Padding
+<div class="p-2 p-4" />;
+<div class="px-2 px-4" />;
+<div class="py-2 py-4" />;
+<div class="pt-2 pt-4" />;
+
+// Margin
+<div class="m-2 m-4" />;
+<div class="mx-2 mx-4" />;
+<div class="my-2 my-4" />;
+<div class="mt-2 mt-4" />;
+
+// Gap
+<div class="gap-2 gap-4" />;
+<div class="gap-x-2 gap-x-4" />;
+<div class="gap-y-2 gap-y-4" />;
+
+// ==========================================
+// Display conflicts
+// ==========================================
+<div class="hidden block" />;
+<div class="flex grid" />;
+<div class="inline block" />;
+<div class="inline-flex inline-block" />;
+
+// ==========================================
+// Flexbox conflicts
+// ==========================================
+<div class="flex-row flex-col" />;
+<div class="flex-wrap flex-nowrap" />;
+<div class="flex-grow flex-grow-0" />;
+<div class="shrink shrink-0" />;
+<div class="grow grow-0" />;
+<div class="basis-0 basis-full" />;
+
+// ==========================================
+// Grid conflicts
+// ==========================================
+<div class="grid-cols-1 grid-cols-2" />;
+<div class="grid-rows-1 grid-rows-2" />;
+<div class="grid-flow-row grid-flow-col" />;
+<div class="auto-cols-min auto-cols-max" />;
+<div class="auto-rows-min auto-rows-max" />;
+
+// ==========================================
+// Alignment conflicts
+// ==========================================
+<div class="justify-start justify-center" />;
+<div class="justify-items-start justify-items-center" />;
+<div class="justify-self-start justify-self-center" />;
+<div class="items-start items-center" />;
+<div class="content-start content-center" />;
+<div class="self-start self-center" />;
+<div class="place-content-start place-content-center" />;
+<div class="place-items-start place-items-center" />;
+<div class="place-self-start place-self-center" />;
+
+// ==========================================
+// Size conflicts
+// ==========================================
+<div class="w-full w-1/2" />;
+<div class="h-full h-1/2" />;
+<div class="min-w-0 min-w-full" />;
+<div class="max-w-sm max-w-lg" />;
+<div class="min-h-0 min-h-full" />;
+<div class="max-h-screen max-h-full" />;
+<div class="size-4 size-8" />;
+
+// ==========================================
+// Color conflicts
+// ==========================================
+<div class="text-red-500 text-blue-500" />;
+<div class="bg-red-500 bg-blue-500" />;
+<div class="border-red-500 border-blue-500" />;
+<div class="ring-red-500 ring-blue-500" />;
+<div class="outline-red-500 outline-blue-500" />;
+<div class="accent-red-500 accent-blue-500" />;
+<div class="caret-red-500 caret-blue-500" />;
+<div class="fill-red-500 fill-blue-500" />;
+<div class="stroke-red-500 stroke-blue-500" />;
+
+// ==========================================
+// Typography conflicts
+// ==========================================
+<div class="font-bold font-normal" />;
+<div class="font-sans font-serif" />;
+<div class="text-sm text-lg" />;
+<div class="text-left text-center" />;
+<div class="tracking-tight tracking-wide" />;
+<div class="leading-tight leading-loose" />;
+<div class="underline line-through" />;
+<div class="uppercase lowercase" />;
+<div class="whitespace-normal whitespace-nowrap" />;
+<div class="break-normal break-all" />;
+<div class="align-top align-middle" />;
+
+// ==========================================
+// Position conflicts
+// ==========================================
+<div class="static absolute" />;
+<div class="relative fixed" />;
+<div class="top-0 top-4" />;
+<div class="right-0 right-4" />;
+<div class="bottom-0 bottom-4" />;
+<div class="left-0 left-4" />;
+<div class="inset-0 inset-4" />;
+<div class="inset-x-0 inset-x-4" />;
+<div class="inset-y-0 inset-y-4" />;
+<div class="float-left float-right" />;
+<div class="clear-left clear-right" />;
+
+// ==========================================
+// Z-index conflicts
+// ==========================================
+<div class="z-0 z-10" />;
+<div class="z-auto z-50" />;
+
+// ==========================================
+// Visibility conflicts
+// ==========================================
+<div class="visible invisible" />;
+
+// ==========================================
+// Overflow conflicts
+// ==========================================
+<div class="overflow-auto overflow-hidden" />;
+<div class="overflow-x-auto overflow-x-hidden" />;
+<div class="overflow-y-auto overflow-y-hidden" />;
+
+// ==========================================
+// Cursor conflicts
+// ==========================================
+<div class="cursor-pointer cursor-wait" />;
+<div class="pointer-events-none pointer-events-auto" />;
+<div class="select-none select-all" />;
+
+// ==========================================
+// Object fit/position conflicts
+// ==========================================
+<div class="object-contain object-cover" />;
+<div class="object-center object-top" />;
+
+// ==========================================
+// Border conflicts
+// ==========================================
+<div class="border-0 border-2" />;
+<div class="border-t-0 border-t-2" />;
+<div class="rounded-none rounded-lg" />;
+<div class="rounded-t-none rounded-t-lg" />;
+<div class="border-solid border-dashed" />;
+<div class="outline-none outline-1" />;
+
+// ==========================================
+// Shadow conflicts
+// ==========================================
+<div class="shadow-sm shadow-lg" />;
+<div class="shadow-none shadow-xl" />;
+
+// ==========================================
+// Opacity conflicts
+// ==========================================
+<div class="opacity-0 opacity-100" />;
+<div class="opacity-50 opacity-75" />;
+
+// ==========================================
+// Transform conflicts
+// ==========================================
+<div class="rotate-45 rotate-90" />;
+<div class="scale-50 scale-100" />;
+<div class="translate-x-0 translate-x-4" />;
+<div class="translate-y-0 translate-y-4" />;
+<div class="skew-x-0 skew-x-12" />;
+<div class="skew-y-0 skew-y-12" />;
+<div class="origin-center origin-top" />;
+
+// ==========================================
+// Transition conflicts
+// ==========================================
+<div class="transition-none transition-all" />;
+<div class="duration-75 duration-300" />;
+<div class="ease-linear ease-in" />;
+<div class="delay-75 delay-300" />;
+
+// ==========================================
+// Aspect ratio conflicts
+// ==========================================
+<div class="aspect-auto aspect-square" />;
+<div class="aspect-video aspect-square" />;
+
+// ==========================================
+// Multiple conflicts in same attribute
+// ==========================================
+<div class="p-2 p-4 m-2 m-4" />;
+<div class="flex flex-row hidden" />;
+<div class="text-red-500 text-blue-500 bg-red-500 bg-blue-500" />;
+
+// ==========================================
+// With variants (should still detect conflicts)
+// ==========================================
+<div class="hover:p-2 hover:p-4" />;
+<div class="md:flex md:grid" />;
+<div class="dark:text-red-500 dark:text-blue-500" />;
+<div class="focus:ring-2 focus:ring-4" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:5:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    3 │ // ==========================================
+    4 │ // Padding
+  > 5 │ <div class="p-2 p-4" />;
+      │            ^^^^^^^^^
+    6 │ <div class="px-2 px-4" />;
+    7 │ <div class="py-2 py-4" />;
+  
+  i Conflicts: padding: `p-2`, `p-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    5 │ <div·class="p-2·p-4"·/>;
+      │               ----      
+
+```
+
+```
+invalid.jsx:6:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    4 │ // Padding
+    5 │ <div class="p-2 p-4" />;
+  > 6 │ <div class="px-2 px-4" />;
+      │            ^^^^^^^^^^^
+    7 │ <div class="py-2 py-4" />;
+    8 │ <div class="pt-2 pt-4" />;
+  
+  i Conflicts: padding-x: `px-2`, `px-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    6 │ <div·class="px-2·px-4"·/>;
+      │                -----      
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    5 │ <div class="p-2 p-4" />;
+    6 │ <div class="px-2 px-4" />;
+  > 7 │ <div class="py-2 py-4" />;
+      │            ^^^^^^^^^^^
+    8 │ <div class="pt-2 pt-4" />;
+    9 │ 
+  
+  i Conflicts: padding-y: `py-2`, `py-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    7 │ <div·class="py-2·py-4"·/>;
+      │                -----      
+
+```
+
+```
+invalid.jsx:8:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+     6 │ <div class="px-2 px-4" />;
+     7 │ <div class="py-2 py-4" />;
+   > 8 │ <div class="pt-2 pt-4" />;
+       │            ^^^^^^^^^^^
+     9 │ 
+    10 │ // Margin
+  
+  i Conflicts: padding-top: `pt-2`, `pt-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    8 │ <div·class="pt-2·pt-4"·/>;
+      │                -----      
+
+```
+
+```
+invalid.jsx:11:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    10 │ // Margin
+  > 11 │ <div class="m-2 m-4" />;
+       │            ^^^^^^^^^
+    12 │ <div class="mx-2 mx-4" />;
+    13 │ <div class="my-2 my-4" />;
+  
+  i Conflicts: margin: `m-2`, `m-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    11 │ <div·class="m-2·m-4"·/>;
+       │               ----      
+
+```
+
+```
+invalid.jsx:12:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    10 │ // Margin
+    11 │ <div class="m-2 m-4" />;
+  > 12 │ <div class="mx-2 mx-4" />;
+       │            ^^^^^^^^^^^
+    13 │ <div class="my-2 my-4" />;
+    14 │ <div class="mt-2 mt-4" />;
+  
+  i Conflicts: margin-x: `mx-2`, `mx-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    12 │ <div·class="mx-2·mx-4"·/>;
+       │                -----      
+
+```
+
+```
+invalid.jsx:13:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    11 │ <div class="m-2 m-4" />;
+    12 │ <div class="mx-2 mx-4" />;
+  > 13 │ <div class="my-2 my-4" />;
+       │            ^^^^^^^^^^^
+    14 │ <div class="mt-2 mt-4" />;
+    15 │ 
+  
+  i Conflicts: margin-y: `my-2`, `my-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    13 │ <div·class="my-2·my-4"·/>;
+       │                -----      
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    12 │ <div class="mx-2 mx-4" />;
+    13 │ <div class="my-2 my-4" />;
+  > 14 │ <div class="mt-2 mt-4" />;
+       │            ^^^^^^^^^^^
+    15 │ 
+    16 │ // Gap
+  
+  i Conflicts: margin-top: `mt-2`, `mt-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    14 │ <div·class="mt-2·mt-4"·/>;
+       │                -----      
+
+```
+
+```
+invalid.jsx:17:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    16 │ // Gap
+  > 17 │ <div class="gap-2 gap-4" />;
+       │            ^^^^^^^^^^^^^
+    18 │ <div class="gap-x-2 gap-x-4" />;
+    19 │ <div class="gap-y-2 gap-y-4" />;
+  
+  i Conflicts: gap: `gap-2`, `gap-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    17 │ <div·class="gap-2·gap-4"·/>;
+       │                 ------      
+
+```
+
+```
+invalid.jsx:18:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    16 │ // Gap
+    17 │ <div class="gap-2 gap-4" />;
+  > 18 │ <div class="gap-x-2 gap-x-4" />;
+       │            ^^^^^^^^^^^^^^^^^
+    19 │ <div class="gap-y-2 gap-y-4" />;
+    20 │ 
+  
+  i Conflicts: column-gap: `gap-x-2`, `gap-x-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    18 │ <div·class="gap-x-2·gap-x-4"·/>;
+       │                   --------      
+
+```
+
+```
+invalid.jsx:19:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    17 │ <div class="gap-2 gap-4" />;
+    18 │ <div class="gap-x-2 gap-x-4" />;
+  > 19 │ <div class="gap-y-2 gap-y-4" />;
+       │            ^^^^^^^^^^^^^^^^^
+    20 │ 
+    21 │ // ==========================================
+  
+  i Conflicts: row-gap: `gap-y-2`, `gap-y-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    19 │ <div·class="gap-y-2·gap-y-4"·/>;
+       │                   --------      
+
+```
+
+```
+invalid.jsx:24:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    22 │ // Display conflicts
+    23 │ // ==========================================
+  > 24 │ <div class="hidden block" />;
+       │            ^^^^^^^^^^^^^^
+    25 │ <div class="flex grid" />;
+    26 │ <div class="inline block" />;
+  
+  i Conflicts: display: `hidden`, `block`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    24 │ <div·class="hidden·block"·/>;
+       │             -------          
+
+```
+
+```
+invalid.jsx:25:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    23 │ // ==========================================
+    24 │ <div class="hidden block" />;
+  > 25 │ <div class="flex grid" />;
+       │            ^^^^^^^^^^^
+    26 │ <div class="inline block" />;
+    27 │ <div class="inline-flex inline-block" />;
+  
+  i Conflicts: display: `flex`, `grid`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    25 │ <div·class="flex·grid"·/>;
+       │             -----         
+
+```
+
+```
+invalid.jsx:26:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    24 │ <div class="hidden block" />;
+    25 │ <div class="flex grid" />;
+  > 26 │ <div class="inline block" />;
+       │            ^^^^^^^^^^^^^^
+    27 │ <div class="inline-flex inline-block" />;
+    28 │ 
+  
+  i Conflicts: display: `inline`, `block`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    26 │ <div·class="inline·block"·/>;
+       │             -------          
+
+```
+
+```
+invalid.jsx:27:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    25 │ <div class="flex grid" />;
+    26 │ <div class="inline block" />;
+  > 27 │ <div class="inline-flex inline-block" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │ 
+    29 │ // ==========================================
+  
+  i Conflicts: display: `inline-flex`, `inline-block`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    27 │ <div·class="inline-flex·inline-block"·/>;
+       │                    ------------          
+
+```
+
+```
+invalid.jsx:32:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    30 │ // Flexbox conflicts
+    31 │ // ==========================================
+  > 32 │ <div class="flex-row flex-col" />;
+       │            ^^^^^^^^^^^^^^^^^^^
+    33 │ <div class="flex-wrap flex-nowrap" />;
+    34 │ <div class="flex-grow flex-grow-0" />;
+  
+  i Conflicts: flex-direction: `flex-row`, `flex-col`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    32 │ <div·class="flex-row·flex-col"·/>;
+       │                  ---------        
+
+```
+
+```
+invalid.jsx:33:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    31 │ // ==========================================
+    32 │ <div class="flex-row flex-col" />;
+  > 33 │ <div class="flex-wrap flex-nowrap" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ <div class="flex-grow flex-grow-0" />;
+    35 │ <div class="shrink shrink-0" />;
+  
+  i Conflicts: flex-wrap: `flex-wrap`, `flex-nowrap`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    33 │ <div·class="flex-wrap·flex-nowrap"·/>;
+       │                  ----------           
+
+```
+
+```
+invalid.jsx:35:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    33 │ <div class="flex-wrap flex-nowrap" />;
+    34 │ <div class="flex-grow flex-grow-0" />;
+  > 35 │ <div class="shrink shrink-0" />;
+       │            ^^^^^^^^^^^^^^^^^
+    36 │ <div class="grow grow-0" />;
+    37 │ <div class="basis-0 basis-full" />;
+  
+  i Conflicts: flex-shrink: `shrink`, `shrink-0`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    35 │ <div·class="shrink·shrink-0"·/>;
+       │                   -------       
+
+```
+
+```
+invalid.jsx:36:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    34 │ <div class="flex-grow flex-grow-0" />;
+    35 │ <div class="shrink shrink-0" />;
+  > 36 │ <div class="grow grow-0" />;
+       │            ^^^^^^^^^^^^^
+    37 │ <div class="basis-0 basis-full" />;
+    38 │ 
+  
+  i Conflicts: flex-grow: `grow`, `grow-0`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    36 │ <div·class="grow·grow-0"·/>;
+       │                 -----       
+
+```
+
+```
+invalid.jsx:37:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    35 │ <div class="shrink shrink-0" />;
+    36 │ <div class="grow grow-0" />;
+  > 37 │ <div class="basis-0 basis-full" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    38 │ 
+    39 │ // ==========================================
+  
+  i Conflicts: flex-basis: `basis-0`, `basis-full`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    37 │ <div·class="basis-0·basis-full"·/>;
+       │                   --------         
+
+```
+
+```
+invalid.jsx:42:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    40 │ // Grid conflicts
+    41 │ // ==========================================
+  > 42 │ <div class="grid-cols-1 grid-cols-2" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    43 │ <div class="grid-rows-1 grid-rows-2" />;
+    44 │ <div class="grid-flow-row grid-flow-col" />;
+  
+  i Conflicts: grid-template-columns: `grid-cols-1`, `grid-cols-2`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    42 │ <div·class="grid-cols-1·grid-cols-2"·/>;
+       │                       ------------      
+
+```
+
+```
+invalid.jsx:43:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    41 │ // ==========================================
+    42 │ <div class="grid-cols-1 grid-cols-2" />;
+  > 43 │ <div class="grid-rows-1 grid-rows-2" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    44 │ <div class="grid-flow-row grid-flow-col" />;
+    45 │ <div class="auto-cols-min auto-cols-max" />;
+  
+  i Conflicts: grid-template-rows: `grid-rows-1`, `grid-rows-2`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    43 │ <div·class="grid-rows-1·grid-rows-2"·/>;
+       │                       ------------      
+
+```
+
+```
+invalid.jsx:44:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    42 │ <div class="grid-cols-1 grid-cols-2" />;
+    43 │ <div class="grid-rows-1 grid-rows-2" />;
+  > 44 │ <div class="grid-flow-row grid-flow-col" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    45 │ <div class="auto-cols-min auto-cols-max" />;
+    46 │ <div class="auto-rows-min auto-rows-max" />;
+  
+  i Conflicts: grid-auto-flow: `grid-flow-row`, `grid-flow-col`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    44 │ <div·class="grid-flow-row·grid-flow-col"·/>;
+       │                       --------------        
+
+```
+
+```
+invalid.jsx:51:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    49 │ // Alignment conflicts
+    50 │ // ==========================================
+  > 51 │ <div class="justify-start justify-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    52 │ <div class="justify-items-start justify-items-center" />;
+    53 │ <div class="justify-self-start justify-self-center" />;
+  
+  i Conflicts: justify-content: `justify-start`, `justify-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    51 │ <div·class="justify-start·justify-center"·/>;
+       │                     --------------           
+
+```
+
+```
+invalid.jsx:52:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    50 │ // ==========================================
+    51 │ <div class="justify-start justify-center" />;
+  > 52 │ <div class="justify-items-start justify-items-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    53 │ <div class="justify-self-start justify-self-center" />;
+    54 │ <div class="items-start items-center" />;
+  
+  i Conflicts: justify-items: `justify-items-start`, `justify-items-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    52 │ <div·class="justify-items-start·justify-items-center"·/>;
+       │                           --------------------           
+
+```
+
+```
+invalid.jsx:53:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    51 │ <div class="justify-start justify-center" />;
+    52 │ <div class="justify-items-start justify-items-center" />;
+  > 53 │ <div class="justify-self-start justify-self-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    54 │ <div class="items-start items-center" />;
+    55 │ <div class="content-start content-center" />;
+  
+  i Conflicts: justify-self: `justify-self-start`, `justify-self-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    53 │ <div·class="justify-self-start·justify-self-center"·/>;
+       │                          -------------------           
+
+```
+
+```
+invalid.jsx:54:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    52 │ <div class="justify-items-start justify-items-center" />;
+    53 │ <div class="justify-self-start justify-self-center" />;
+  > 54 │ <div class="items-start items-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    55 │ <div class="content-start content-center" />;
+    56 │ <div class="self-start self-center" />;
+  
+  i Conflicts: align-items: `items-start`, `items-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    54 │ <div·class="items-start·items-center"·/>;
+       │                   ------------           
+
+```
+
+```
+invalid.jsx:55:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    53 │ <div class="justify-self-start justify-self-center" />;
+    54 │ <div class="items-start items-center" />;
+  > 55 │ <div class="content-start content-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    56 │ <div class="self-start self-center" />;
+    57 │ <div class="place-content-start place-content-center" />;
+  
+  i Conflicts: align-content: `content-start`, `content-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    55 │ <div·class="content-start·content-center"·/>;
+       │                     --------------           
+
+```
+
+```
+invalid.jsx:56:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    54 │ <div class="items-start items-center" />;
+    55 │ <div class="content-start content-center" />;
+  > 56 │ <div class="self-start self-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    57 │ <div class="place-content-start place-content-center" />;
+    58 │ <div class="place-items-start place-items-center" />;
+  
+  i Conflicts: align-self: `self-start`, `self-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    56 │ <div·class="self-start·self-center"·/>;
+       │                  -----------           
+
+```
+
+```
+invalid.jsx:57:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    55 │ <div class="content-start content-center" />;
+    56 │ <div class="self-start self-center" />;
+  > 57 │ <div class="place-content-start place-content-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    58 │ <div class="place-items-start place-items-center" />;
+    59 │ <div class="place-self-start place-self-center" />;
+  
+  i Conflicts: place-content: `place-content-start`, `place-content-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    57 │ <div·class="place-content-start·place-content-center"·/>;
+       │                           --------------------           
+
+```
+
+```
+invalid.jsx:58:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    56 │ <div class="self-start self-center" />;
+    57 │ <div class="place-content-start place-content-center" />;
+  > 58 │ <div class="place-items-start place-items-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    59 │ <div class="place-self-start place-self-center" />;
+    60 │ 
+  
+  i Conflicts: place-items: `place-items-start`, `place-items-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    58 │ <div·class="place-items-start·place-items-center"·/>;
+       │                         ------------------           
+
+```
+
+```
+invalid.jsx:59:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    57 │ <div class="place-content-start place-content-center" />;
+    58 │ <div class="place-items-start place-items-center" />;
+  > 59 │ <div class="place-self-start place-self-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    60 │ 
+    61 │ // ==========================================
+  
+  i Conflicts: place-self: `place-self-start`, `place-self-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    59 │ <div·class="place-self-start·place-self-center"·/>;
+       │                        -----------------           
+
+```
+
+```
+invalid.jsx:64:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    62 │ // Size conflicts
+    63 │ // ==========================================
+  > 64 │ <div class="w-full w-1/2" />;
+       │            ^^^^^^^^^^^^^^
+    65 │ <div class="h-full h-1/2" />;
+    66 │ <div class="min-w-0 min-w-full" />;
+  
+  i Conflicts: width: `w-full`, `w-1/2`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    64 │ <div·class="w-full·w-1/2"·/>;
+       │               -------        
+
+```
+
+```
+invalid.jsx:65:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    63 │ // ==========================================
+    64 │ <div class="w-full w-1/2" />;
+  > 65 │ <div class="h-full h-1/2" />;
+       │            ^^^^^^^^^^^^^^
+    66 │ <div class="min-w-0 min-w-full" />;
+    67 │ <div class="max-w-sm max-w-lg" />;
+  
+  i Conflicts: height: `h-full`, `h-1/2`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    65 │ <div·class="h-full·h-1/2"·/>;
+       │               -------        
+
+```
+
+```
+invalid.jsx:66:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    64 │ <div class="w-full w-1/2" />;
+    65 │ <div class="h-full h-1/2" />;
+  > 66 │ <div class="min-w-0 min-w-full" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    67 │ <div class="max-w-sm max-w-lg" />;
+    68 │ <div class="min-h-0 min-h-full" />;
+  
+  i Conflicts: min-width: `min-w-0`, `min-w-full`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    66 │ <div·class="min-w-0·min-w-full"·/>;
+       │                   --------         
+
+```
+
+```
+invalid.jsx:67:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    65 │ <div class="h-full h-1/2" />;
+    66 │ <div class="min-w-0 min-w-full" />;
+  > 67 │ <div class="max-w-sm max-w-lg" />;
+       │            ^^^^^^^^^^^^^^^^^^^
+    68 │ <div class="min-h-0 min-h-full" />;
+    69 │ <div class="max-h-screen max-h-full" />;
+  
+  i Conflicts: max-width: `max-w-sm`, `max-w-lg`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    67 │ <div·class="max-w-sm·max-w-lg"·/>;
+       │                   ---------       
+
+```
+
+```
+invalid.jsx:68:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    66 │ <div class="min-w-0 min-w-full" />;
+    67 │ <div class="max-w-sm max-w-lg" />;
+  > 68 │ <div class="min-h-0 min-h-full" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    69 │ <div class="max-h-screen max-h-full" />;
+    70 │ <div class="size-4 size-8" />;
+  
+  i Conflicts: min-height: `min-h-0`, `min-h-full`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    68 │ <div·class="min-h-0·min-h-full"·/>;
+       │                   --------         
+
+```
+
+```
+invalid.jsx:69:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    67 │ <div class="max-w-sm max-w-lg" />;
+    68 │ <div class="min-h-0 min-h-full" />;
+  > 69 │ <div class="max-h-screen max-h-full" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    70 │ <div class="size-4 size-8" />;
+    71 │ 
+  
+  i Conflicts: max-height: `max-h-screen`, `max-h-full`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    69 │ <div·class="max-h-screen·max-h-full"·/>;
+       │                   -------------         
+
+```
+
+```
+invalid.jsx:75:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    73 │ // Color conflicts
+    74 │ // ==========================================
+  > 75 │ <div class="text-red-500 text-blue-500" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    76 │ <div class="bg-red-500 bg-blue-500" />;
+    77 │ <div class="border-red-500 border-blue-500" />;
+  
+  i Conflicts: text-color: `text-red-500`, `text-blue-500`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    75 │ <div·class="text-red-500·text-blue-500"·/>;
+       │                  -------------             
+
+```
+
+```
+invalid.jsx:76:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    74 │ // ==========================================
+    75 │ <div class="text-red-500 text-blue-500" />;
+  > 76 │ <div class="bg-red-500 bg-blue-500" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    77 │ <div class="border-red-500 border-blue-500" />;
+    78 │ <div class="ring-red-500 ring-blue-500" />;
+  
+  i Conflicts: background-color: `bg-red-500`, `bg-blue-500`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    76 │ <div·class="bg-red-500·bg-blue-500"·/>;
+       │                -----------             
+
+```
+
+```
+invalid.jsx:77:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    75 │ <div class="text-red-500 text-blue-500" />;
+    76 │ <div class="bg-red-500 bg-blue-500" />;
+  > 77 │ <div class="border-red-500 border-blue-500" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    78 │ <div class="ring-red-500 ring-blue-500" />;
+    79 │ <div class="outline-red-500 outline-blue-500" />;
+  
+  i Conflicts: border-color: `border-red-500`, `border-blue-500`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    77 │ <div·class="border-red-500·border-blue-500"·/>;
+       │                    ---------------             
+
+```
+
+```
+invalid.jsx:88:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    86 │ // Typography conflicts
+    87 │ // ==========================================
+  > 88 │ <div class="font-bold font-normal" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^
+    89 │ <div class="font-sans font-serif" />;
+    90 │ <div class="text-sm text-lg" />;
+  
+  i Conflicts: font-weight: `font-bold`, `font-normal`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    88 │ <div·class="font-bold·font-normal"·/>;
+       │                  ----------           
+
+```
+
+```
+invalid.jsx:90:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    88 │ <div class="font-bold font-normal" />;
+    89 │ <div class="font-sans font-serif" />;
+  > 90 │ <div class="text-sm text-lg" />;
+       │            ^^^^^^^^^^^^^^^^^
+    91 │ <div class="text-left text-center" />;
+    92 │ <div class="tracking-tight tracking-wide" />;
+  
+  i Conflicts: font-size: `text-sm`, `text-lg`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    90 │ <div·class="text-sm·text-lg"·/>;
+       │                  --------       
+
+```
+
+```
+invalid.jsx:91:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    89 │ <div class="font-sans font-serif" />;
+    90 │ <div class="text-sm text-lg" />;
+  > 91 │ <div class="text-left text-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^
+    92 │ <div class="tracking-tight tracking-wide" />;
+    93 │ <div class="leading-tight leading-loose" />;
+  
+  i Conflicts: text-align: `text-left`, `text-center`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    91 │ <div·class="text-left·text-center"·/>;
+       │                  ----------           
+
+```
+
+```
+invalid.jsx:92:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    90 │ <div class="text-sm text-lg" />;
+    91 │ <div class="text-left text-center" />;
+  > 92 │ <div class="tracking-tight tracking-wide" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    93 │ <div class="leading-tight leading-loose" />;
+    94 │ <div class="underline line-through" />;
+  
+  i Conflicts: letter-spacing: `tracking-tight`, `tracking-wide`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    92 │ <div·class="tracking-tight·tracking-wide"·/>;
+       │                      ---------------         
+
+```
+
+```
+invalid.jsx:93:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    91 │ <div class="text-left text-center" />;
+    92 │ <div class="tracking-tight tracking-wide" />;
+  > 93 │ <div class="leading-tight leading-loose" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    94 │ <div class="underline line-through" />;
+    95 │ <div class="uppercase lowercase" />;
+  
+  i Conflicts: line-height: `leading-tight`, `leading-loose`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    93 │ <div·class="leading-tight·leading-loose"·/>;
+       │                     --------------          
+
+```
+
+```
+invalid.jsx:94:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    92 │ <div class="tracking-tight tracking-wide" />;
+    93 │ <div class="leading-tight leading-loose" />;
+  > 94 │ <div class="underline line-through" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    95 │ <div class="uppercase lowercase" />;
+    96 │ <div class="whitespace-normal whitespace-nowrap" />;
+  
+  i Conflicts: text-decoration-line: `underline`, `line-through`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    94 │ <div·class="underline·line-through"·/>;
+       │             ----------                 
+
+```
+
+```
+invalid.jsx:95:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    93 │ <div class="leading-tight leading-loose" />;
+    94 │ <div class="underline line-through" />;
+  > 95 │ <div class="uppercase lowercase" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^
+    96 │ <div class="whitespace-normal whitespace-nowrap" />;
+    97 │ <div class="break-normal break-all" />;
+  
+  i Conflicts: text-transform: `uppercase`, `lowercase`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    95 │ <div·class="uppercase·lowercase"·/>;
+       │             ----------              
+
+```
+
+```
+invalid.jsx:96:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    94 │ <div class="underline line-through" />;
+    95 │ <div class="uppercase lowercase" />;
+  > 96 │ <div class="whitespace-normal whitespace-nowrap" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    97 │ <div class="break-normal break-all" />;
+    98 │ <div class="align-top align-middle" />;
+  
+  i Conflicts: whitespace: `whitespace-normal`, `whitespace-nowrap`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    96 │ <div·class="whitespace-normal·whitespace-nowrap"·/>;
+       │                        ------------------           
+
+```
+
+```
+invalid.jsx:97:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    95 │ <div class="uppercase lowercase" />;
+    96 │ <div class="whitespace-normal whitespace-nowrap" />;
+  > 97 │ <div class="break-normal break-all" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    98 │ <div class="align-top align-middle" />;
+    99 │ 
+  
+  i Conflicts: word-break: `break-normal`, `break-all`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    97 │ <div·class="break-normal·break-all"·/>;
+       │                   -------------        
+
+```
+
+```
+invalid.jsx:98:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+     96 │ <div class="whitespace-normal whitespace-nowrap" />;
+     97 │ <div class="break-normal break-all" />;
+   > 98 │ <div class="align-top align-middle" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^
+     99 │ 
+    100 │ // ==========================================
+  
+  i Conflicts: vertical-align: `align-top`, `align-middle`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    98 │ <div·class="align-top·align-middle"·/>;
+       │                   ----------           
+
+```
+
+```
+invalid.jsx:103:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    101 │ // Position conflicts
+    102 │ // ==========================================
+  > 103 │ <div class="static absolute" />;
+        │            ^^^^^^^^^^^^^^^^^
+    104 │ <div class="relative fixed" />;
+    105 │ <div class="top-0 top-4" />;
+  
+  i Conflicts: position: `static`, `absolute`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    103 │ <div·class="static·absolute"·/>;
+        │             -------             
+
+```
+
+```
+invalid.jsx:104:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    102 │ // ==========================================
+    103 │ <div class="static absolute" />;
+  > 104 │ <div class="relative fixed" />;
+        │            ^^^^^^^^^^^^^^^^
+    105 │ <div class="top-0 top-4" />;
+    106 │ <div class="right-0 right-4" />;
+  
+  i Conflicts: position: `relative`, `fixed`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    104 │ <div·class="relative·fixed"·/>;
+        │             ---------          
+
+```
+
+```
+invalid.jsx:105:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    103 │ <div class="static absolute" />;
+    104 │ <div class="relative fixed" />;
+  > 105 │ <div class="top-0 top-4" />;
+        │            ^^^^^^^^^^^^^
+    106 │ <div class="right-0 right-4" />;
+    107 │ <div class="bottom-0 bottom-4" />;
+  
+  i Conflicts: top: `top-0`, `top-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    105 │ <div·class="top-0·top-4"·/>;
+        │                 ------      
+
+```
+
+```
+invalid.jsx:106:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    104 │ <div class="relative fixed" />;
+    105 │ <div class="top-0 top-4" />;
+  > 106 │ <div class="right-0 right-4" />;
+        │            ^^^^^^^^^^^^^^^^^
+    107 │ <div class="bottom-0 bottom-4" />;
+    108 │ <div class="left-0 left-4" />;
+  
+  i Conflicts: right: `right-0`, `right-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    106 │ <div·class="right-0·right-4"·/>;
+        │                   --------      
+
+```
+
+```
+invalid.jsx:107:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    105 │ <div class="top-0 top-4" />;
+    106 │ <div class="right-0 right-4" />;
+  > 107 │ <div class="bottom-0 bottom-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^
+    108 │ <div class="left-0 left-4" />;
+    109 │ <div class="inset-0 inset-4" />;
+  
+  i Conflicts: bottom: `bottom-0`, `bottom-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    107 │ <div·class="bottom-0·bottom-4"·/>;
+        │                    ---------      
+
+```
+
+```
+invalid.jsx:108:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    106 │ <div class="right-0 right-4" />;
+    107 │ <div class="bottom-0 bottom-4" />;
+  > 108 │ <div class="left-0 left-4" />;
+        │            ^^^^^^^^^^^^^^^
+    109 │ <div class="inset-0 inset-4" />;
+    110 │ <div class="inset-x-0 inset-x-4" />;
+  
+  i Conflicts: left: `left-0`, `left-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    108 │ <div·class="left-0·left-4"·/>;
+        │                  -------      
+
+```
+
+```
+invalid.jsx:109:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    107 │ <div class="bottom-0 bottom-4" />;
+    108 │ <div class="left-0 left-4" />;
+  > 109 │ <div class="inset-0 inset-4" />;
+        │            ^^^^^^^^^^^^^^^^^
+    110 │ <div class="inset-x-0 inset-x-4" />;
+    111 │ <div class="inset-y-0 inset-y-4" />;
+  
+  i Conflicts: inset: `inset-0`, `inset-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    109 │ <div·class="inset-0·inset-4"·/>;
+        │                   --------      
+
+```
+
+```
+invalid.jsx:110:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    108 │ <div class="left-0 left-4" />;
+    109 │ <div class="inset-0 inset-4" />;
+  > 110 │ <div class="inset-x-0 inset-x-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    111 │ <div class="inset-y-0 inset-y-4" />;
+    112 │ <div class="float-left float-right" />;
+  
+  i Conflicts: inset-x: `inset-x-0`, `inset-x-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    110 │ <div·class="inset-x-0·inset-x-4"·/>;
+        │                     ----------      
+
+```
+
+```
+invalid.jsx:111:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    109 │ <div class="inset-0 inset-4" />;
+    110 │ <div class="inset-x-0 inset-x-4" />;
+  > 111 │ <div class="inset-y-0 inset-y-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    112 │ <div class="float-left float-right" />;
+    113 │ <div class="clear-left clear-right" />;
+  
+  i Conflicts: inset-y: `inset-y-0`, `inset-y-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    111 │ <div·class="inset-y-0·inset-y-4"·/>;
+        │                     ----------      
+
+```
+
+```
+invalid.jsx:112:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    110 │ <div class="inset-x-0 inset-x-4" />;
+    111 │ <div class="inset-y-0 inset-y-4" />;
+  > 112 │ <div class="float-left float-right" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    113 │ <div class="clear-left clear-right" />;
+    114 │ 
+  
+  i Conflicts: float: `float-left`, `float-right`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    112 │ <div·class="float-left·float-right"·/>;
+        │                   -----------          
+
+```
+
+```
+invalid.jsx:113:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    111 │ <div class="inset-y-0 inset-y-4" />;
+    112 │ <div class="float-left float-right" />;
+  > 113 │ <div class="clear-left clear-right" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    114 │ 
+    115 │ // ==========================================
+  
+  i Conflicts: clear: `clear-left`, `clear-right`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    113 │ <div·class="clear-left·clear-right"·/>;
+        │                   -----------          
+
+```
+
+```
+invalid.jsx:118:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    116 │ // Z-index conflicts
+    117 │ // ==========================================
+  > 118 │ <div class="z-0 z-10" />;
+        │            ^^^^^^^^^^
+    119 │ <div class="z-auto z-50" />;
+    120 │ 
+  
+  i Conflicts: z-index: `z-0`, `z-10`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    118 │ <div·class="z-0·z-10"·/>;
+        │               ----       
+
+```
+
+```
+invalid.jsx:119:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    117 │ // ==========================================
+    118 │ <div class="z-0 z-10" />;
+  > 119 │ <div class="z-auto z-50" />;
+        │            ^^^^^^^^^^^^^
+    120 │ 
+    121 │ // ==========================================
+  
+  i Conflicts: z-index: `z-auto`, `z-50`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    119 │ <div·class="z-auto·z-50"·/>;
+        │               -------       
+
+```
+
+```
+invalid.jsx:124:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    122 │ // Visibility conflicts
+    123 │ // ==========================================
+  > 124 │ <div class="visible invisible" />;
+        │            ^^^^^^^^^^^^^^^^^^^
+    125 │ 
+    126 │ // ==========================================
+  
+  i Conflicts: visibility: `visible`, `invisible`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    124 │ <div·class="visible·invisible"·/>;
+        │             --------              
+
+```
+
+```
+invalid.jsx:129:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    127 │ // Overflow conflicts
+    128 │ // ==========================================
+  > 129 │ <div class="overflow-auto overflow-hidden" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    130 │ <div class="overflow-x-auto overflow-x-hidden" />;
+    131 │ <div class="overflow-y-auto overflow-y-hidden" />;
+  
+  i Conflicts: overflow: `overflow-auto`, `overflow-hidden`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    129 │ <div·class="overflow-auto·overflow-hidden"·/>;
+        │                      --------------           
+
+```
+
+```
+invalid.jsx:130:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    128 │ // ==========================================
+    129 │ <div class="overflow-auto overflow-hidden" />;
+  > 130 │ <div class="overflow-x-auto overflow-x-hidden" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    131 │ <div class="overflow-y-auto overflow-y-hidden" />;
+    132 │ 
+  
+  i Conflicts: overflow-x: `overflow-x-auto`, `overflow-x-hidden`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    130 │ <div·class="overflow-x-auto·overflow-x-hidden"·/>;
+        │                        ----------------           
+
+```
+
+```
+invalid.jsx:131:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    129 │ <div class="overflow-auto overflow-hidden" />;
+    130 │ <div class="overflow-x-auto overflow-x-hidden" />;
+  > 131 │ <div class="overflow-y-auto overflow-y-hidden" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    132 │ 
+    133 │ // ==========================================
+  
+  i Conflicts: overflow-y: `overflow-y-auto`, `overflow-y-hidden`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    131 │ <div·class="overflow-y-auto·overflow-y-hidden"·/>;
+        │                        ----------------           
+
+```
+
+```
+invalid.jsx:136:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    134 │ // Cursor conflicts
+    135 │ // ==========================================
+  > 136 │ <div class="cursor-pointer cursor-wait" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    137 │ <div class="pointer-events-none pointer-events-auto" />;
+    138 │ <div class="select-none select-all" />;
+  
+  i Conflicts: cursor: `cursor-pointer`, `cursor-wait`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    136 │ <div·class="cursor-pointer·cursor-wait"·/>;
+        │                    ---------------         
+
+```
+
+```
+invalid.jsx:137:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    135 │ // ==========================================
+    136 │ <div class="cursor-pointer cursor-wait" />;
+  > 137 │ <div class="pointer-events-none pointer-events-auto" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    138 │ <div class="select-none select-all" />;
+    139 │ 
+  
+  i Conflicts: pointer-events: `pointer-events-none`, `pointer-events-auto`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    137 │ <div·class="pointer-events-none·pointer-events-auto"·/>;
+        │                            --------------------         
+
+```
+
+```
+invalid.jsx:138:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    136 │ <div class="cursor-pointer cursor-wait" />;
+    137 │ <div class="pointer-events-none pointer-events-auto" />;
+  > 138 │ <div class="select-none select-all" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    139 │ 
+    140 │ // ==========================================
+  
+  i Conflicts: user-select: `select-none`, `select-all`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    138 │ <div·class="select-none·select-all"·/>;
+        │                    ------------        
+
+```
+
+```
+invalid.jsx:143:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    141 │ // Object fit/position conflicts
+    142 │ // ==========================================
+  > 143 │ <div class="object-contain object-cover" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    144 │ <div class="object-center object-top" />;
+    145 │ 
+  
+  i Conflicts: object-fit: `object-contain`, `object-cover`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    143 │ <div·class="object-contain·object-cover"·/>;
+        │                    ---------------          
+
+```
+
+```
+invalid.jsx:144:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    142 │ // ==========================================
+    143 │ <div class="object-contain object-cover" />;
+  > 144 │ <div class="object-center object-top" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    145 │ 
+    146 │ // ==========================================
+  
+  i Conflicts: object-position: `object-center`, `object-top`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    144 │ <div·class="object-center·object-top"·/>;
+        │                    --------------        
+
+```
+
+```
+invalid.jsx:149:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    147 │ // Border conflicts
+    148 │ // ==========================================
+  > 149 │ <div class="border-0 border-2" />;
+        │            ^^^^^^^^^^^^^^^^^^^
+    150 │ <div class="border-t-0 border-t-2" />;
+    151 │ <div class="rounded-none rounded-lg" />;
+  
+  i Conflicts: border-width: `border-0`, `border-2`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    149 │ <div·class="border-0·border-2"·/>;
+        │                    ---------      
+
+```
+
+```
+invalid.jsx:151:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    149 │ <div class="border-0 border-2" />;
+    150 │ <div class="border-t-0 border-t-2" />;
+  > 151 │ <div class="rounded-none rounded-lg" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    152 │ <div class="rounded-t-none rounded-t-lg" />;
+    153 │ <div class="border-solid border-dashed" />;
+  
+  i Conflicts: border-radius: `rounded-none`, `rounded-lg`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    151 │ <div·class="rounded-none·rounded-lg"·/>;
+        │                     -------------       
+
+```
+
+```
+invalid.jsx:152:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    150 │ <div class="border-t-0 border-t-2" />;
+    151 │ <div class="rounded-none rounded-lg" />;
+  > 152 │ <div class="rounded-t-none rounded-t-lg" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    153 │ <div class="border-solid border-dashed" />;
+    154 │ <div class="outline-none outline-1" />;
+  
+  i Conflicts: border-radius: `rounded-t-none`, `rounded-t-lg`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    152 │ <div·class="rounded-t-none·rounded-t-lg"·/>;
+        │                       ---------------       
+
+```
+
+```
+invalid.jsx:153:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    151 │ <div class="rounded-none rounded-lg" />;
+    152 │ <div class="rounded-t-none rounded-t-lg" />;
+  > 153 │ <div class="border-solid border-dashed" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    154 │ <div class="outline-none outline-1" />;
+    155 │ 
+  
+  i Conflicts: border-style: `border-solid`, `border-dashed`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    153 │ <div·class="border-solid·border-dashed"·/>;
+        │                    -------------           
+
+```
+
+```
+invalid.jsx:159:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    157 │ // Shadow conflicts
+    158 │ // ==========================================
+  > 159 │ <div class="shadow-sm shadow-lg" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    160 │ <div class="shadow-none shadow-xl" />;
+    161 │ 
+  
+  i Conflicts: box-shadow: `shadow-sm`, `shadow-lg`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    159 │ <div·class="shadow-sm·shadow-lg"·/>;
+        │                    ----------       
+
+```
+
+```
+invalid.jsx:160:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    158 │ // ==========================================
+    159 │ <div class="shadow-sm shadow-lg" />;
+  > 160 │ <div class="shadow-none shadow-xl" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^
+    161 │ 
+    162 │ // ==========================================
+  
+  i Conflicts: box-shadow: `shadow-none`, `shadow-xl`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    160 │ <div·class="shadow-none·shadow-xl"·/>;
+        │                    ------------       
+
+```
+
+```
+invalid.jsx:165:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    163 │ // Opacity conflicts
+    164 │ // ==========================================
+  > 165 │ <div class="opacity-0 opacity-100" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^
+    166 │ <div class="opacity-50 opacity-75" />;
+    167 │ 
+  
+  i Conflicts: opacity: `opacity-0`, `opacity-100`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    165 │ <div·class="opacity-0·opacity-100"·/>;
+        │                     ----------        
+
+```
+
+```
+invalid.jsx:166:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    164 │ // ==========================================
+    165 │ <div class="opacity-0 opacity-100" />;
+  > 166 │ <div class="opacity-50 opacity-75" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^
+    167 │ 
+    168 │ // ==========================================
+  
+  i Conflicts: opacity: `opacity-50`, `opacity-75`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    166 │ <div·class="opacity-50·opacity-75"·/>;
+        │                     -----------       
+
+```
+
+```
+invalid.jsx:171:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    169 │ // Transform conflicts
+    170 │ // ==========================================
+  > 171 │ <div class="rotate-45 rotate-90" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    172 │ <div class="scale-50 scale-100" />;
+    173 │ <div class="translate-x-0 translate-x-4" />;
+  
+  i Conflicts: rotate: `rotate-45`, `rotate-90`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    171 │ <div·class="rotate-45·rotate-90"·/>;
+        │                    ----------       
+
+```
+
+```
+invalid.jsx:172:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    170 │ // ==========================================
+    171 │ <div class="rotate-45 rotate-90" />;
+  > 172 │ <div class="scale-50 scale-100" />;
+        │            ^^^^^^^^^^^^^^^^^^^^
+    173 │ <div class="translate-x-0 translate-x-4" />;
+    174 │ <div class="translate-y-0 translate-y-4" />;
+  
+  i Conflicts: scale: `scale-50`, `scale-100`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    172 │ <div·class="scale-50·scale-100"·/>;
+        │                   ---------        
+
+```
+
+```
+invalid.jsx:173:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    171 │ <div class="rotate-45 rotate-90" />;
+    172 │ <div class="scale-50 scale-100" />;
+  > 173 │ <div class="translate-x-0 translate-x-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    174 │ <div class="translate-y-0 translate-y-4" />;
+    175 │ <div class="skew-x-0 skew-x-12" />;
+  
+  i Conflicts: translate-x: `translate-x-0`, `translate-x-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    173 │ <div·class="translate-x-0·translate-x-4"·/>;
+        │                         --------------      
+
+```
+
+```
+invalid.jsx:174:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    172 │ <div class="scale-50 scale-100" />;
+    173 │ <div class="translate-x-0 translate-x-4" />;
+  > 174 │ <div class="translate-y-0 translate-y-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    175 │ <div class="skew-x-0 skew-x-12" />;
+    176 │ <div class="skew-y-0 skew-y-12" />;
+  
+  i Conflicts: translate-y: `translate-y-0`, `translate-y-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    174 │ <div·class="translate-y-0·translate-y-4"·/>;
+        │                         --------------      
+
+```
+
+```
+invalid.jsx:175:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    173 │ <div class="translate-x-0 translate-x-4" />;
+    174 │ <div class="translate-y-0 translate-y-4" />;
+  > 175 │ <div class="skew-x-0 skew-x-12" />;
+        │            ^^^^^^^^^^^^^^^^^^^^
+    176 │ <div class="skew-y-0 skew-y-12" />;
+    177 │ <div class="origin-center origin-top" />;
+  
+  i Conflicts: skew-x: `skew-x-0`, `skew-x-12`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    175 │ <div·class="skew-x-0·skew-x-12"·/>;
+        │                    ---------       
+
+```
+
+```
+invalid.jsx:176:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    174 │ <div class="translate-y-0 translate-y-4" />;
+    175 │ <div class="skew-x-0 skew-x-12" />;
+  > 176 │ <div class="skew-y-0 skew-y-12" />;
+        │            ^^^^^^^^^^^^^^^^^^^^
+    177 │ <div class="origin-center origin-top" />;
+    178 │ 
+  
+  i Conflicts: skew-y: `skew-y-0`, `skew-y-12`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    176 │ <div·class="skew-y-0·skew-y-12"·/>;
+        │                    ---------       
+
+```
+
+```
+invalid.jsx:177:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    175 │ <div class="skew-x-0 skew-x-12" />;
+    176 │ <div class="skew-y-0 skew-y-12" />;
+  > 177 │ <div class="origin-center origin-top" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    178 │ 
+    179 │ // ==========================================
+  
+  i Conflicts: transform-origin: `origin-center`, `origin-top`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    177 │ <div·class="origin-center·origin-top"·/>;
+        │                    --------------        
+
+```
+
+```
+invalid.jsx:182:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    180 │ // Transition conflicts
+    181 │ // ==========================================
+  > 182 │ <div class="transition-none transition-all" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    183 │ <div class="duration-75 duration-300" />;
+    184 │ <div class="ease-linear ease-in" />;
+  
+  i Conflicts: transition-property: `transition-none`, `transition-all`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    182 │ <div·class="transition-none·transition-all"·/>;
+        │                        ----------------        
+
+```
+
+```
+invalid.jsx:183:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    181 │ // ==========================================
+    182 │ <div class="transition-none transition-all" />;
+  > 183 │ <div class="duration-75 duration-300" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    184 │ <div class="ease-linear ease-in" />;
+    185 │ <div class="delay-75 delay-300" />;
+  
+  i Conflicts: transition-duration: `duration-75`, `duration-300`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    183 │ <div·class="duration-75·duration-300"·/>;
+        │                      ------------        
+
+```
+
+```
+invalid.jsx:184:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    182 │ <div class="transition-none transition-all" />;
+    183 │ <div class="duration-75 duration-300" />;
+  > 184 │ <div class="ease-linear ease-in" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    185 │ <div class="delay-75 delay-300" />;
+    186 │ 
+  
+  i Conflicts: transition-timing-function: `ease-linear`, `ease-in`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    184 │ <div·class="ease-linear·ease-in"·/>;
+        │                  ------------       
+
+```
+
+```
+invalid.jsx:185:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    183 │ <div class="duration-75 duration-300" />;
+    184 │ <div class="ease-linear ease-in" />;
+  > 185 │ <div class="delay-75 delay-300" />;
+        │            ^^^^^^^^^^^^^^^^^^^^
+    186 │ 
+    187 │ // ==========================================
+  
+  i Conflicts: transition-delay: `delay-75`, `delay-300`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    185 │ <div·class="delay-75·delay-300"·/>;
+        │                   ---------        
+
+```
+
+```
+invalid.jsx:190:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    188 │ // Aspect ratio conflicts
+    189 │ // ==========================================
+  > 190 │ <div class="aspect-auto aspect-square" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    191 │ <div class="aspect-video aspect-square" />;
+    192 │ 
+  
+  i Conflicts: aspect-ratio: `aspect-auto`, `aspect-square`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    190 │ <div·class="aspect-auto·aspect-square"·/>;
+        │                    ------------           
+
+```
+
+```
+invalid.jsx:191:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    189 │ // ==========================================
+    190 │ <div class="aspect-auto aspect-square" />;
+  > 191 │ <div class="aspect-video aspect-square" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    192 │ 
+    193 │ // ==========================================
+  
+  i Conflicts: aspect-ratio: `aspect-video`, `aspect-square`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    191 │ <div·class="aspect-video·aspect-square"·/>;
+        │                    -------------           
+
+```
+
+```
+invalid.jsx:196:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    194 │ // Multiple conflicts in same attribute
+    195 │ // ==========================================
+  > 196 │ <div class="p-2 p-4 m-2 m-4" />;
+        │            ^^^^^^^^^^^^^^^^^
+    197 │ <div class="flex flex-row hidden" />;
+    198 │ <div class="text-red-500 text-blue-500 bg-red-500 bg-blue-500" />;
+  
+  i Conflicts: padding: `p-2`, `p-4`; margin: `m-2`, `m-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    196 │ <div·class="p-2·p-4·m-2·m-4"·/>;
+        │               ---- ----         
+
+```
+
+```
+invalid.jsx:197:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    195 │ // ==========================================
+    196 │ <div class="p-2 p-4 m-2 m-4" />;
+  > 197 │ <div class="flex flex-row hidden" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^
+    198 │ <div class="text-red-500 text-blue-500 bg-red-500 bg-blue-500" />;
+    199 │ 
+  
+  i Conflicts: display: `flex`, `hidden`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    197 │ <div·class="flex·flex-row·hidden"·/>;
+        │                 -----                
+
+```
+
+```
+invalid.jsx:198:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    196 │ <div class="p-2 p-4 m-2 m-4" />;
+    197 │ <div class="flex flex-row hidden" />;
+  > 198 │ <div class="text-red-500 text-blue-500 bg-red-500 bg-blue-500" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    199 │ 
+    200 │ // ==========================================
+  
+  i Conflicts: background-color: `bg-red-500`, `bg-blue-500`; text-color: `text-red-500`, `text-blue-500`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    198 │ <div·class="text-red-500·text-blue-500·bg-red-500·bg-blue-500"·/>;
+        │                  -------------    -----------                     
+
+```
+
+```
+invalid.jsx:203:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    201 │ // With variants (should still detect conflicts)
+    202 │ // ==========================================
+  > 203 │ <div class="hover:p-2 hover:p-4" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^
+    204 │ <div class="md:flex md:grid" />;
+    205 │ <div class="dark:text-red-500 dark:text-blue-500" />;
+  
+  i Conflicts: padding: `hover:p-2`, `hover:p-4`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    203 │ <div·class="hover:p-2·hover:p-4"·/>;
+        │                     ----------      
+
+```
+
+```
+invalid.jsx:204:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    202 │ // ==========================================
+    203 │ <div class="hover:p-2 hover:p-4" />;
+  > 204 │ <div class="md:flex md:grid" />;
+        │            ^^^^^^^^^^^^^^^^^
+    205 │ <div class="dark:text-red-500 dark:text-blue-500" />;
+    206 │ <div class="focus:ring-2 focus:ring-4" />;
+  
+  i Conflicts: display: `md:flex`, `md:grid`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    204 │ <div·class="md:flex·md:grid"·/>;
+        │             --------            
+
+```
+
+```
+invalid.jsx:205:12 lint/nursery/noConflictingTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Conflicting Tailwind CSS classes detected.
+  
+    203 │ <div class="hover:p-2 hover:p-4" />;
+    204 │ <div class="md:flex md:grid" />;
+  > 205 │ <div class="dark:text-red-500 dark:text-blue-500" />;
+        │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    206 │ <div class="focus:ring-2 focus:ring-4" />;
+    207 │ 
+  
+  i Conflicts: text-color: `dark:text-red-500`, `dark:text-blue-500`
+  
+  i Only the last class in each conflict group will take effect.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Remove conflicting classes (keep last occurrence).
+  
+    205 │ <div·class="dark:text-red-500·dark:text-blue-500"·/>;
+        │                       ------------------             
+
+```

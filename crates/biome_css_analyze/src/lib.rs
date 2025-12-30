@@ -8,6 +8,7 @@ mod order;
 mod registry;
 mod services;
 mod suppression_action;
+pub mod tailwind_theme_extractor;
 mod utils;
 
 pub use crate::registry::visit_registry;

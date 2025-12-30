@@ -867,6 +867,62 @@ unsorted.jsx:41:13 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━
 ```
 
 ```
+unsorted.jsx:46:6 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    44 │ // functions
+    45 │ /* SHOULD NOT emit diagnostics (functions not specified in options) */
+  > 46 │ clsx("px-2 foo p-4 bar");
+       │      ^^^^^^^^^^^^^^^^^^
+    47 │ tw`px-2 foo p-4 bar`;
+    48 │ tw.div`px-2 foo p-4 bar`;
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    44 44 │   // functions
+    45 45 │   /* SHOULD NOT emit diagnostics (functions not specified in options) */
+    46    │ - clsx("px-2·foo·p-4·bar");
+       46 │ + clsx("foo·bar·p-4·px-2");
+    47 47 │   tw`px-2 foo p-4 bar`;
+    48 48 │   tw.div`px-2 foo p-4 bar`;
+  
+
+```
+
+```
+unsorted.jsx:47:4 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    45 │ /* SHOULD NOT emit diagnostics (functions not specified in options) */
+    46 │ clsx("px-2 foo p-4 bar");
+  > 47 │ tw`px-2 foo p-4 bar`;
+       │    ^^^^^^^^^^^^^^^^
+    48 │ tw.div`px-2 foo p-4 bar`;
+    49 │ notClassFunction("px-2 foo p-4 bar");
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    45 45 │   /* SHOULD NOT emit diagnostics (functions not specified in options) */
+    46 46 │   clsx("px-2 foo p-4 bar");
+    47    │ - tw`px-2·foo·p-4·bar`;
+       47 │ + tw`foo·bar·p-4·px-2`;
+    48 48 │   tw.div`px-2 foo p-4 bar`;
+    49 49 │   notClassFunction("px-2 foo p-4 bar");
+  
+
+```
+
+```
 unsorted.jsx:55:13 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   i These CSS classes should be sorted.
@@ -1114,6 +1170,174 @@ unsorted.jsx:63:55 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━
        63 │ + → → → {·"px-2·foo·p-4·bar":·"px-2·foo·p-4·bar",·custom:·["foo·bar·p-4·px-2"]·},
     64 64 │   		],
     65 65 │   	}}
+  
+
+```
+
+```
+unsorted.jsx:68:7 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    66 │ />;
+    67 │ /* SHOULD NOT emit diagnostics (clsx function not specified in options) */
+  > 68 │ clsx(["px-2 foo p-4 bar"]);
+       │       ^^^^^^^^^^^^^^^^^^
+    69 │ clsx({
+    70 │ 	"px-2 foo p-4 bar": [
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    66 66 │   />;
+    67 67 │   /* SHOULD NOT emit diagnostics (clsx function not specified in options) */
+    68    │ - clsx(["px-2·foo·p-4·bar"]);
+       68 │ + clsx(["foo·bar·p-4·px-2"]);
+    69 69 │   clsx({
+    70 70 │   	"px-2 foo p-4 bar": [
+  
+
+```
+
+```
+unsorted.jsx:70:2 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    68 │ clsx(["px-2 foo p-4 bar"]);
+    69 │ clsx({
+  > 70 │ 	"px-2 foo p-4 bar": [
+       │ 	^^^^^^^^^^^^^^^^^^
+    71 │ 		"px-2 foo p-4 bar",
+    72 │ 		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    68 68 │   clsx(["px-2 foo p-4 bar"]);
+    69 69 │   clsx({
+    70    │ - → "px-2·foo·p-4·bar":·[
+       70 │ + → "foo·bar·p-4·px-2":·[
+    71 71 │   		"px-2 foo p-4 bar",
+    72 72 │   		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+  
+
+```
+
+```
+unsorted.jsx:71:3 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    69 │ clsx({
+    70 │ 	"px-2 foo p-4 bar": [
+  > 71 │ 		"px-2 foo p-4 bar",
+       │ 		^^^^^^^^^^^^^^^^^^
+    72 │ 		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+    73 │ 	],
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    69 69 │   clsx({
+    70 70 │   	"px-2 foo p-4 bar": [
+    71    │ - → → "px-2·foo·p-4·bar",
+       71 │ + → → "foo·bar·p-4·px-2",
+    72 72 │   		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+    73 73 │   	],
+  
+
+```
+
+```
+unsorted.jsx:72:5 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    70 │ 	"px-2 foo p-4 bar": [
+    71 │ 		"px-2 foo p-4 bar",
+  > 72 │ 		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+       │ 		  ^^^^^^^^^^^^^^^^^^
+    73 │ 	],
+    74 │ });
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    70 70 │   	"px-2 foo p-4 bar": [
+    71 71 │   		"px-2 foo p-4 bar",
+    72    │ - → → {·"px-2·foo·p-4·bar":·"px-2·foo·p-4·bar",·custom:·["px-2·foo·p-4·bar"]·},
+       72 │ + → → {·"foo·bar·p-4·px-2":·"px-2·foo·p-4·bar",·custom:·["px-2·foo·p-4·bar"]·},
+    73 73 │   	],
+    74 74 │   });
+  
+
+```
+
+```
+unsorted.jsx:72:25 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    70 │ 	"px-2 foo p-4 bar": [
+    71 │ 		"px-2 foo p-4 bar",
+  > 72 │ 		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+       │ 		                      ^^^^^^^^^^^^^^^^^^
+    73 │ 	],
+    74 │ });
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    70 70 │   	"px-2 foo p-4 bar": [
+    71 71 │   		"px-2 foo p-4 bar",
+    72    │ - → → {·"px-2·foo·p-4·bar":·"px-2·foo·p-4·bar",·custom:·["px-2·foo·p-4·bar"]·},
+       72 │ + → → {·"px-2·foo·p-4·bar":·"foo·bar·p-4·px-2",·custom:·["px-2·foo·p-4·bar"]·},
+    73 73 │   	],
+    74 74 │   });
+  
+
+```
+
+```
+unsorted.jsx:72:54 lint/nursery/useSortedClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i These CSS classes should be sorted.
+  
+    70 │ 	"px-2 foo p-4 bar": [
+    71 │ 		"px-2 foo p-4 bar",
+  > 72 │ 		{ "px-2 foo p-4 bar": "px-2 foo p-4 bar", custom: ["px-2 foo p-4 bar"] },
+       │ 		                                                   ^^^^^^^^^^^^^^^^^^
+    73 │ 	],
+    74 │ });
+  
+  i This rule is still being actively worked on, so it may be missing features or have rough edges. Visit https://github.com/biomejs/biome/issues/1274 for more information or to report possible bugs.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Sort the classes.
+  
+    70 70 │   	"px-2 foo p-4 bar": [
+    71 71 │   		"px-2 foo p-4 bar",
+    72    │ - → → {·"px-2·foo·p-4·bar":·"px-2·foo·p-4·bar",·custom:·["px-2·foo·p-4·bar"]·},
+       72 │ + → → {·"px-2·foo·p-4·bar":·"px-2·foo·p-4·bar",·custom:·["foo·bar·p-4·px-2"]·},
+    73 73 │   	],
+    74 74 │   });
   
 
 ```

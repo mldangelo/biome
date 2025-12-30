@@ -1,0 +1,31 @@
+/* should not generate diagnostics */
+
+// Valid: already using shorthand
+<div class="p-4" />;
+<div class="m-2" />;
+<div class="size-4" />;
+
+// Valid: different values for x and y
+<div class="px-4 py-2" />;
+<div class="mx-2 my-4" />;
+
+// Valid: different values for w and h
+<div class="w-4 h-8" />;
+<div class="w-full h-auto" />;
+
+// Valid: not all sides specified
+<div class="pt-2 pb-2" />;
+<div class="mt-4 ml-4" />;
+
+// Valid: different values for sides
+<div class="pt-2 pr-4 pb-2 pl-4" />;
+
+// Valid: single class
+<div class="px-4" />;
+<div class="my-2" />;
+<div class="w-4" />;
+<div class="h-full" />;
+
+// Valid: with variants (different variants don't combine)
+<div class="hover:px-4 px-4" />;
+<div class="hover:w-4 w-8" />;

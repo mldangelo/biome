@@ -1,0 +1,153 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: important at end (should be at start)
+<div class="text-red-500!" />;
+<div class="bg-blue-500!" />;
+
+// Invalid: important at end with variants
+<div class="hover:bg-blue-500!" />;
+<div class="focus:hover:text-white!" />;
+
+// Invalid: mixed important positions
+<div class="!text-red-500 bg-blue-500!" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/useConsistentTailwindImportantPosition  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  i Inconsistent important modifier position in: `text-red-500!`.
+  
+    1 │ // Invalid: important at end (should be at start)
+  > 2 │ <div class="text-red-500!" />;
+      │            ^^^^^^^^^^^^^^^
+    3 │ <div class="bg-blue-500!" />;
+    4 │ 
+  
+  i The important modifier should be at the start of the utility class.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move important modifier to consistent position.
+  
+     1  1 │   // Invalid: important at end (should be at start)
+     2    │ - <div·class="text-red-500!"·/>;
+        2 │ + <div·class="!text-red-500"·/>;
+     3  3 │   <div class="bg-blue-500!" />;
+     4  4 │   
+  
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/useConsistentTailwindImportantPosition  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  i Inconsistent important modifier position in: `bg-blue-500!`.
+  
+    1 │ // Invalid: important at end (should be at start)
+    2 │ <div class="text-red-500!" />;
+  > 3 │ <div class="bg-blue-500!" />;
+      │            ^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // Invalid: important at end with variants
+  
+  i The important modifier should be at the start of the utility class.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move important modifier to consistent position.
+  
+     1  1 │   // Invalid: important at end (should be at start)
+     2  2 │   <div class="text-red-500!" />;
+     3    │ - <div·class="bg-blue-500!"·/>;
+        3 │ + <div·class="!bg-blue-500"·/>;
+     4  4 │   
+     5  5 │   // Invalid: important at end with variants
+  
+
+```
+
+```
+invalid.jsx:6:12 lint/nursery/useConsistentTailwindImportantPosition  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  i Inconsistent important modifier position in: `hover:bg-blue-500!`.
+  
+    5 │ // Invalid: important at end with variants
+  > 6 │ <div class="hover:bg-blue-500!" />;
+      │            ^^^^^^^^^^^^^^^^^^^^
+    7 │ <div class="focus:hover:text-white!" />;
+    8 │ 
+  
+  i The important modifier should be at the start of the utility class.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move important modifier to consistent position.
+  
+     4  4 │   
+     5  5 │   // Invalid: important at end with variants
+     6    │ - <div·class="hover:bg-blue-500!"·/>;
+        6 │ + <div·class="hover:!bg-blue-500"·/>;
+     7  7 │   <div class="focus:hover:text-white!" />;
+     8  8 │   
+  
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/useConsistentTailwindImportantPosition  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━
+
+  i Inconsistent important modifier position in: `focus:hover:text-white!`.
+  
+    5 │ // Invalid: important at end with variants
+    6 │ <div class="hover:bg-blue-500!" />;
+  > 7 │ <div class="focus:hover:text-white!" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │ // Invalid: mixed important positions
+  
+  i The important modifier should be at the start of the utility class.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move important modifier to consistent position.
+  
+     5  5 │   // Invalid: important at end with variants
+     6  6 │   <div class="hover:bg-blue-500!" />;
+     7    │ - <div·class="focus:hover:text-white!"·/>;
+        7 │ + <div·class="focus:hover:!text-white"·/>;
+     8  8 │   
+     9  9 │   // Invalid: mixed important positions
+  
+
+```
+
+```
+invalid.jsx:10:12 lint/nursery/useConsistentTailwindImportantPosition  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+
+  i Inconsistent important modifier position in: `bg-blue-500!`.
+  
+     9 │ // Invalid: mixed important positions
+  > 10 │ <div class="!text-red-500 bg-blue-500!" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
+  
+  i The important modifier should be at the start of the utility class.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move important modifier to consistent position.
+  
+     8  8 │   
+     9  9 │   // Invalid: mixed important positions
+    10    │ - <div·class="!text-red-500·bg-blue-500!"·/>;
+       10 │ + <div·class="!text-red-500·!bg-blue-500"·/>;
+    11 11 │   
+  
+
+```

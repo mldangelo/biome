@@ -1,4 +1,4 @@
-use crate::options::{JsxRuntime, PreferredIndentation, PreferredQuote};
+use crate::options::{JsxRuntime, PreferredIndentation, PreferredQuote, TailwindAnalyzerConfig};
 use crate::{FromServices, Queryable, Rule, RuleKey, ServiceBag, registry::RuleRoot};
 use crate::{GroupCategory, RuleCategory, RuleGroup, RuleMetadata};
 use biome_diagnostics::{Error, Result};
@@ -21,6 +21,7 @@ pub struct RuleContext<'a, R: Rule> {
     preferred_indentation: PreferredIndentation,
     jsx_runtime: Option<JsxRuntime>,
     css_modules: bool,
+    tailwind: &'a TailwindAnalyzerConfig,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -40,6 +41,7 @@ where
         preferred_indentation: PreferredIndentation,
         jsx_runtime: Option<JsxRuntime>,
         css_modules: bool,
+        tailwind: &'a TailwindAnalyzerConfig,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         Ok(Self {
@@ -55,6 +57,7 @@ where
             preferred_indentation,
             jsx_runtime,
             css_modules,
+            tailwind,
         })
     }
 
@@ -189,6 +192,11 @@ where
 
     pub fn is_css_modules(&self) -> bool {
         self.css_modules
+    }
+
+    /// Returns the Tailwind CSS configuration
+    pub fn tailwind(&self) -> &TailwindAnalyzerConfig {
+        self.tailwind
     }
 
     /// Attempts to retrieve a service from the current context

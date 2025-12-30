@@ -1,0 +1,18 @@
+{
+	"$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noRestrictedTailwindClasses": {
+					"level": "error",
+					"options": {
+						"classes": [
+							{ "pattern": "^bg-red-", "regex": true, "message": "Use semantic color tokens instead of red backgrounds" },
+							{ "pattern": "^text-(xs|sm)$", "regex": true, "message": "Use 'text-small' utility instead" }
+						]
+					}
+				}
+			}
+		}
+	}
+}

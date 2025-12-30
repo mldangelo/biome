@@ -27,6 +27,7 @@ top_level_extraneous_field.json:2:2 deserialize ━━━━━━━━━━�
   - graphql
   - grit
   - html
+  - tailwind
   - overrides
   - plugins
   - assist

@@ -1,0 +1,241 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: autofix.jsx
+---
+# Input
+```jsx
+// Test auto-fix with replacement
+// hidden -> invisible (with replacement)
+<div class="hidden" />;
+<div class="hover:hidden" />;
+<div class="md:hover:hidden" />;
+
+// float-left -> flex (with replacement)
+<div class="float-left" />;
+
+// multiple restricted classes with replacements
+<div class="hidden flex float-left p-4" />;
+
+// deprecated -> removed (no replacement, just removal)
+<div class="deprecated text-lg" />;
+
+// Template literal
+const cls = `hidden px-4`;
+
+// JavaScript string
+const className = "hidden float-left";
+
+```
+
+# Diagnostics
+```
+autofix.jsx:3:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`.
+  
+    1 │ // Test auto-fix with replacement
+    2 │ // hidden -> invisible (with replacement)
+  > 3 │ <div class="hidden" />;
+      │            ^^^^^^^^
+    4 │ <div class="hover:hidden" />;
+    5 │ <div class="md:hover:hidden" />;
+  
+  i Use 'invisible' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+     1  1 │   // Test auto-fix with replacement
+     2  2 │   // hidden -> invisible (with replacement)
+     3    │ - <div·class="hidden"·/>;
+        3 │ + <div·class="invisible"·/>;
+     4  4 │   <div class="hover:hidden" />;
+     5  5 │   <div class="md:hover:hidden" />;
+  
+
+```
+
+```
+autofix.jsx:4:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hover:hidden`.
+  
+    2 │ // hidden -> invisible (with replacement)
+    3 │ <div class="hidden" />;
+  > 4 │ <div class="hover:hidden" />;
+      │            ^^^^^^^^^^^^^^
+    5 │ <div class="md:hover:hidden" />;
+    6 │ 
+  
+  i Use 'invisible' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+     2  2 │   // hidden -> invisible (with replacement)
+     3  3 │   <div class="hidden" />;
+     4    │ - <div·class="hover:hidden"·/>;
+        4 │ + <div·class="hover:invisible"·/>;
+     5  5 │   <div class="md:hover:hidden" />;
+     6  6 │   
+  
+
+```
+
+```
+autofix.jsx:5:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `md:hover:hidden`.
+  
+    3 │ <div class="hidden" />;
+    4 │ <div class="hover:hidden" />;
+  > 5 │ <div class="md:hover:hidden" />;
+      │            ^^^^^^^^^^^^^^^^^
+    6 │ 
+    7 │ // float-left -> flex (with replacement)
+  
+  i Use 'invisible' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+     3  3 │   <div class="hidden" />;
+     4  4 │   <div class="hover:hidden" />;
+     5    │ - <div·class="md:hover:hidden"·/>;
+        5 │ + <div·class="md:hover:invisible"·/>;
+     6  6 │   
+     7  7 │   // float-left -> flex (with replacement)
+  
+
+```
+
+```
+autofix.jsx:8:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `float-left`.
+  
+     7 │ // float-left -> flex (with replacement)
+   > 8 │ <div class="float-left" />;
+       │            ^^^^^^^^^^^^
+     9 │ 
+    10 │ // multiple restricted classes with replacements
+  
+  i Use flexbox instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+     6  6 │   
+     7  7 │   // float-left -> flex (with replacement)
+     8    │ - <div·class="float-left"·/>;
+        8 │ + <div·class="flex"·/>;
+     9  9 │   
+    10 10 │   // multiple restricted classes with replacements
+  
+
+```
+
+```
+autofix.jsx:11:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`, `float-left`.
+  
+    10 │ // multiple restricted classes with replacements
+  > 11 │ <div class="hidden flex float-left p-4" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ // deprecated -> removed (no replacement, just removal)
+  
+  i This class has been restricted in the project configuration.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+     9  9 │   
+    10 10 │   // multiple restricted classes with replacements
+    11    │ - <div·class="hidden·flex·float-left·p-4"·/>;
+       11 │ + <div·class="invisible·flex·flex·p-4"·/>;
+    12 12 │   
+    13 13 │   // deprecated -> removed (no replacement, just removal)
+  
+
+```
+
+```
+autofix.jsx:14:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `deprecated`.
+  
+    13 │ // deprecated -> removed (no replacement, just removal)
+  > 14 │ <div class="deprecated text-lg" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    15 │ 
+    16 │ // Template literal
+  
+  i This class is deprecated and should be removed
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    14 │ <div·class="deprecated·text-lg"·/>;
+       │             -----------            
+
+```
+
+```
+autofix.jsx:17:14 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`.
+  
+    16 │ // Template literal
+  > 17 │ const cls = `hidden px-4`;
+       │              ^^^^^^^^^^^
+    18 │ 
+    19 │ // JavaScript string
+  
+  i Use 'invisible' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    15 15 │   
+    16 16 │   // Template literal
+    17    │ - const·cls·=·`hidden·px-4`;
+       17 │ + const·cls·=·`invisible·px-4`;
+    18 18 │   
+    19 19 │   // JavaScript string
+  
+
+```
+
+```
+autofix.jsx:20:19 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`, `float-left`.
+  
+    19 │ // JavaScript string
+  > 20 │ const className = "hidden float-left";
+       │                   ^^^^^^^^^^^^^^^^^^^
+    21 │ 
+  
+  i This class has been restricted in the project configuration.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    18 18 │   
+    19 19 │   // JavaScript string
+    20    │ - const·className·=·"hidden·float-left";
+       20 │ + const·className·=·"invisible·flex";
+    21 21 │   
+  
+
+```

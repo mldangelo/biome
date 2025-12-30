@@ -3,10 +3,15 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use biome_analyze::declare_lint_group;
+pub mod enforces_negative_arbitrary_values;
 pub mod no_ambiguous_anchor_text;
+pub mod no_arbitrary_tailwind_value;
 pub mod no_before_interactive_script_outside_document;
+pub mod no_conflicting_tailwind_classes;
 pub mod no_continue;
 pub mod no_deprecated_imports;
+pub mod no_deprecated_tailwind_classes;
+pub mod no_duplicate_tailwind_classes;
 pub mod no_duplicated_spread_props;
 pub mod no_empty_source;
 pub mod no_equals_to_null;
@@ -24,6 +29,7 @@ pub mod no_next_async_client_component;
 pub mod no_parameters_only_used_in_recursion;
 pub mod no_proto;
 pub mod no_react_forward_ref;
+pub mod no_restricted_tailwind_classes;
 pub mod no_return_assign;
 pub mod no_script_url;
 pub mod no_shadow;
@@ -31,7 +37,10 @@ pub mod no_sync_scripts;
 pub mod no_ternary;
 pub mod no_undeclared_env_vars;
 pub mod no_unknown_attribute;
+pub mod no_unnecessary_arbitrary_value;
 pub mod no_unnecessary_conditions;
+pub mod no_unnecessary_tailwind_whitespace;
+pub mod no_unregistered_tailwind_classes;
 pub mod no_unresolved_imports;
 pub mod no_unused_expressions;
 pub mod no_useless_catch_binding;
@@ -44,6 +53,9 @@ pub mod no_vue_setup_props_reactivity_loss;
 pub mod use_array_sort_compare;
 pub mod use_await_thenable;
 pub mod use_consistent_arrow_return;
+pub mod use_consistent_tailwind_important_position;
+pub mod use_consistent_tailwind_line_wrapping;
+pub mod use_consistent_tailwind_variable_syntax;
 pub mod use_destructuring;
 pub mod use_exhaustive_switch_cases;
 pub mod use_explicit_type;
@@ -54,7 +66,8 @@ pub mod use_qwik_valid_lexical_scope;
 pub mod use_regexp_exec;
 pub mod use_sorted_classes;
 pub mod use_spread;
+pub mod use_tailwind_shorthand_classes;
 pub mod use_vue_consistent_define_props_declaration;
 pub mod use_vue_define_macros_order;
 pub mod use_vue_multi_word_component_names;
-declare_lint_group! { pub Nursery { name : "nursery" , rules : [self :: no_ambiguous_anchor_text :: NoAmbiguousAnchorText , self :: no_before_interactive_script_outside_document :: NoBeforeInteractiveScriptOutsideDocument , self :: no_continue :: NoContinue , self :: no_deprecated_imports :: NoDeprecatedImports , self :: no_duplicated_spread_props :: NoDuplicatedSpreadProps , self :: no_empty_source :: NoEmptySource , self :: no_equals_to_null :: NoEqualsToNull , self :: no_floating_promises :: NoFloatingPromises , self :: no_for_in :: NoForIn , self :: no_import_cycles :: NoImportCycles , self :: no_increment_decrement :: NoIncrementDecrement , self :: no_jsx_literals :: NoJsxLiterals , self :: no_jsx_props_bind :: NoJsxPropsBind , self :: no_leaked_render :: NoLeakedRender , self :: no_misused_promises :: NoMisusedPromises , self :: no_multi_assign :: NoMultiAssign , self :: no_multi_str :: NoMultiStr , self :: no_next_async_client_component :: NoNextAsyncClientComponent , self :: no_parameters_only_used_in_recursion :: NoParametersOnlyUsedInRecursion , self :: no_proto :: NoProto , self :: no_react_forward_ref :: NoReactForwardRef , self :: no_return_assign :: NoReturnAssign , self :: no_script_url :: NoScriptUrl , self :: no_shadow :: NoShadow , self :: no_sync_scripts :: NoSyncScripts , self :: no_ternary :: NoTernary , self :: no_undeclared_env_vars :: NoUndeclaredEnvVars , self :: no_unknown_attribute :: NoUnknownAttribute , self :: no_unnecessary_conditions :: NoUnnecessaryConditions , self :: no_unresolved_imports :: NoUnresolvedImports , self :: no_unused_expressions :: NoUnusedExpressions , self :: no_useless_catch_binding :: NoUselessCatchBinding , self :: no_useless_undefined :: NoUselessUndefined , self :: no_vue_data_object_declaration :: NoVueDataObjectDeclaration , self :: no_vue_duplicate_keys :: NoVueDuplicateKeys , self :: no_vue_reserved_keys :: NoVueReservedKeys , self :: no_vue_reserved_props :: NoVueReservedProps , self :: no_vue_setup_props_reactivity_loss :: NoVueSetupPropsReactivityLoss , self :: use_array_sort_compare :: UseArraySortCompare , self :: use_await_thenable :: UseAwaitThenable , self :: use_consistent_arrow_return :: UseConsistentArrowReturn , self :: use_destructuring :: UseDestructuring , self :: use_exhaustive_switch_cases :: UseExhaustiveSwitchCases , self :: use_explicit_type :: UseExplicitType , self :: use_find :: UseFind , self :: use_max_params :: UseMaxParams , self :: use_qwik_method_usage :: UseQwikMethodUsage , self :: use_qwik_valid_lexical_scope :: UseQwikValidLexicalScope , self :: use_regexp_exec :: UseRegexpExec , self :: use_sorted_classes :: UseSortedClasses , self :: use_spread :: UseSpread , self :: use_vue_consistent_define_props_declaration :: UseVueConsistentDefinePropsDeclaration , self :: use_vue_define_macros_order :: UseVueDefineMacrosOrder , self :: use_vue_multi_word_component_names :: UseVueMultiWordComponentNames ,] } }
+declare_lint_group! { pub Nursery { name : "nursery" , rules : [self :: enforces_negative_arbitrary_values :: EnforcesNegativeArbitraryValues , self :: no_ambiguous_anchor_text :: NoAmbiguousAnchorText , self :: no_arbitrary_tailwind_value :: NoArbitraryTailwindValue , self :: no_before_interactive_script_outside_document :: NoBeforeInteractiveScriptOutsideDocument , self :: no_conflicting_tailwind_classes :: NoConflictingTailwindClasses , self :: no_continue :: NoContinue , self :: no_deprecated_imports :: NoDeprecatedImports , self :: no_deprecated_tailwind_classes :: NoDeprecatedTailwindClasses , self :: no_duplicate_tailwind_classes :: NoDuplicateTailwindClasses , self :: no_duplicated_spread_props :: NoDuplicatedSpreadProps , self :: no_empty_source :: NoEmptySource , self :: no_equals_to_null :: NoEqualsToNull , self :: no_floating_promises :: NoFloatingPromises , self :: no_for_in :: NoForIn , self :: no_import_cycles :: NoImportCycles , self :: no_increment_decrement :: NoIncrementDecrement , self :: no_jsx_literals :: NoJsxLiterals , self :: no_jsx_props_bind :: NoJsxPropsBind , self :: no_leaked_render :: NoLeakedRender , self :: no_misused_promises :: NoMisusedPromises , self :: no_multi_assign :: NoMultiAssign , self :: no_multi_str :: NoMultiStr , self :: no_next_async_client_component :: NoNextAsyncClientComponent , self :: no_parameters_only_used_in_recursion :: NoParametersOnlyUsedInRecursion , self :: no_proto :: NoProto , self :: no_react_forward_ref :: NoReactForwardRef , self :: no_restricted_tailwind_classes :: NoRestrictedTailwindClasses , self :: no_return_assign :: NoReturnAssign , self :: no_script_url :: NoScriptUrl , self :: no_shadow :: NoShadow , self :: no_sync_scripts :: NoSyncScripts , self :: no_ternary :: NoTernary , self :: no_undeclared_env_vars :: NoUndeclaredEnvVars , self :: no_unknown_attribute :: NoUnknownAttribute , self :: no_unnecessary_arbitrary_value :: NoUnnecessaryArbitraryValue , self :: no_unnecessary_conditions :: NoUnnecessaryConditions , self :: no_unnecessary_tailwind_whitespace :: NoUnnecessaryTailwindWhitespace , self :: no_unregistered_tailwind_classes :: NoUnregisteredTailwindClasses , self :: no_unresolved_imports :: NoUnresolvedImports , self :: no_unused_expressions :: NoUnusedExpressions , self :: no_useless_catch_binding :: NoUselessCatchBinding , self :: no_useless_undefined :: NoUselessUndefined , self :: no_vue_data_object_declaration :: NoVueDataObjectDeclaration , self :: no_vue_duplicate_keys :: NoVueDuplicateKeys , self :: no_vue_reserved_keys :: NoVueReservedKeys , self :: no_vue_reserved_props :: NoVueReservedProps , self :: no_vue_setup_props_reactivity_loss :: NoVueSetupPropsReactivityLoss , self :: use_array_sort_compare :: UseArraySortCompare , self :: use_await_thenable :: UseAwaitThenable , self :: use_consistent_arrow_return :: UseConsistentArrowReturn , self :: use_consistent_tailwind_important_position :: UseConsistentTailwindImportantPosition , self :: use_consistent_tailwind_line_wrapping :: UseConsistentTailwindLineWrapping , self :: use_consistent_tailwind_variable_syntax :: UseConsistentTailwindVariableSyntax , self :: use_destructuring :: UseDestructuring , self :: use_exhaustive_switch_cases :: UseExhaustiveSwitchCases , self :: use_explicit_type :: UseExplicitType , self :: use_find :: UseFind , self :: use_max_params :: UseMaxParams , self :: use_qwik_method_usage :: UseQwikMethodUsage , self :: use_qwik_valid_lexical_scope :: UseQwikValidLexicalScope , self :: use_regexp_exec :: UseRegexpExec , self :: use_sorted_classes :: UseSortedClasses , self :: use_spread :: UseSpread , self :: use_tailwind_shorthand_classes :: UseTailwindShorthandClasses , self :: use_vue_consistent_define_props_declaration :: UseVueConsistentDefinePropsDeclaration , self :: use_vue_define_macros_order :: UseVueDefineMacrosOrder , self :: use_vue_multi_word_component_names :: UseVueMultiWordComponentNames ,] } }

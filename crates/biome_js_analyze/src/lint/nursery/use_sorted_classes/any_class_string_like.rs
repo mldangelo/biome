@@ -1,10 +1,27 @@
 use biome_js_syntax::{
-    AnyJsExpression, JsCallArguments, JsCallExpression, JsLiteralMemberName,
-    JsStringLiteralExpression, JsSyntaxNode, JsTemplateChunkElement, JsTemplateExpression,
-    JsxAttribute, JsxString,
+    AnyJsExpression, AnyJsObjectMemberName, JsCallArguments, JsCallExpression, JsLiteralMemberName,
+    JsPropertyObjectMember, JsStringLiteralExpression, JsSyntaxNode, JsTemplateChunkElement,
+    JsTemplateExpression, JsxAttribute, JsxString,
 };
 use biome_rowan::{AstNode, TokenText, declare_node_union};
-use biome_rule_options::use_sorted_classes::UseSortedClassesOptions;
+
+/// A trait for options that can be used with `AnyClassStringLike::should_visit`.
+///
+/// This trait abstracts over the attribute/function matching logic so that
+/// multiple rule options types can share the same `should_visit` implementation.
+pub trait TailwindClassOptions {
+    /// Check if an attribute name should be inspected for Tailwind classes.
+    fn has_attribute(&self, name: &str) -> bool;
+
+    /// Check if a function name should be inspected for Tailwind classes.
+    fn has_function(&self, name: &str) -> bool;
+
+    /// Check if a function name matches using wildcard patterns.
+    fn match_function(&self, name: &str) -> bool;
+
+    /// Check if an object key should be ignored (its values won't be inspected).
+    fn has_ignored_key(&self, name: &str) -> bool;
+}
 
 fn get_callee_name(call_expression: &JsCallExpression) -> Option<TokenText> {
     call_expression
@@ -17,9 +34,9 @@ fn get_callee_name(call_expression: &JsCallExpression) -> Option<TokenText> {
         .ok()
 }
 
-fn is_call_expression_of_target_function(
+fn is_call_expression_of_target_function<O: TailwindClassOptions>(
     call_expression: &JsCallExpression,
-    options: &UseSortedClassesOptions,
+    options: &O,
 ) -> bool {
     get_callee_name(call_expression).is_some_and(|name| options.has_function(name.text()))
 }
@@ -41,10 +58,30 @@ declare_node_union! {
     pub AnyClassStringLike = JsStringLiteralExpression | JsxString | JsTemplateChunkElement | JsLiteralMemberName
 }
 
-fn inspect_string_literal(node: &JsSyntaxNode, options: &UseSortedClassesOptions) -> Option<bool> {
+/// Get the name of an object property key
+fn get_property_key_name(property: &JsPropertyObjectMember) -> Option<TokenText> {
+    match property.name().ok()? {
+        AnyJsObjectMemberName::JsLiteralMemberName(name) => name.name().ok(),
+        AnyJsObjectMemberName::JsComputedMemberName(_) => None, // Can't determine at compile time
+        AnyJsObjectMemberName::JsMetavariable(_) => None,
+    }
+}
+
+fn inspect_string_literal<O: TailwindClassOptions>(
+    node: &JsSyntaxNode,
+    options: &O,
+) -> Option<bool> {
     let mut in_arguments = false;
     let mut in_function = false;
     for ancestor in node.ancestors().skip(1) {
+        // Check if we're inside an ignored object property
+        if let Some(property) = JsPropertyObjectMember::cast_ref(&ancestor)
+            && let Some(key_name) = get_property_key_name(&property)
+            && options.has_ignored_key(key_name.text())
+        {
+            return None; // Skip values under ignored keys
+        }
+
         if let Some(jsx_attribute) = JsxAttribute::cast_ref(&ancestor) {
             let attribute_name = get_attribute_name(&jsx_attribute)?;
             if options.has_attribute(attribute_name.text()) {
@@ -69,7 +106,7 @@ fn inspect_string_literal(node: &JsSyntaxNode, options: &UseSortedClassesOptions
 }
 
 impl AnyClassStringLike {
-    pub(crate) fn should_visit(&self, options: &UseSortedClassesOptions) -> Option<bool> {
+    pub(crate) fn should_visit<O: TailwindClassOptions>(&self, options: &O) -> Option<bool> {
         match self {
             Self::JsStringLiteralExpression(string_literal) => {
                 inspect_string_literal(string_literal.syntax(), options)
@@ -129,5 +166,87 @@ impl AnyClassStringLike {
             }
             Self::JsLiteralMemberName(node) => node.name().ok(),
         }
+    }
+}
+
+// Implement the trait for UseSortedClassesOptions
+impl TailwindClassOptions for biome_rule_options::use_sorted_classes::UseSortedClassesOptions {
+    fn has_attribute(&self, name: &str) -> bool {
+        self.has_attribute(name)
+    }
+
+    fn has_function(&self, name: &str) -> bool {
+        self.has_function(name)
+    }
+
+    fn match_function(&self, name: &str) -> bool {
+        self.match_function(name)
+    }
+
+    fn has_ignored_key(&self, name: &str) -> bool {
+        self.has_ignored_key(name)
+    }
+}
+
+// Implement the trait for UseConsistentTailwindImportantPositionOptions
+impl TailwindClassOptions
+    for biome_rule_options::use_consistent_tailwind_important_position::UseConsistentTailwindImportantPositionOptions
+{
+    fn has_attribute(&self, name: &str) -> bool {
+        self.has_attribute(name)
+    }
+
+    fn has_function(&self, name: &str) -> bool {
+        self.has_function(name)
+    }
+
+    fn match_function(&self, name: &str) -> bool {
+        self.match_function(name)
+    }
+
+    fn has_ignored_key(&self, name: &str) -> bool {
+        self.has_ignored_key(name)
+    }
+}
+
+// Implement the trait for UseConsistentTailwindLineWrappingOptions
+impl TailwindClassOptions
+    for biome_rule_options::use_consistent_tailwind_line_wrapping::UseConsistentTailwindLineWrappingOptions
+{
+    fn has_attribute(&self, name: &str) -> bool {
+        self.has_attribute(name)
+    }
+
+    fn has_function(&self, name: &str) -> bool {
+        self.has_function(name)
+    }
+
+    fn match_function(&self, name: &str) -> bool {
+        self.match_function(name)
+    }
+
+    fn has_ignored_key(&self, name: &str) -> bool {
+        self.has_ignored_key(name)
+    }
+}
+
+// Implement the trait for NoUnregisteredTailwindClassesOptions
+impl TailwindClassOptions
+    for biome_rule_options::no_unregistered_tailwind_classes::NoUnregisteredTailwindClassesOptions
+{
+    fn has_attribute(&self, name: &str) -> bool {
+        self.has_attribute(name)
+    }
+
+    fn has_function(&self, name: &str) -> bool {
+        self.has_function(name)
+    }
+
+    fn match_function(&self, name: &str) -> bool {
+        self.match_function(name)
+    }
+
+    fn has_ignored_key(&self, name: &str) -> bool {
+        self.has_ignored_key(name)
     }
 }

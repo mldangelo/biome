@@ -371,6 +371,7 @@ where
             preferred_indentation,
             self.options.jsx_runtime(),
             self.options.css_modules(),
+            self.options.tailwind(),
         )
         .ok()?;
 
@@ -420,6 +421,7 @@ where
             self.options.preferred_indentation(),
             self.options.jsx_runtime(),
             self.options.css_modules(),
+            self.options.tailwind(),
         )
         .ok();
         let mut actions = Vec::new();
@@ -485,6 +487,7 @@ where
             self.options.preferred_indentation(),
             self.options.jsx_runtime(),
             self.options.css_modules(),
+            self.options.tailwind(),
         )
         .ok();
         if let Some(ctx) = ctx {

@@ -1,0 +1,48 @@
+---
+source: crates/biome_cli/tests/snap_test.rs
+expression: redactor(content)
+---
+## `biome.json`
+
+```json
+{
+  "linter": { "enabled": true },
+  "tailwind": { "spacing": { "13": "3.25rem" } }
+}
+```
+
+## `tailwind.config.js`
+
+```js
+
+export default {
+    theme: {
+        extend: {
+            spacing: {
+                "13": "3.25rem"
+            }
+        }
+    }
+}
+
+```
+
+# Emitted Messages
+
+```block
+Found Tailwind config: tailwind.config.js
+```
+
+```block
+tailwind.config.js has been successfully migrated.
+```
+
+```block
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Migration results:
+  
+  - biome.json: configuration successfully migrated.
+  
+
+```

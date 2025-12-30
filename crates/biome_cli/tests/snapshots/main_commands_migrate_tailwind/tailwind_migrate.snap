@@ -1,0 +1,67 @@
+---
+source: crates/biome_cli/tests/snap_test.rs
+expression: redactor(content)
+---
+## `biome.json`
+
+```json
+{ "linter": { "enabled": true } }
+```
+
+## `tailwind.config.js`
+
+```js
+
+export default {
+    theme: {
+        extend: {
+            spacing: {
+                "13": "3.25rem",
+                "18": "4.5rem"
+            },
+            opacity: {
+                "15": "0.15"
+            }
+        }
+    }
+}
+
+```
+
+# Emitted Messages
+
+```block
+Found Tailwind config: tailwind.config.js
+```
+
+```block
+biome.json migrate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Configuration file can be updated.
+  
+    1   │ - {·"linter":·{·"enabled":·true·}·}
+      1 │ + {
+      2 │ + → "linter":·{·"enabled":·true·},
+      3 │ + → "tailwind":·{
+      4 │ + → → "spacing":·{·"13":·"3.25rem",·"18":·"4.5rem"·},
+      5 │ + → → "opacity":·{·"15":·"0.15"·}
+      6 │ + → }
+      7 │ + }
+      8 │ + 
+  
+
+```
+
+```block
+configuration ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Migration results:
+  
+  - biome.json: configuration needs migration.
+  
+  i Use --write to apply the changes.
+  
+  $ biome migrate --write
+  
+
+```

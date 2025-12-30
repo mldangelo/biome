@@ -1,0 +1,933 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// ==========================================
+// Double negatives (dash prefix + negative value)
+// ==========================================
+<div class="-top-[-10px]" />;
+<div class="-m-[-1rem]" />;
+<div class="-mt-[-16px]" />;
+<div class="-translate-x-[-50%]" />;
+
+// ==========================================
+// Dash prefix with positive values (should use negative inside brackets)
+// ==========================================
+<div class="-top-[10px]" />;
+<div class="-m-[1rem]" />;
+<div class="-mt-[16px]" />;
+<div class="-translate-x-[50%]" />;
+<div class="-translate-y-[25%]" />;
+<div class="-inset-[1rem]" />;
+<div class="-left-[16px]" />;
+<div class="-right-[2rem]" />;
+
+// ==========================================
+// CSS variables (should wrap in calc)
+// ==========================================
+<div class="-left-[var(--spacing)]" />;
+<div class="-top-[var(--offset)]" />;
+<div class="-m-[var(--margin)]" />;
+
+// ==========================================
+// Calc expressions
+// ==========================================
+<div class="-left-[calc(100%-1rem)]" />;
+
+// ==========================================
+// With variants
+// ==========================================
+<div class="hover:-m-[1rem]" />;
+<div class="hover:-m-[-1rem]" />;
+<div class="dark:md:-mt-[16px]" />;
+<div class="focus:-translate-x-[50%]" />;
+
+// ==========================================
+// Multiple violations
+// ==========================================
+<div class="-m-[1rem] -translate-x-[50%]" />;
+<div class="-m-[-1rem] -translate-x-[-50%]" />;
+
+// ==========================================
+// With important modifier (prefix)
+// ==========================================
+<div class="!-top-[10px]" />;
+<div class="!-m-[1rem]" />;
+<div class="!-top-[-10px]" />;
+<div class="hover:!-m-[1rem]" />;
+
+// ==========================================
+// With important modifier (suffix)
+// ==========================================
+<div class="-top-[10px]!" />;
+<div class="-m-[1rem]!" />;
+<div class="-top-[-10px]!" />;
+<div class="hover:-m-[1rem]!" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:4:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    2 │ // Double negatives (dash prefix + negative value)
+    3 │ // ==========================================
+  > 4 │ <div class="-top-[-10px]" />;
+      │            ^^^^^^^^^^^^^^
+    5 │ <div class="-m-[-1rem]" />;
+    6 │ <div class="-mt-[-16px]" />;
+  
+  i Replace: `-top-[-10px]` → `top-[10px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    4 │ <div·class="-top-[-10px]"·/>;
+      │             -     -          
+
+```
+
+```
+invalid.jsx:5:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    3 │ // ==========================================
+    4 │ <div class="-top-[-10px]" />;
+  > 5 │ <div class="-m-[-1rem]" />;
+      │            ^^^^^^^^^^^^
+    6 │ <div class="-mt-[-16px]" />;
+    7 │ <div class="-translate-x-[-50%]" />;
+  
+  i Replace: `-m-[-1rem]` → `m-[1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    5 │ <div·class="-m-[-1rem]"·/>;
+      │             -   -          
+
+```
+
+```
+invalid.jsx:6:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    4 │ <div class="-top-[-10px]" />;
+    5 │ <div class="-m-[-1rem]" />;
+  > 6 │ <div class="-mt-[-16px]" />;
+      │            ^^^^^^^^^^^^^
+    7 │ <div class="-translate-x-[-50%]" />;
+    8 │ 
+  
+  i Replace: `-mt-[-16px]` → `mt-[16px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    6 │ <div·class="-mt-[-16px]"·/>;
+      │             -    -          
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    5 │ <div class="-m-[-1rem]" />;
+    6 │ <div class="-mt-[-16px]" />;
+  > 7 │ <div class="-translate-x-[-50%]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │ // ==========================================
+  
+  i Replace: `-translate-x-[-50%]` → `translate-x-[50%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    7 │ <div·class="-translate-x-[-50%]"·/>;
+      │             -             -         
+
+```
+
+```
+invalid.jsx:12:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    10 │ // Dash prefix with positive values (should use negative inside brackets)
+    11 │ // ==========================================
+  > 12 │ <div class="-top-[10px]" />;
+       │            ^^^^^^^^^^^^^
+    13 │ <div class="-m-[1rem]" />;
+    14 │ <div class="-mt-[16px]" />;
+  
+  i Replace: `-top-[10px]` → `top-[-10px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    10 10 │   // Dash prefix with positive values (should use negative inside brackets)
+    11 11 │   // ==========================================
+    12    │ - <div·class="-top-[10px]"·/>;
+       12 │ + <div·class="top-[-10px]"·/>;
+    13 13 │   <div class="-m-[1rem]" />;
+    14 14 │   <div class="-mt-[16px]" />;
+  
+
+```
+
+```
+invalid.jsx:13:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    11 │ // ==========================================
+    12 │ <div class="-top-[10px]" />;
+  > 13 │ <div class="-m-[1rem]" />;
+       │            ^^^^^^^^^^^
+    14 │ <div class="-mt-[16px]" />;
+    15 │ <div class="-translate-x-[50%]" />;
+  
+  i Replace: `-m-[1rem]` → `m-[-1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    11 11 │   // ==========================================
+    12 12 │   <div class="-top-[10px]" />;
+    13    │ - <div·class="-m-[1rem]"·/>;
+       13 │ + <div·class="m-[-1rem]"·/>;
+    14 14 │   <div class="-mt-[16px]" />;
+    15 15 │   <div class="-translate-x-[50%]" />;
+  
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    12 │ <div class="-top-[10px]" />;
+    13 │ <div class="-m-[1rem]" />;
+  > 14 │ <div class="-mt-[16px]" />;
+       │            ^^^^^^^^^^^^
+    15 │ <div class="-translate-x-[50%]" />;
+    16 │ <div class="-translate-y-[25%]" />;
+  
+  i Replace: `-mt-[16px]` → `mt-[-16px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    12 12 │   <div class="-top-[10px]" />;
+    13 13 │   <div class="-m-[1rem]" />;
+    14    │ - <div·class="-mt-[16px]"·/>;
+       14 │ + <div·class="mt-[-16px]"·/>;
+    15 15 │   <div class="-translate-x-[50%]" />;
+    16 16 │   <div class="-translate-y-[25%]" />;
+  
+
+```
+
+```
+invalid.jsx:15:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    13 │ <div class="-m-[1rem]" />;
+    14 │ <div class="-mt-[16px]" />;
+  > 15 │ <div class="-translate-x-[50%]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    16 │ <div class="-translate-y-[25%]" />;
+    17 │ <div class="-inset-[1rem]" />;
+  
+  i Replace: `-translate-x-[50%]` → `translate-x-[-50%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    13 13 │   <div class="-m-[1rem]" />;
+    14 14 │   <div class="-mt-[16px]" />;
+    15    │ - <div·class="-translate-x-[50%]"·/>;
+       15 │ + <div·class="translate-x-[-50%]"·/>;
+    16 16 │   <div class="-translate-y-[25%]" />;
+    17 17 │   <div class="-inset-[1rem]" />;
+  
+
+```
+
+```
+invalid.jsx:16:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    14 │ <div class="-mt-[16px]" />;
+    15 │ <div class="-translate-x-[50%]" />;
+  > 16 │ <div class="-translate-y-[25%]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    17 │ <div class="-inset-[1rem]" />;
+    18 │ <div class="-left-[16px]" />;
+  
+  i Replace: `-translate-y-[25%]` → `translate-y-[-25%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    14 14 │   <div class="-mt-[16px]" />;
+    15 15 │   <div class="-translate-x-[50%]" />;
+    16    │ - <div·class="-translate-y-[25%]"·/>;
+       16 │ + <div·class="translate-y-[-25%]"·/>;
+    17 17 │   <div class="-inset-[1rem]" />;
+    18 18 │   <div class="-left-[16px]" />;
+  
+
+```
+
+```
+invalid.jsx:17:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    15 │ <div class="-translate-x-[50%]" />;
+    16 │ <div class="-translate-y-[25%]" />;
+  > 17 │ <div class="-inset-[1rem]" />;
+       │            ^^^^^^^^^^^^^^^
+    18 │ <div class="-left-[16px]" />;
+    19 │ <div class="-right-[2rem]" />;
+  
+  i Replace: `-inset-[1rem]` → `inset-[-1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    15 15 │   <div class="-translate-x-[50%]" />;
+    16 16 │   <div class="-translate-y-[25%]" />;
+    17    │ - <div·class="-inset-[1rem]"·/>;
+       17 │ + <div·class="inset-[-1rem]"·/>;
+    18 18 │   <div class="-left-[16px]" />;
+    19 19 │   <div class="-right-[2rem]" />;
+  
+
+```
+
+```
+invalid.jsx:18:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    16 │ <div class="-translate-y-[25%]" />;
+    17 │ <div class="-inset-[1rem]" />;
+  > 18 │ <div class="-left-[16px]" />;
+       │            ^^^^^^^^^^^^^^
+    19 │ <div class="-right-[2rem]" />;
+    20 │ 
+  
+  i Replace: `-left-[16px]` → `left-[-16px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    16 16 │   <div class="-translate-y-[25%]" />;
+    17 17 │   <div class="-inset-[1rem]" />;
+    18    │ - <div·class="-left-[16px]"·/>;
+       18 │ + <div·class="left-[-16px]"·/>;
+    19 19 │   <div class="-right-[2rem]" />;
+    20 20 │   
+  
+
+```
+
+```
+invalid.jsx:19:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    17 │ <div class="-inset-[1rem]" />;
+    18 │ <div class="-left-[16px]" />;
+  > 19 │ <div class="-right-[2rem]" />;
+       │            ^^^^^^^^^^^^^^^
+    20 │ 
+    21 │ // ==========================================
+  
+  i Replace: `-right-[2rem]` → `right-[-2rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    17 17 │   <div class="-inset-[1rem]" />;
+    18 18 │   <div class="-left-[16px]" />;
+    19    │ - <div·class="-right-[2rem]"·/>;
+       19 │ + <div·class="right-[-2rem]"·/>;
+    20 20 │   
+    21 21 │   // ==========================================
+  
+
+```
+
+```
+invalid.jsx:24:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    22 │ // CSS variables (should wrap in calc)
+    23 │ // ==========================================
+  > 24 │ <div class="-left-[var(--spacing)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ <div class="-top-[var(--offset)]" />;
+    26 │ <div class="-m-[var(--margin)]" />;
+  
+  i Replace: `-left-[var(--spacing)]` → `left-[calc(var(--spacing)*-1)]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    22 22 │   // CSS variables (should wrap in calc)
+    23 23 │   // ==========================================
+    24    │ - <div·class="-left-[var(--spacing)]"·/>;
+       24 │ + <div·class="left-[calc(var(--spacing)*-1)]"·/>;
+    25 25 │   <div class="-top-[var(--offset)]" />;
+    26 26 │   <div class="-m-[var(--margin)]" />;
+  
+
+```
+
+```
+invalid.jsx:25:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    23 │ // ==========================================
+    24 │ <div class="-left-[var(--spacing)]" />;
+  > 25 │ <div class="-top-[var(--offset)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^
+    26 │ <div class="-m-[var(--margin)]" />;
+    27 │ 
+  
+  i Replace: `-top-[var(--offset)]` → `top-[calc(var(--offset)*-1)]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    23 23 │   // ==========================================
+    24 24 │   <div class="-left-[var(--spacing)]" />;
+    25    │ - <div·class="-top-[var(--offset)]"·/>;
+       25 │ + <div·class="top-[calc(var(--offset)*-1)]"·/>;
+    26 26 │   <div class="-m-[var(--margin)]" />;
+    27 27 │   
+  
+
+```
+
+```
+invalid.jsx:26:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    24 │ <div class="-left-[var(--spacing)]" />;
+    25 │ <div class="-top-[var(--offset)]" />;
+  > 26 │ <div class="-m-[var(--margin)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    27 │ 
+    28 │ // ==========================================
+  
+  i Replace: `-m-[var(--margin)]` → `m-[calc(var(--margin)*-1)]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    24 24 │   <div class="-left-[var(--spacing)]" />;
+    25 25 │   <div class="-top-[var(--offset)]" />;
+    26    │ - <div·class="-m-[var(--margin)]"·/>;
+       26 │ + <div·class="m-[calc(var(--margin)*-1)]"·/>;
+    27 27 │   
+    28 28 │   // ==========================================
+  
+
+```
+
+```
+invalid.jsx:31:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    29 │ // Calc expressions
+    30 │ // ==========================================
+  > 31 │ <div class="-left-[calc(100%-1rem)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │ 
+    33 │ // ==========================================
+  
+  i Replace: `-left-[calc(100%-1rem)]` → `left-[calc((100%-1rem)*-1)]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    29 29 │   // Calc expressions
+    30 30 │   // ==========================================
+    31    │ - <div·class="-left-[calc(100%-1rem)]"·/>;
+       31 │ + <div·class="left-[calc((100%-1rem)*-1)]"·/>;
+    32 32 │   
+    33 33 │   // ==========================================
+  
+
+```
+
+```
+invalid.jsx:36:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    34 │ // With variants
+    35 │ // ==========================================
+  > 36 │ <div class="hover:-m-[1rem]" />;
+       │            ^^^^^^^^^^^^^^^^^
+    37 │ <div class="hover:-m-[-1rem]" />;
+    38 │ <div class="dark:md:-mt-[16px]" />;
+  
+  i Replace: `hover:-m-[1rem]` → `hover:m-[-1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    34 34 │   // With variants
+    35 35 │   // ==========================================
+    36    │ - <div·class="hover:-m-[1rem]"·/>;
+       36 │ + <div·class="hover:m-[-1rem]"·/>;
+    37 37 │   <div class="hover:-m-[-1rem]" />;
+    38 38 │   <div class="dark:md:-mt-[16px]" />;
+  
+
+```
+
+```
+invalid.jsx:37:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    35 │ // ==========================================
+    36 │ <div class="hover:-m-[1rem]" />;
+  > 37 │ <div class="hover:-m-[-1rem]" />;
+       │            ^^^^^^^^^^^^^^^^^^
+    38 │ <div class="dark:md:-mt-[16px]" />;
+    39 │ <div class="focus:-translate-x-[50%]" />;
+  
+  i Replace: `hover:-m-[-1rem]` → `hover:m-[1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    35 35 │   // ==========================================
+    36 36 │   <div class="hover:-m-[1rem]" />;
+    37    │ - <div·class="hover:-m-[-1rem]"·/>;
+       37 │ + <div·class="hover:m-[1rem]"·/>;
+    38 38 │   <div class="dark:md:-mt-[16px]" />;
+    39 39 │   <div class="focus:-translate-x-[50%]" />;
+  
+
+```
+
+```
+invalid.jsx:38:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    36 │ <div class="hover:-m-[1rem]" />;
+    37 │ <div class="hover:-m-[-1rem]" />;
+  > 38 │ <div class="dark:md:-mt-[16px]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    39 │ <div class="focus:-translate-x-[50%]" />;
+    40 │ 
+  
+  i Replace: `dark:md:-mt-[16px]` → `dark:md:mt-[-16px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    36 36 │   <div class="hover:-m-[1rem]" />;
+    37 37 │   <div class="hover:-m-[-1rem]" />;
+    38    │ - <div·class="dark:md:-mt-[16px]"·/>;
+       38 │ + <div·class="dark:md:mt-[-16px]"·/>;
+    39 39 │   <div class="focus:-translate-x-[50%]" />;
+    40 40 │   
+  
+
+```
+
+```
+invalid.jsx:39:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    37 │ <div class="hover:-m-[-1rem]" />;
+    38 │ <div class="dark:md:-mt-[16px]" />;
+  > 39 │ <div class="focus:-translate-x-[50%]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    40 │ 
+    41 │ // ==========================================
+  
+  i Replace: `focus:-translate-x-[50%]` → `focus:translate-x-[-50%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    37 37 │   <div class="hover:-m-[-1rem]" />;
+    38 38 │   <div class="dark:md:-mt-[16px]" />;
+    39    │ - <div·class="focus:-translate-x-[50%]"·/>;
+       39 │ + <div·class="focus:translate-x-[-50%]"·/>;
+    40 40 │   
+    41 41 │   // ==========================================
+  
+
+```
+
+```
+invalid.jsx:44:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    42 │ // Multiple violations
+    43 │ // ==========================================
+  > 44 │ <div class="-m-[1rem] -translate-x-[50%]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    45 │ <div class="-m-[-1rem] -translate-x-[-50%]" />;
+    46 │ 
+  
+  i Replace: `-m-[1rem]` → `m-[-1rem]`, `-translate-x-[50%]` → `translate-x-[-50%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    42 42 │   // Multiple violations
+    43 43 │   // ==========================================
+    44    │ - <div·class="-m-[1rem]·-translate-x-[50%]"·/>;
+       44 │ + <div·class="m-[-1rem]·translate-x-[-50%]"·/>;
+    45 45 │   <div class="-m-[-1rem] -translate-x-[-50%]" />;
+    46 46 │   
+  
+
+```
+
+```
+invalid.jsx:45:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    43 │ // ==========================================
+    44 │ <div class="-m-[1rem] -translate-x-[50%]" />;
+  > 45 │ <div class="-m-[-1rem] -translate-x-[-50%]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    46 │ 
+    47 │ // ==========================================
+  
+  i Replace: `-m-[-1rem]` → `m-[1rem]`, `-translate-x-[-50%]` → `translate-x-[50%]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    45 │ <div·class="-m-[-1rem]·-translate-x-[-50%]"·/>;
+       │             -   -      -             -         
+
+```
+
+```
+invalid.jsx:50:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    48 │ // With important modifier (prefix)
+    49 │ // ==========================================
+  > 50 │ <div class="!-top-[10px]" />;
+       │            ^^^^^^^^^^^^^^
+    51 │ <div class="!-m-[1rem]" />;
+    52 │ <div class="!-top-[-10px]" />;
+  
+  i Replace: `!-top-[10px]` → `!top-[-10px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    48 48 │   // With important modifier (prefix)
+    49 49 │   // ==========================================
+    50    │ - <div·class="!-top-[10px]"·/>;
+       50 │ + <div·class="!top-[-10px]"·/>;
+    51 51 │   <div class="!-m-[1rem]" />;
+    52 52 │   <div class="!-top-[-10px]" />;
+  
+
+```
+
+```
+invalid.jsx:51:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    49 │ // ==========================================
+    50 │ <div class="!-top-[10px]" />;
+  > 51 │ <div class="!-m-[1rem]" />;
+       │            ^^^^^^^^^^^^
+    52 │ <div class="!-top-[-10px]" />;
+    53 │ <div class="hover:!-m-[1rem]" />;
+  
+  i Replace: `!-m-[1rem]` → `!m-[-1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    49 49 │   // ==========================================
+    50 50 │   <div class="!-top-[10px]" />;
+    51    │ - <div·class="!-m-[1rem]"·/>;
+       51 │ + <div·class="!m-[-1rem]"·/>;
+    52 52 │   <div class="!-top-[-10px]" />;
+    53 53 │   <div class="hover:!-m-[1rem]" />;
+  
+
+```
+
+```
+invalid.jsx:52:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    50 │ <div class="!-top-[10px]" />;
+    51 │ <div class="!-m-[1rem]" />;
+  > 52 │ <div class="!-top-[-10px]" />;
+       │            ^^^^^^^^^^^^^^^
+    53 │ <div class="hover:!-m-[1rem]" />;
+    54 │ 
+  
+  i Replace: `!-top-[-10px]` → `!top-[10px]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    52 │ <div·class="!-top-[-10px]"·/>;
+       │              -     -          
+
+```
+
+```
+invalid.jsx:53:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    51 │ <div class="!-m-[1rem]" />;
+    52 │ <div class="!-top-[-10px]" />;
+  > 53 │ <div class="hover:!-m-[1rem]" />;
+       │            ^^^^^^^^^^^^^^^^^^
+    54 │ 
+    55 │ // ==========================================
+  
+  i Replace: `hover:!-m-[1rem]` → `hover:!m-[-1rem]`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    51 51 │   <div class="!-m-[1rem]" />;
+    52 52 │   <div class="!-top-[-10px]" />;
+    53    │ - <div·class="hover:!-m-[1rem]"·/>;
+       53 │ + <div·class="hover:!m-[-1rem]"·/>;
+    54 54 │   
+    55 55 │   // ==========================================
+  
+
+```
+
+```
+invalid.jsx:58:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    56 │ // With important modifier (suffix)
+    57 │ // ==========================================
+  > 58 │ <div class="-top-[10px]!" />;
+       │            ^^^^^^^^^^^^^^
+    59 │ <div class="-m-[1rem]!" />;
+    60 │ <div class="-top-[-10px]!" />;
+  
+  i Replace: `-top-[10px]!` → `top-[-10px]!`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    56 56 │   // With important modifier (suffix)
+    57 57 │   // ==========================================
+    58    │ - <div·class="-top-[10px]!"·/>;
+       58 │ + <div·class="top-[-10px]!"·/>;
+    59 59 │   <div class="-m-[1rem]!" />;
+    60 60 │   <div class="-top-[-10px]!" />;
+  
+
+```
+
+```
+invalid.jsx:59:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    57 │ // ==========================================
+    58 │ <div class="-top-[10px]!" />;
+  > 59 │ <div class="-m-[1rem]!" />;
+       │            ^^^^^^^^^^^^
+    60 │ <div class="-top-[-10px]!" />;
+    61 │ <div class="hover:-m-[1rem]!" />;
+  
+  i Replace: `-m-[1rem]!` → `m-[-1rem]!`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    57 57 │   // ==========================================
+    58 58 │   <div class="-top-[10px]!" />;
+    59    │ - <div·class="-m-[1rem]!"·/>;
+       59 │ + <div·class="m-[-1rem]!"·/>;
+    60 60 │   <div class="-top-[-10px]!" />;
+    61 61 │   <div class="hover:-m-[1rem]!" />;
+  
+
+```
+
+```
+invalid.jsx:60:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    58 │ <div class="-top-[10px]!" />;
+    59 │ <div class="-m-[1rem]!" />;
+  > 60 │ <div class="-top-[-10px]!" />;
+       │            ^^^^^^^^^^^^^^^
+    61 │ <div class="hover:-m-[1rem]!" />;
+    62 │ 
+  
+  i Replace: `-top-[-10px]!` → `top-[10px]!`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    60 │ <div·class="-top-[-10px]!"·/>;
+       │             -     -           
+
+```
+
+```
+invalid.jsx:61:12 lint/nursery/enforcesNegativeArbitraryValues  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Avoid using the dash prefix with arbitrary values.
+  
+    59 │ <div class="-m-[1rem]!" />;
+    60 │ <div class="-top-[-10px]!" />;
+  > 61 │ <div class="hover:-m-[1rem]!" />;
+       │            ^^^^^^^^^^^^^^^^^^
+    62 │ 
+  
+  i Replace: `hover:-m-[1rem]!` → `hover:m-[-1rem]!`
+  
+  i Move the negative sign inside the brackets for clarity.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Move the negative sign inside the brackets.
+  
+    59 59 │   <div class="-m-[1rem]!" />;
+    60 60 │   <div class="-top-[-10px]!" />;
+    61    │ - <div·class="hover:-m-[1rem]!"·/>;
+       61 │ + <div·class="hover:m-[-1rem]!"·/>;
+    62 62 │   
+  
+
+```

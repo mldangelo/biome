@@ -1,0 +1,15 @@
+{
+	"$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"useConsistentTailwindLineWrapping": {
+					"level": "error",
+					"options": {
+						"printWidth": 40
+					}
+				}
+			}
+		}
+	}
+}

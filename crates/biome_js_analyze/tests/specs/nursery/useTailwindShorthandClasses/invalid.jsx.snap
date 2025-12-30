@@ -1,0 +1,275 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: px + py can be p
+<div class="px-4 py-4" />;
+
+// Invalid: mx + my can be m
+<div class="mx-2 my-2" />;
+
+// Invalid: pt + pr + pb + pl can be p
+<div class="pt-2 pr-2 pb-2 pl-2" />;
+
+// Invalid: mt + mr + mb + ml can be m
+<div class="mt-4 mr-4 mb-4 ml-4" />;
+
+// Invalid: with other classes
+<div class="flex px-4 py-4 items-center" />;
+
+// Invalid: w + h can be size (Tailwind v3.4+)
+<div class="w-4 h-4" />;
+
+// Invalid: w + h with other values
+<div class="w-full h-full" />;
+
+// Invalid: w + h with variants
+<div class="hover:w-8 hover:h-8" />;
+
+// Invalid: w + h with other classes
+<div class="flex w-10 h-10 items-center" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    1 │ // Invalid: px + py can be p
+  > 2 │ <div class="px-4 py-4" />;
+      │            ^^^^^^^^^^^
+    3 │ 
+    4 │ // Invalid: mx + my can be m
+  
+  i Replace: `px-4 + py-4` → `p-4`, `px-4 + py-4` → `p-4`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+     1  1 │   // Invalid: px + py can be p
+     2    │ - <div·class="px-4·py-4"·/>;
+        2 │ + <div·class="p-4"·/>;
+     3  3 │   
+     4  4 │   // Invalid: mx + my can be m
+  
+
+```
+
+```
+invalid.jsx:5:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    4 │ // Invalid: mx + my can be m
+  > 5 │ <div class="mx-2 my-2" />;
+      │            ^^^^^^^^^^^
+    6 │ 
+    7 │ // Invalid: pt + pr + pb + pl can be p
+  
+  i Replace: `mx-2 + my-2` → `m-2`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+     3  3 │   
+     4  4 │   // Invalid: mx + my can be m
+     5    │ - <div·class="mx-2·my-2"·/>;
+        5 │ + <div·class="m-2"·/>;
+     6  6 │   
+     7  7 │   // Invalid: pt + pr + pb + pl can be p
+  
+
+```
+
+```
+invalid.jsx:8:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+     7 │ // Invalid: pt + pr + pb + pl can be p
+   > 8 │ <div class="pt-2 pr-2 pb-2 pl-2" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^
+     9 │ 
+    10 │ // Invalid: mt + mr + mb + ml can be m
+  
+  i Replace: `pt-2 + pr-2 + pb-2 + pl-2` → `p-2`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+     6  6 │   
+     7  7 │   // Invalid: pt + pr + pb + pl can be p
+     8    │ - <div·class="pt-2·pr-2·pb-2·pl-2"·/>;
+        8 │ + <div·class="p-2"·/>;
+     9  9 │   
+    10 10 │   // Invalid: mt + mr + mb + ml can be m
+  
+
+```
+
+```
+invalid.jsx:11:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    10 │ // Invalid: mt + mr + mb + ml can be m
+  > 11 │ <div class="mt-4 mr-4 mb-4 ml-4" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ // Invalid: with other classes
+  
+  i Replace: `mt-4 + mr-4 + mb-4 + ml-4` → `m-4`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+     9  9 │   
+    10 10 │   // Invalid: mt + mr + mb + ml can be m
+    11    │ - <div·class="mt-4·mr-4·mb-4·ml-4"·/>;
+       11 │ + <div·class="m-4"·/>;
+    12 12 │   
+    13 13 │   // Invalid: with other classes
+  
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    13 │ // Invalid: with other classes
+  > 14 │ <div class="flex px-4 py-4 items-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ 
+    16 │ // Invalid: w + h can be size (Tailwind v3.4+)
+  
+  i Replace: `px-4 + py-4` → `p-4`, `px-4 + py-4` → `p-4`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+    12 12 │   
+    13 13 │   // Invalid: with other classes
+    14    │ - <div·class="flex·px-4·py-4·items-center"·/>;
+       14 │ + <div·class="flex·p-4·items-center"·/>;
+    15 15 │   
+    16 16 │   // Invalid: w + h can be size (Tailwind v3.4+)
+  
+
+```
+
+```
+invalid.jsx:17:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    16 │ // Invalid: w + h can be size (Tailwind v3.4+)
+  > 17 │ <div class="w-4 h-4" />;
+       │            ^^^^^^^^^
+    18 │ 
+    19 │ // Invalid: w + h with other values
+  
+  i Replace: `w-4 + h-4` → `size-4`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+    15 15 │   
+    16 16 │   // Invalid: w + h can be size (Tailwind v3.4+)
+    17    │ - <div·class="w-4·h-4"·/>;
+       17 │ + <div·class="size-4"·/>;
+    18 18 │   
+    19 19 │   // Invalid: w + h with other values
+  
+
+```
+
+```
+invalid.jsx:20:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    19 │ // Invalid: w + h with other values
+  > 20 │ <div class="w-full h-full" />;
+       │            ^^^^^^^^^^^^^^^
+    21 │ 
+    22 │ // Invalid: w + h with variants
+  
+  i Replace: `w-full + h-full` → `size-full`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+    18 18 │   
+    19 19 │   // Invalid: w + h with other values
+    20    │ - <div·class="w-full·h-full"·/>;
+       20 │ + <div·class="size-full"·/>;
+    21 21 │   
+    22 22 │   // Invalid: w + h with variants
+  
+
+```
+
+```
+invalid.jsx:23:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    22 │ // Invalid: w + h with variants
+  > 23 │ <div class="hover:w-8 hover:h-8" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^
+    24 │ 
+    25 │ // Invalid: w + h with other classes
+  
+  i Replace: `hover:w-8 + hover:h-8` → `hover:size-8`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+    21 21 │   
+    22 22 │   // Invalid: w + h with variants
+    23    │ - <div·class="hover:w-8·hover:h-8"·/>;
+       23 │ + <div·class="hover:size-8"·/>;
+    24 24 │   
+    25 25 │   // Invalid: w + h with other classes
+  
+
+```
+
+```
+invalid.jsx:26:12 lint/nursery/useTailwindShorthandClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use shorthand Tailwind CSS classes.
+  
+    25 │ // Invalid: w + h with other classes
+  > 26 │ <div class="flex w-10 h-10 items-center" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │ 
+  
+  i Replace: `w-10 + h-10` → `size-10`
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with shorthand class.
+  
+    24 24 │   
+    25 25 │   // Invalid: w + h with other classes
+    26    │ - <div·class="flex·w-10·h-10·items-center"·/>;
+       26 │ + <div·class="flex·size-10·items-center"·/>;
+    27 27 │   
+  
+
+```

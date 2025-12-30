@@ -1,0 +1,19 @@
+{
+	"$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noRestrictedTailwindClasses": {
+					"level": "error",
+					"options": {
+						"classes": [
+							{ "pattern": "hidden", "message": "Use 'invisible' instead", "replacement": "invisible" },
+							{ "pattern": "float-left", "message": "Use flexbox instead", "replacement": "flex" },
+							{ "pattern": "deprecated", "message": "This class is deprecated and should be removed" }
+						]
+					}
+				}
+			}
+		}
+	}
+}

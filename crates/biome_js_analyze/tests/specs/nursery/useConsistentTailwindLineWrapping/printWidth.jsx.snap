@@ -1,0 +1,73 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: printWidth.jsx
+---
+# Input
+```jsx
+// Test printWidth option - classes should be wrapped at 40 characters
+
+// Long class strings that should be wrapped
+<div class="flex items-center justify-between p-4 m-2 bg-blue-500" />;
+
+// Already wrapped correctly (within width)
+<div class="flex items-center" />;
+
+// Single line that's too long
+<div class="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 focus:ring-2" />;
+
+```
+
+# Diagnostics
+```
+printWidth.jsx:4:12 lint/nursery/useConsistentTailwindLineWrapping  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Tailwind class string contains inconsistent whitespace.
+  
+    3 │ // Long class strings that should be wrapped
+  > 4 │ <div class="flex items-center justify-between p-4 m-2 bg-blue-500" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // Already wrapped correctly (within width)
+  
+  i Class strings should be on a single line with single spaces between classes.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Normalize whitespace in class string.
+  
+     2  2 │   
+     3  3 │   // Long class strings that should be wrapped
+     4    │ - <div·class="flex·items-center·justify-between·p-4·m-2·bg-blue-500"·/>;
+        4 │ + <div·class="flex·items-center·justify-between·p-4
+        5 │ + m-2·bg-blue-500"·/>;
+     5  6 │   
+     6  7 │   // Already wrapped correctly (within width)
+  
+
+```
+
+```
+printWidth.jsx:10:12 lint/nursery/useConsistentTailwindLineWrapping  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━
+
+  i Tailwind class string contains inconsistent whitespace.
+  
+     9 │ // Single line that's too long
+  > 10 │ <div class="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 focus:ring-2" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
+  
+  i Class strings should be on a single line with single spaces between classes.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Normalize whitespace in class string.
+  
+     8  8 │   
+     9  9 │   // Single line that's too long
+    10    │ - <div·class="bg-blue-500·text-white·p-4·rounded-lg·shadow-md·hover:bg-blue-600·focus:ring-2"·/>;
+       10 │ + <div·class="bg-blue-500·text-white·p-4·rounded-lg
+       11 │ + shadow-md·hover:bg-blue-600·focus:ring-2"·/>;
+    11 12 │   
+  
+
+```

@@ -13,6 +13,7 @@ use crate::{
     settings::{ServiceLanguage, Settings},
     workspace::GetSyntaxTreeResult,
 };
+use biome_analyze::options::TailwindAnalyzerConfig;
 use biome_analyze::{AnalysisFilter, AnalyzerConfiguration, AnalyzerOptions, ControlFlow, Never};
 use biome_configuration::html::{
     HtmlAssistConfiguration, HtmlAssistEnabled, HtmlFormatterConfiguration, HtmlFormatterEnabled,
@@ -200,8 +201,23 @@ impl ServiceLanguage for HtmlLanguage {
         _file_source: &super::DocumentFileSource,
         suppression_reason: Option<&str>,
     ) -> AnalyzerOptions {
-        let configuration =
-            AnalyzerConfiguration::default().with_rules(to_analyzer_rules(global, path.as_path()));
+        // Convert TailwindConfiguration to TailwindAnalyzerConfig
+        let tailwind_config = {
+            let tw = global.tailwind();
+            TailwindAnalyzerConfig {
+                spacing: tw.spacing.clone(),
+                opacity: tw.opacity.clone(),
+                z_index: tw.z_index.clone(),
+                font_size: tw.font_size.clone(),
+                border_radius: tw.border_radius.clone(),
+                negatable: tw.negatable.clone(),
+                ignored_classes: tw.ignored_classes.clone(),
+            }
+        };
+
+        let configuration = AnalyzerConfiguration::default()
+            .with_rules(to_analyzer_rules(global, path.as_path()))
+            .with_tailwind(tailwind_config);
 
         AnalyzerOptions::default()
             .with_file_path(path.as_path())

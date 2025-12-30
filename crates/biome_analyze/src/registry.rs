@@ -407,6 +407,7 @@ impl<L: Language + Default> RegistryRule<L> {
             let preferred_indentation = params.options.preferred_indentation();
             let jsx_runtime = params.options.jsx_runtime();
             let css_modules = params.options.css_modules();
+            let tailwind = params.options.tailwind();
             let options = params.options.rule_options::<R>().unwrap_or_default();
             let ctx = RuleContext::new(
                 &query_result,
@@ -420,6 +421,7 @@ impl<L: Language + Default> RegistryRule<L> {
                 preferred_indentation,
                 jsx_runtime,
                 css_modules,
+                tailwind,
             )?;
 
             for result in R::run(&ctx) {

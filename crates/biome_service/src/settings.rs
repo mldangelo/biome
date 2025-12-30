@@ -16,7 +16,7 @@ use biome_configuration::{
     FilesIgnoreUnknownEnabled, FormatterConfiguration, GraphqlConfiguration, GritConfiguration,
     JsConfiguration, JsonConfiguration, LinterConfiguration, OverrideAssistConfiguration,
     OverrideFormatterConfiguration, OverrideGlobs, OverrideLinterConfiguration, Overrides, Rules,
-    push_to_analyzer_assist, push_to_analyzer_rules,
+    TailwindConfiguration, push_to_analyzer_assist, push_to_analyzer_rules,
 };
 use biome_css_formatter::context::CssFormatOptions;
 use biome_css_parser::CssParserOptions;
@@ -72,6 +72,9 @@ pub struct Settings {
     pub override_settings: OverrideSettings,
     /// The VCS settings of the project
     pub vcs_settings: VcsSettings,
+
+    /// Tailwind CSS configuration
+    pub tailwind: TailwindConfiguration,
 
     // TODO: remove once HTML full support is stable
     pub experimental_full_html_support: Option<ExperimentalFullSupportEnabled>,
@@ -181,6 +184,11 @@ impl Settings {
             self.plugins = plugins;
         }
 
+        // tailwind settings
+        if let Some(tailwind) = configuration.tailwind {
+            self.tailwind = tailwind;
+        }
+
         // NOTE: keep this last. Computing the overrides require reading the settings computed by the parent settings.
         if let Some(overrides) = configuration.overrides {
             self.override_settings = to_override_settings(
@@ -214,6 +222,11 @@ impl Settings {
     /// Retrieves the settings of the organize imports
     pub fn assist(&self) -> &AssistSettings {
         &self.assist
+    }
+
+    /// Retrieves the Tailwind CSS configuration
+    pub fn tailwind(&self) -> &TailwindConfiguration {
+        &self.tailwind
     }
 
     /// Returns linter rules taking overrides into account.

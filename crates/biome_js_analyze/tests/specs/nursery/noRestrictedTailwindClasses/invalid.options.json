@@ -1,0 +1,18 @@
+{
+	"$schema": "../../../../../../packages/@biomejs/biome/configuration_schema.json",
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noRestrictedTailwindClasses": {
+					"level": "error",
+					"options": {
+						"classes": [
+							{ "pattern": "hidden", "message": "Use 'invisible' or 'sr-only' instead" },
+							{ "pattern": "float-left", "message": "Use flexbox or grid instead of floats" }
+						]
+					}
+				}
+			}
+		}
+	}
+}

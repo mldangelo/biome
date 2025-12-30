@@ -1,0 +1,97 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: unknown classes
+<div class="hello-world" />;
+<div class="myclass" />;
+<div class="unknownprefix-value" />;
+
+// Invalid: mixed with valid classes
+<div class="flex items-center unknownclass" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/noUnregisteredTailwindClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Unknown Tailwind CSS class(es) detected.
+  
+    1 │ // Invalid: unknown classes
+  > 2 │ <div class="hello-world" />;
+      │            ^^^^^^^^^^^^^
+    3 │ <div class="myclass" />;
+    4 │ <div class="unknownprefix-value" />;
+  
+  i Unrecognized: `hello-world`
+  
+  i These class names don't match known Tailwind patterns. Check for typos or ensure custom classes are properly configured.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/noUnregisteredTailwindClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Unknown Tailwind CSS class(es) detected.
+  
+    1 │ // Invalid: unknown classes
+    2 │ <div class="hello-world" />;
+  > 3 │ <div class="myclass" />;
+      │            ^^^^^^^^^
+    4 │ <div class="unknownprefix-value" />;
+    5 │ 
+  
+  i Unrecognized: `myclass`
+  
+  i These class names don't match known Tailwind patterns. Check for typos or ensure custom classes are properly configured.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:4:12 lint/nursery/noUnregisteredTailwindClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Unknown Tailwind CSS class(es) detected.
+  
+    2 │ <div class="hello-world" />;
+    3 │ <div class="myclass" />;
+  > 4 │ <div class="unknownprefix-value" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // Invalid: mixed with valid classes
+  
+  i Unrecognized: `unknownprefix-value`
+  
+  i These class names don't match known Tailwind patterns. Check for typos or ensure custom classes are properly configured.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/noUnregisteredTailwindClasses ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Unknown Tailwind CSS class(es) detected.
+  
+    6 │ // Invalid: mixed with valid classes
+  > 7 │ <div class="flex items-center unknownclass" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ 
+  
+  i Unrecognized: `unknownclass`
+  
+  i These class names don't match known Tailwind patterns. Check for typos or ensure custom classes are properly configured.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```

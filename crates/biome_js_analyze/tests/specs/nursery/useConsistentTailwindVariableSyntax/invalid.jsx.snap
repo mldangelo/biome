@@ -1,0 +1,166 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: using var() syntax when simpler syntax available
+<div class="bg-[var(--my-color)]" />;
+<div class="text-[var(--brand-primary)]" />;
+<div class="border-[var(--border-color)]" />;
+
+// Invalid: with variants
+<div class="hover:bg-[var(--hover-color)]" />;
+<div class="dark:text-[var(--dark-text)]" />;
+
+// Invalid: multiple classes
+<div class="bg-[var(--bg)] text-[var(--text)]" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+    1 │ // Invalid: using var() syntax when simpler syntax available
+  > 2 │ <div class="bg-[var(--my-color)]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^
+    3 │ <div class="text-[var(--brand-primary)]" />;
+    4 │ <div class="border-[var(--border-color)]" />;
+  
+  i Replace: `bg-[var(--my-color)]` → `bg-[--my-color]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    2 │ <div·class="bg-[var(--my-color)]"·/>;
+      │                 ----          -      
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+    1 │ // Invalid: using var() syntax when simpler syntax available
+    2 │ <div class="bg-[var(--my-color)]" />;
+  > 3 │ <div class="text-[var(--brand-primary)]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ <div class="border-[var(--border-color)]" />;
+    5 │ 
+  
+  i Replace: `text-[var(--brand-primary)]` → `text-[--brand-primary]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    3 │ <div·class="text-[var(--brand-primary)]"·/>;
+      │                   ----               -      
+
+```
+
+```
+invalid.jsx:4:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+    2 │ <div class="bg-[var(--my-color)]" />;
+    3 │ <div class="text-[var(--brand-primary)]" />;
+  > 4 │ <div class="border-[var(--border-color)]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ 
+    6 │ // Invalid: with variants
+  
+  i Replace: `border-[var(--border-color)]` → `border-[--border-color]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    4 │ <div·class="border-[var(--border-color)]"·/>;
+      │                     ----              -      
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+    6 │ // Invalid: with variants
+  > 7 │ <div class="hover:bg-[var(--hover-color)]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ <div class="dark:text-[var(--dark-text)]" />;
+    9 │ 
+  
+  i Replace: `hover:bg-[var(--hover-color)]` → `hover:bg-[--hover-color]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    7 │ <div·class="hover:bg-[var(--hover-color)]"·/>;
+      │                       ----             -      
+
+```
+
+```
+invalid.jsx:8:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+     6 │ // Invalid: with variants
+     7 │ <div class="hover:bg-[var(--hover-color)]" />;
+   > 8 │ <div class="dark:text-[var(--dark-text)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ 
+    10 │ // Invalid: multiple classes
+  
+  i Replace: `dark:text-[var(--dark-text)]` → `dark:text-[--dark-text]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    8 │ <div·class="dark:text-[var(--dark-text)]"·/>;
+      │                        ----           -      
+
+```
+
+```
+invalid.jsx:11:12 lint/nursery/useConsistentTailwindVariableSyntax  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Use modern CSS variable syntax in Tailwind classes.
+  
+    10 │ // Invalid: multiple classes
+  > 11 │ <div class="bg-[var(--bg)] text-[var(--text)]" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+  
+  i Replace: `bg-[var(--bg)]` → `bg-[--bg]`, `text-[var(--text)]` → `text-[--text]`
+  
+  i The modern syntax `[--var-name]` is shorter and cleaner than `[var(--var-name)]`.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Use modern CSS variable syntax.
+  
+    11 │ <div·class="bg-[var(--bg)]·text-[var(--text)]"·/>;
+       │                 ----    -        ----      -      
+
+```

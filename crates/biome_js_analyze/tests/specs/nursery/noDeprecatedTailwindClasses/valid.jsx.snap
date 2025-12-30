@@ -1,0 +1,32 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: valid.jsx
+---
+# Input
+```jsx
+/* should not generate diagnostics */
+
+// Valid: modern shrink utilities
+<div class="shrink" />;
+<div class="shrink-0" />;
+
+// Valid: modern grow utilities
+<div class="grow" />;
+<div class="grow-0" />;
+
+// Valid: modern text utilities
+<div class="text-ellipsis" />;
+<div class="text-clip" />;
+
+// Valid: modern box decoration utilities
+<div class="box-decoration-slice" />;
+<div class="box-decoration-clone" />;
+
+// Valid: with variants
+<div class="hover:shrink" />;
+<div class="focus:hover:grow-0" />;
+
+// Valid: other classes
+<div class="flex p-4 m-2" />;
+
+```

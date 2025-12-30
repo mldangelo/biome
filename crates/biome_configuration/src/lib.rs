@@ -20,6 +20,7 @@ pub mod javascript;
 pub mod json;
 pub mod max_size;
 mod overrides;
+pub mod tailwind;
 pub mod vcs;
 
 use crate::analyzer::assist::{Actions, AssistConfiguration, Source, assist_configuration};
@@ -70,6 +71,7 @@ use std::iter::FusedIterator;
 use std::slice::Iter;
 use std::str::FromStr;
 use std::sync::LazyLock;
+pub use tailwind::TailwindConfiguration;
 use vcs::VcsClientKind;
 
 pub const DEFAULT_SCANNER_IGNORE_ENTRIES: &[&[u8]] = &[
@@ -167,6 +169,11 @@ pub struct Configuration {
     #[bpaf(external(html_configuration), optional)]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub html: Option<HtmlConfiguration>,
+
+    /// Configuration for Tailwind CSS integration
+    #[bpaf(hide, pure(Default::default()))]
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub tailwind: Option<TailwindConfiguration>,
 
     /// A list of granular patterns that should be applied only to a sub set of files
     #[bpaf(hide, pure(Default::default()))]
@@ -400,6 +407,10 @@ impl Configuration {
             .and_then(|lang| lang.linter.as_ref())
             .cloned()
             .unwrap_or_default()
+    }
+
+    pub fn get_tailwind_configuration(&self) -> TailwindConfiguration {
+        self.tailwind.clone().unwrap_or_default()
     }
 }
 

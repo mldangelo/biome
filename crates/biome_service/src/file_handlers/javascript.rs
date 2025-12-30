@@ -19,7 +19,7 @@ use crate::{
 use biome_analyze::options::{PreferredIndentation, PreferredQuote};
 use biome_analyze::{
     AnalysisFilter, AnalyzerConfiguration, AnalyzerOptions, ControlFlow, Never, QueryMatch,
-    RuleCategoriesBuilder, RuleFilter,
+    RuleCategoriesBuilder, RuleFilter, TailwindAnalyzerConfig,
 };
 use biome_configuration::javascript::{
     JsAssistConfiguration, JsAssistEnabled, JsFormatterConfiguration, JsFormatterEnabled,
@@ -377,12 +377,27 @@ impl ServiceLanguage for JsLanguage {
             }
         }
 
+        // Convert TailwindConfiguration to TailwindAnalyzerConfig
+        let tailwind_config = {
+            let tw = global.tailwind();
+            TailwindAnalyzerConfig {
+                spacing: tw.spacing.clone(),
+                opacity: tw.opacity.clone(),
+                z_index: tw.z_index.clone(),
+                font_size: tw.font_size.clone(),
+                border_radius: tw.border_radius.clone(),
+                negatable: tw.negatable.clone(),
+                ignored_classes: tw.ignored_classes.clone(),
+            }
+        };
+
         let configuration = configuration
             .with_rules(to_analyzer_rules(global, path.as_path()))
             .with_globals(globals)
             .with_preferred_quote(preferred_quote)
             .with_preferred_jsx_quote(preferred_jsx_quote)
-            .with_preferred_indentation(preferred_indentation);
+            .with_preferred_indentation(preferred_indentation)
+            .with_tailwind(tailwind_config);
 
         AnalyzerOptions::default()
             .with_file_path(path.as_path())

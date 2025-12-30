@@ -1,0 +1,131 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: restricted class "hidden"
+<div class="hidden" />;
+
+// Invalid: restricted class with variants
+<div class="hover:hidden" />;
+<div class="md:hover:hidden" />;
+
+// Invalid: restricted class "float-left"
+<div class="float-left" />;
+
+// Invalid: multiple restricted classes
+<div class="hidden flex float-left" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`.
+  
+    1 │ // Invalid: restricted class "hidden"
+  > 2 │ <div class="hidden" />;
+      │            ^^^^^^^^
+    3 │ 
+    4 │ // Invalid: restricted class with variants
+  
+  i Use 'invisible' or 'sr-only' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    2 │ <div·class="hidden"·/>;
+      │             ------     
+
+```
+
+```
+invalid.jsx:5:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hover:hidden`.
+  
+    4 │ // Invalid: restricted class with variants
+  > 5 │ <div class="hover:hidden" />;
+      │            ^^^^^^^^^^^^^^
+    6 │ <div class="md:hover:hidden" />;
+    7 │ 
+  
+  i Use 'invisible' or 'sr-only' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    5 │ <div·class="hover:hidden"·/>;
+      │             ------------     
+
+```
+
+```
+invalid.jsx:6:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `md:hover:hidden`.
+  
+    4 │ // Invalid: restricted class with variants
+    5 │ <div class="hover:hidden" />;
+  > 6 │ <div class="md:hover:hidden" />;
+      │            ^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // Invalid: restricted class "float-left"
+  
+  i Use 'invisible' or 'sr-only' instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    6 │ <div·class="md:hover:hidden"·/>;
+      │             ---------------     
+
+```
+
+```
+invalid.jsx:9:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `float-left`.
+  
+     8 │ // Invalid: restricted class "float-left"
+   > 9 │ <div class="float-left" />;
+       │            ^^^^^^^^^^^^
+    10 │ 
+    11 │ // Invalid: multiple restricted classes
+  
+  i Use flexbox or grid instead of floats
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    9 │ <div·class="float-left"·/>;
+      │             ----------     
+
+```
+
+```
+invalid.jsx:12:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hidden`, `float-left`.
+  
+    11 │ // Invalid: multiple restricted classes
+  > 12 │ <div class="hidden flex float-left" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 
+  
+  i This class has been restricted in the project configuration.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    12 │ <div·class="hidden·flex·float-left"·/>;
+       │             -------    -----------     
+
+```

@@ -89,12 +89,14 @@ impl std::fmt::Display for RuleGroup {
 #[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RuleName {
+    EnforcesNegativeArbitraryValues,
     NoAccessKey,
     NoAccumulatingSpread,
     NoAdjacentSpacesInRegex,
     NoAlert,
     NoAmbiguousAnchorText,
     NoApproximativeNumericConstant,
+    NoArbitraryTailwindValue,
     NoArguments,
     NoAriaHiddenOnFocusable,
     NoAriaUnsupportedElements,
@@ -116,6 +118,7 @@ pub enum RuleName {
     NoCommentText,
     NoCommonJs,
     NoCompareNegZero,
+    NoConflictingTailwindClasses,
     NoConfusingLabels,
     NoConfusingVoidType,
     NoConsole,
@@ -133,6 +136,7 @@ pub enum RuleName {
     NoDefaultExport,
     NoDelete,
     NoDeprecatedImports,
+    NoDeprecatedTailwindClasses,
     NoDescendingSpecificity,
     NoDistractingElements,
     NoDocumentCookie,
@@ -152,6 +156,7 @@ pub enum RuleName {
     NoDuplicateParameters,
     NoDuplicateProperties,
     NoDuplicateSelectorsKeyframeBlock,
+    NoDuplicateTailwindClasses,
     NoDuplicateTestHooks,
     NoDuplicatedSpreadProps,
     NoDynamicNamespaceImportAccess,
@@ -260,6 +265,7 @@ pub enum RuleName {
     NoRestrictedElements,
     NoRestrictedGlobals,
     NoRestrictedImports,
+    NoRestrictedTailwindClasses,
     NoRestrictedTypes,
     NoReturnAssign,
     NoScriptUrl,
@@ -301,9 +307,12 @@ pub enum RuleName {
     NoUnknownTypeSelector,
     NoUnknownUnit,
     NoUnmatchableAnbSelector,
+    NoUnnecessaryArbitraryValue,
     NoUnnecessaryConditions,
+    NoUnnecessaryTailwindWhitespace,
     NoUnreachable,
     NoUnreachableSuper,
+    NoUnregisteredTailwindClasses,
     NoUnresolvedImports,
     NoUnsafeDeclarationMerging,
     NoUnsafeFinally,
@@ -377,6 +386,9 @@ pub enum RuleName {
     UseConsistentGraphqlDescriptions,
     UseConsistentMemberAccessibility,
     UseConsistentObjectDefinitions,
+    UseConsistentTailwindImportantPosition,
+    UseConsistentTailwindLineWrapping,
+    UseConsistentTailwindVariableSyntax,
     UseConsistentTypeDefinitions,
     UseConst,
     UseDateNow,
@@ -461,6 +473,7 @@ pub enum RuleName {
     UseStaticResponseMethods,
     UseStrictMode,
     UseSymbolDescription,
+    UseTailwindShorthandClasses,
     UseTemplate,
     UseThrowNewError,
     UseThrowOnlyError,
@@ -504,12 +517,14 @@ pub enum RuleName {
 impl RuleName {
     pub const fn as_str(self) -> &'static str {
         match self {
+            Self::EnforcesNegativeArbitraryValues => "enforcesNegativeArbitraryValues",
             Self::NoAccessKey => "noAccessKey",
             Self::NoAccumulatingSpread => "noAccumulatingSpread",
             Self::NoAdjacentSpacesInRegex => "noAdjacentSpacesInRegex",
             Self::NoAlert => "noAlert",
             Self::NoAmbiguousAnchorText => "noAmbiguousAnchorText",
             Self::NoApproximativeNumericConstant => "noApproximativeNumericConstant",
+            Self::NoArbitraryTailwindValue => "noArbitraryTailwindValue",
             Self::NoArguments => "noArguments",
             Self::NoAriaHiddenOnFocusable => "noAriaHiddenOnFocusable",
             Self::NoAriaUnsupportedElements => "noAriaUnsupportedElements",
@@ -533,6 +548,7 @@ impl RuleName {
             Self::NoCommentText => "noCommentText",
             Self::NoCommonJs => "noCommonJs",
             Self::NoCompareNegZero => "noCompareNegZero",
+            Self::NoConflictingTailwindClasses => "noConflictingTailwindClasses",
             Self::NoConfusingLabels => "noConfusingLabels",
             Self::NoConfusingVoidType => "noConfusingVoidType",
             Self::NoConsole => "noConsole",
@@ -550,6 +566,7 @@ impl RuleName {
             Self::NoDefaultExport => "noDefaultExport",
             Self::NoDelete => "noDelete",
             Self::NoDeprecatedImports => "noDeprecatedImports",
+            Self::NoDeprecatedTailwindClasses => "noDeprecatedTailwindClasses",
             Self::NoDescendingSpecificity => "noDescendingSpecificity",
             Self::NoDistractingElements => "noDistractingElements",
             Self::NoDocumentCookie => "noDocumentCookie",
@@ -569,6 +586,7 @@ impl RuleName {
             Self::NoDuplicateParameters => "noDuplicateParameters",
             Self::NoDuplicateProperties => "noDuplicateProperties",
             Self::NoDuplicateSelectorsKeyframeBlock => "noDuplicateSelectorsKeyframeBlock",
+            Self::NoDuplicateTailwindClasses => "noDuplicateTailwindClasses",
             Self::NoDuplicateTestHooks => "noDuplicateTestHooks",
             Self::NoDuplicatedSpreadProps => "noDuplicatedSpreadProps",
             Self::NoDynamicNamespaceImportAccess => "noDynamicNamespaceImportAccess",
@@ -681,6 +699,7 @@ impl RuleName {
             Self::NoRestrictedElements => "noRestrictedElements",
             Self::NoRestrictedGlobals => "noRestrictedGlobals",
             Self::NoRestrictedImports => "noRestrictedImports",
+            Self::NoRestrictedTailwindClasses => "noRestrictedTailwindClasses",
             Self::NoRestrictedTypes => "noRestrictedTypes",
             Self::NoReturnAssign => "noReturnAssign",
             Self::NoScriptUrl => "noScriptUrl",
@@ -722,9 +741,12 @@ impl RuleName {
             Self::NoUnknownTypeSelector => "noUnknownTypeSelector",
             Self::NoUnknownUnit => "noUnknownUnit",
             Self::NoUnmatchableAnbSelector => "noUnmatchableAnbSelector",
+            Self::NoUnnecessaryArbitraryValue => "noUnnecessaryArbitraryValue",
             Self::NoUnnecessaryConditions => "noUnnecessaryConditions",
+            Self::NoUnnecessaryTailwindWhitespace => "noUnnecessaryTailwindWhitespace",
             Self::NoUnreachable => "noUnreachable",
             Self::NoUnreachableSuper => "noUnreachableSuper",
+            Self::NoUnregisteredTailwindClasses => "noUnregisteredTailwindClasses",
             Self::NoUnresolvedImports => "noUnresolvedImports",
             Self::NoUnsafeDeclarationMerging => "noUnsafeDeclarationMerging",
             Self::NoUnsafeFinally => "noUnsafeFinally",
@@ -798,6 +820,11 @@ impl RuleName {
             Self::UseConsistentGraphqlDescriptions => "useConsistentGraphqlDescriptions",
             Self::UseConsistentMemberAccessibility => "useConsistentMemberAccessibility",
             Self::UseConsistentObjectDefinitions => "useConsistentObjectDefinitions",
+            Self::UseConsistentTailwindImportantPosition => {
+                "useConsistentTailwindImportantPosition"
+            }
+            Self::UseConsistentTailwindLineWrapping => "useConsistentTailwindLineWrapping",
+            Self::UseConsistentTailwindVariableSyntax => "useConsistentTailwindVariableSyntax",
             Self::UseConsistentTypeDefinitions => "useConsistentTypeDefinitions",
             Self::UseConst => "useConst",
             Self::UseDateNow => "useDateNow",
@@ -882,6 +909,7 @@ impl RuleName {
             Self::UseStaticResponseMethods => "useStaticResponseMethods",
             Self::UseStrictMode => "useStrictMode",
             Self::UseSymbolDescription => "useSymbolDescription",
+            Self::UseTailwindShorthandClasses => "useTailwindShorthandClasses",
             Self::UseTemplate => "useTemplate",
             Self::UseThrowNewError => "useThrowNewError",
             Self::UseThrowOnlyError => "useThrowOnlyError",
@@ -927,12 +955,14 @@ impl RuleName {
     }
     pub const fn group(self) -> RuleGroup {
         match self {
+            Self::EnforcesNegativeArbitraryValues => RuleGroup::Nursery,
             Self::NoAccessKey => RuleGroup::A11y,
             Self::NoAccumulatingSpread => RuleGroup::Performance,
             Self::NoAdjacentSpacesInRegex => RuleGroup::Complexity,
             Self::NoAlert => RuleGroup::Suspicious,
             Self::NoAmbiguousAnchorText => RuleGroup::Nursery,
             Self::NoApproximativeNumericConstant => RuleGroup::Suspicious,
+            Self::NoArbitraryTailwindValue => RuleGroup::Nursery,
             Self::NoArguments => RuleGroup::Complexity,
             Self::NoAriaHiddenOnFocusable => RuleGroup::A11y,
             Self::NoAriaUnsupportedElements => RuleGroup::A11y,
@@ -954,6 +984,7 @@ impl RuleName {
             Self::NoCommentText => RuleGroup::Suspicious,
             Self::NoCommonJs => RuleGroup::Style,
             Self::NoCompareNegZero => RuleGroup::Suspicious,
+            Self::NoConflictingTailwindClasses => RuleGroup::Nursery,
             Self::NoConfusingLabels => RuleGroup::Suspicious,
             Self::NoConfusingVoidType => RuleGroup::Suspicious,
             Self::NoConsole => RuleGroup::Suspicious,
@@ -971,6 +1002,7 @@ impl RuleName {
             Self::NoDefaultExport => RuleGroup::Style,
             Self::NoDelete => RuleGroup::Performance,
             Self::NoDeprecatedImports => RuleGroup::Nursery,
+            Self::NoDeprecatedTailwindClasses => RuleGroup::Nursery,
             Self::NoDescendingSpecificity => RuleGroup::Style,
             Self::NoDistractingElements => RuleGroup::A11y,
             Self::NoDocumentCookie => RuleGroup::Suspicious,
@@ -990,6 +1022,7 @@ impl RuleName {
             Self::NoDuplicateParameters => RuleGroup::Suspicious,
             Self::NoDuplicateProperties => RuleGroup::Suspicious,
             Self::NoDuplicateSelectorsKeyframeBlock => RuleGroup::Suspicious,
+            Self::NoDuplicateTailwindClasses => RuleGroup::Nursery,
             Self::NoDuplicateTestHooks => RuleGroup::Suspicious,
             Self::NoDuplicatedSpreadProps => RuleGroup::Nursery,
             Self::NoDynamicNamespaceImportAccess => RuleGroup::Performance,
@@ -1098,6 +1131,7 @@ impl RuleName {
             Self::NoRestrictedElements => RuleGroup::Correctness,
             Self::NoRestrictedGlobals => RuleGroup::Style,
             Self::NoRestrictedImports => RuleGroup::Style,
+            Self::NoRestrictedTailwindClasses => RuleGroup::Nursery,
             Self::NoRestrictedTypes => RuleGroup::Style,
             Self::NoReturnAssign => RuleGroup::Nursery,
             Self::NoScriptUrl => RuleGroup::Nursery,
@@ -1139,9 +1173,12 @@ impl RuleName {
             Self::NoUnknownTypeSelector => RuleGroup::Correctness,
             Self::NoUnknownUnit => RuleGroup::Correctness,
             Self::NoUnmatchableAnbSelector => RuleGroup::Correctness,
+            Self::NoUnnecessaryArbitraryValue => RuleGroup::Nursery,
             Self::NoUnnecessaryConditions => RuleGroup::Nursery,
+            Self::NoUnnecessaryTailwindWhitespace => RuleGroup::Nursery,
             Self::NoUnreachable => RuleGroup::Correctness,
             Self::NoUnreachableSuper => RuleGroup::Correctness,
+            Self::NoUnregisteredTailwindClasses => RuleGroup::Nursery,
             Self::NoUnresolvedImports => RuleGroup::Nursery,
             Self::NoUnsafeDeclarationMerging => RuleGroup::Suspicious,
             Self::NoUnsafeFinally => RuleGroup::Correctness,
@@ -1215,6 +1252,9 @@ impl RuleName {
             Self::UseConsistentGraphqlDescriptions => RuleGroup::Nursery,
             Self::UseConsistentMemberAccessibility => RuleGroup::Style,
             Self::UseConsistentObjectDefinitions => RuleGroup::Style,
+            Self::UseConsistentTailwindImportantPosition => RuleGroup::Nursery,
+            Self::UseConsistentTailwindLineWrapping => RuleGroup::Nursery,
+            Self::UseConsistentTailwindVariableSyntax => RuleGroup::Nursery,
             Self::UseConsistentTypeDefinitions => RuleGroup::Style,
             Self::UseConst => RuleGroup::Style,
             Self::UseDateNow => RuleGroup::Complexity,
@@ -1299,6 +1339,7 @@ impl RuleName {
             Self::UseStaticResponseMethods => RuleGroup::Suspicious,
             Self::UseStrictMode => RuleGroup::Suspicious,
             Self::UseSymbolDescription => RuleGroup::Style,
+            Self::UseTailwindShorthandClasses => RuleGroup::Nursery,
             Self::UseTemplate => RuleGroup::Style,
             Self::UseThrowNewError => RuleGroup::Style,
             Self::UseThrowOnlyError => RuleGroup::Style,
@@ -1345,12 +1386,14 @@ impl std::str::FromStr for RuleName {
     type Err = &'static str;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
+            "enforcesNegativeArbitraryValues" => Ok(Self::EnforcesNegativeArbitraryValues),
             "noAccessKey" => Ok(Self::NoAccessKey),
             "noAccumulatingSpread" => Ok(Self::NoAccumulatingSpread),
             "noAdjacentSpacesInRegex" => Ok(Self::NoAdjacentSpacesInRegex),
             "noAlert" => Ok(Self::NoAlert),
             "noAmbiguousAnchorText" => Ok(Self::NoAmbiguousAnchorText),
             "noApproximativeNumericConstant" => Ok(Self::NoApproximativeNumericConstant),
+            "noArbitraryTailwindValue" => Ok(Self::NoArbitraryTailwindValue),
             "noArguments" => Ok(Self::NoArguments),
             "noAriaHiddenOnFocusable" => Ok(Self::NoAriaHiddenOnFocusable),
             "noAriaUnsupportedElements" => Ok(Self::NoAriaUnsupportedElements),
@@ -1374,6 +1417,7 @@ impl std::str::FromStr for RuleName {
             "noCommentText" => Ok(Self::NoCommentText),
             "noCommonJs" => Ok(Self::NoCommonJs),
             "noCompareNegZero" => Ok(Self::NoCompareNegZero),
+            "noConflictingTailwindClasses" => Ok(Self::NoConflictingTailwindClasses),
             "noConfusingLabels" => Ok(Self::NoConfusingLabels),
             "noConfusingVoidType" => Ok(Self::NoConfusingVoidType),
             "noConsole" => Ok(Self::NoConsole),
@@ -1393,6 +1437,7 @@ impl std::str::FromStr for RuleName {
             "noDefaultExport" => Ok(Self::NoDefaultExport),
             "noDelete" => Ok(Self::NoDelete),
             "noDeprecatedImports" => Ok(Self::NoDeprecatedImports),
+            "noDeprecatedTailwindClasses" => Ok(Self::NoDeprecatedTailwindClasses),
             "noDescendingSpecificity" => Ok(Self::NoDescendingSpecificity),
             "noDistractingElements" => Ok(Self::NoDistractingElements),
             "noDocumentCookie" => Ok(Self::NoDocumentCookie),
@@ -1412,6 +1457,7 @@ impl std::str::FromStr for RuleName {
             "noDuplicateParameters" => Ok(Self::NoDuplicateParameters),
             "noDuplicateProperties" => Ok(Self::NoDuplicateProperties),
             "noDuplicateSelectorsKeyframeBlock" => Ok(Self::NoDuplicateSelectorsKeyframeBlock),
+            "noDuplicateTailwindClasses" => Ok(Self::NoDuplicateTailwindClasses),
             "noDuplicateTestHooks" => Ok(Self::NoDuplicateTestHooks),
             "noDuplicatedSpreadProps" => Ok(Self::NoDuplicatedSpreadProps),
             "noDynamicNamespaceImportAccess" => Ok(Self::NoDynamicNamespaceImportAccess),
@@ -1524,6 +1570,7 @@ impl std::str::FromStr for RuleName {
             "noRestrictedElements" => Ok(Self::NoRestrictedElements),
             "noRestrictedGlobals" => Ok(Self::NoRestrictedGlobals),
             "noRestrictedImports" => Ok(Self::NoRestrictedImports),
+            "noRestrictedTailwindClasses" => Ok(Self::NoRestrictedTailwindClasses),
             "noRestrictedTypes" => Ok(Self::NoRestrictedTypes),
             "noReturnAssign" => Ok(Self::NoReturnAssign),
             "noScriptUrl" => Ok(Self::NoScriptUrl),
@@ -1565,9 +1612,12 @@ impl std::str::FromStr for RuleName {
             "noUnknownTypeSelector" => Ok(Self::NoUnknownTypeSelector),
             "noUnknownUnit" => Ok(Self::NoUnknownUnit),
             "noUnmatchableAnbSelector" => Ok(Self::NoUnmatchableAnbSelector),
+            "noUnnecessaryArbitraryValue" => Ok(Self::NoUnnecessaryArbitraryValue),
             "noUnnecessaryConditions" => Ok(Self::NoUnnecessaryConditions),
+            "noUnnecessaryTailwindWhitespace" => Ok(Self::NoUnnecessaryTailwindWhitespace),
             "noUnreachable" => Ok(Self::NoUnreachable),
             "noUnreachableSuper" => Ok(Self::NoUnreachableSuper),
+            "noUnregisteredTailwindClasses" => Ok(Self::NoUnregisteredTailwindClasses),
             "noUnresolvedImports" => Ok(Self::NoUnresolvedImports),
             "noUnsafeDeclarationMerging" => Ok(Self::NoUnsafeDeclarationMerging),
             "noUnsafeFinally" => Ok(Self::NoUnsafeFinally),
@@ -1641,6 +1691,11 @@ impl std::str::FromStr for RuleName {
             "useConsistentGraphqlDescriptions" => Ok(Self::UseConsistentGraphqlDescriptions),
             "useConsistentMemberAccessibility" => Ok(Self::UseConsistentMemberAccessibility),
             "useConsistentObjectDefinitions" => Ok(Self::UseConsistentObjectDefinitions),
+            "useConsistentTailwindImportantPosition" => {
+                Ok(Self::UseConsistentTailwindImportantPosition)
+            }
+            "useConsistentTailwindLineWrapping" => Ok(Self::UseConsistentTailwindLineWrapping),
+            "useConsistentTailwindVariableSyntax" => Ok(Self::UseConsistentTailwindVariableSyntax),
             "useConsistentTypeDefinitions" => Ok(Self::UseConsistentTypeDefinitions),
             "useConst" => Ok(Self::UseConst),
             "useDateNow" => Ok(Self::UseDateNow),
@@ -1725,6 +1780,7 @@ impl std::str::FromStr for RuleName {
             "useStaticResponseMethods" => Ok(Self::UseStaticResponseMethods),
             "useStrictMode" => Ok(Self::UseStrictMode),
             "useSymbolDescription" => Ok(Self::UseSymbolDescription),
+            "useTailwindShorthandClasses" => Ok(Self::UseTailwindShorthandClasses),
             "useTemplate" => Ok(Self::UseTemplate),
             "useThrowNewError" => Ok(Self::UseThrowNewError),
             "useThrowOnlyError" => Ok(Self::UseThrowOnlyError),
@@ -4900,15 +4956,20 @@ impl From<GroupPlainConfiguration> for Correctness {
 #[cfg_attr(feature = "schema", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 #[doc = r" A list of rules that belong to this group"]
-pub struct Nursery { # [doc = r" Enables the recommended rules for this group"] # [serde (skip_serializing_if = "Option::is_none")] pub recommended : Option < bool > , # [doc = "Disallow ambiguous anchor descriptions.\nSee <https://biomejs.dev/linter/rules/no-ambiguous-anchor-text>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_ambiguous_anchor_text : Option < RuleConfiguration < biome_rule_options :: no_ambiguous_anchor_text :: NoAmbiguousAnchorTextOptions >> , # [doc = "Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.\nSee <https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_before_interactive_script_outside_document : Option < RuleConfiguration < biome_rule_options :: no_before_interactive_script_outside_document :: NoBeforeInteractiveScriptOutsideDocumentOptions >> , # [doc = "Disallow continue statements.\nSee <https://biomejs.dev/linter/rules/no-continue>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_continue : Option < RuleConfiguration < biome_rule_options :: no_continue :: NoContinueOptions >> , # [doc = "Restrict imports of deprecated exports.\nSee <https://biomejs.dev/linter/rules/no-deprecated-imports>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_deprecated_imports : Option < RuleConfiguration < biome_rule_options :: no_deprecated_imports :: NoDeprecatedImportsOptions >> , # [doc = "Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: \"bundledDependencies\", \"bundleDependencies\", \"dependencies\", \"devDependencies\", \"overrides\", \"optionalDependencies\", and \"peerDependencies\".\nSee <https://biomejs.dev/linter/rules/no-duplicate-dependencies>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_duplicate_dependencies : Option < RuleConfiguration < biome_rule_options :: no_duplicate_dependencies :: NoDuplicateDependenciesOptions >> , # [doc = "Disallow JSX prop spreading the same identifier multiple times.\nSee <https://biomejs.dev/linter/rules/no-duplicated-spread-props>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_duplicated_spread_props : Option < RuleConfiguration < biome_rule_options :: no_duplicated_spread_props :: NoDuplicatedSpreadPropsOptions >> , # [doc = "Disallow empty sources.\nSee <https://biomejs.dev/linter/rules/no-empty-source>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_empty_source : Option < RuleConfiguration < biome_rule_options :: no_empty_source :: NoEmptySourceOptions >> , # [doc = "Require the use of === or !== for comparison with null.\nSee <https://biomejs.dev/linter/rules/no-equals-to-null>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_equals_to_null : Option < RuleFixConfiguration < biome_rule_options :: no_equals_to_null :: NoEqualsToNullOptions >> , # [doc = "Require Promise-like statements to be handled appropriately.\nSee <https://biomejs.dev/linter/rules/no-floating-promises>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_floating_promises : Option < RuleFixConfiguration < biome_rule_options :: no_floating_promises :: NoFloatingPromisesOptions >> , # [doc = "Disallow iterating using a for-in loop.\nSee <https://biomejs.dev/linter/rules/no-for-in>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_for_in : Option < RuleConfiguration < biome_rule_options :: no_for_in :: NoForInOptions >> , # [doc = "Prevent import cycles.\nSee <https://biomejs.dev/linter/rules/no-import-cycles>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_import_cycles : Option < RuleConfiguration < biome_rule_options :: no_import_cycles :: NoImportCyclesOptions >> , # [doc = "Disallows the usage of the unary operators ++ and --.\nSee <https://biomejs.dev/linter/rules/no-increment-decrement>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_increment_decrement : Option < RuleConfiguration < biome_rule_options :: no_increment_decrement :: NoIncrementDecrementOptions >> , # [doc = "Disallow string literals inside JSX elements.\nSee <https://biomejs.dev/linter/rules/no-jsx-literals>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_jsx_literals : Option < RuleConfiguration < biome_rule_options :: no_jsx_literals :: NoJsxLiteralsOptions >> , # [doc = "Disallow .bind(), arrow functions, or function expressions in JSX props.\nSee <https://biomejs.dev/linter/rules/no-jsx-props-bind>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_jsx_props_bind : Option < RuleConfiguration < biome_rule_options :: no_jsx_props_bind :: NoJsxPropsBindOptions >> , # [doc = "Prevent problematic leaked values from being rendered.\nSee <https://biomejs.dev/linter/rules/no-leaked-render>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_leaked_render : Option < RuleConfiguration < biome_rule_options :: no_leaked_render :: NoLeakedRenderOptions >> , # [doc = "Disallow Promises to be used in places where they are almost certainly a mistake.\nSee <https://biomejs.dev/linter/rules/no-misused-promises>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_misused_promises : Option < RuleFixConfiguration < biome_rule_options :: no_misused_promises :: NoMisusedPromisesOptions >> , # [doc = "Disallow use of chained assignment expressions.\nSee <https://biomejs.dev/linter/rules/no-multi-assign>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_multi_assign : Option < RuleConfiguration < biome_rule_options :: no_multi_assign :: NoMultiAssignOptions >> , # [doc = "Disallow creating multiline strings by escaping newlines.\nSee <https://biomejs.dev/linter/rules/no-multi-str>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_multi_str : Option < RuleConfiguration < biome_rule_options :: no_multi_str :: NoMultiStrOptions >> , # [doc = "Prevent client components from being async functions.\nSee <https://biomejs.dev/linter/rules/no-next-async-client-component>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_next_async_client_component : Option < RuleConfiguration < biome_rule_options :: no_next_async_client_component :: NoNextAsyncClientComponentOptions >> , # [doc = "Disallow function parameters that are only used in recursive calls.\nSee <https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_parameters_only_used_in_recursion : Option < RuleFixConfiguration < biome_rule_options :: no_parameters_only_used_in_recursion :: NoParametersOnlyUsedInRecursionOptions >> , # [doc = "Disallow the use of the deprecated __proto__ object property.\nSee <https://biomejs.dev/linter/rules/no-proto>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_proto : Option < RuleConfiguration < biome_rule_options :: no_proto :: NoProtoOptions >> , # [doc = "Replaces usages of forwardRef with passing ref as a prop.\nSee <https://biomejs.dev/linter/rules/no-react-forward-ref>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_react_forward_ref : Option < RuleFixConfiguration < biome_rule_options :: no_react_forward_ref :: NoReactForwardRefOptions >> , # [doc = "Disallow assignments in return statements.\nSee <https://biomejs.dev/linter/rules/no-return-assign>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_return_assign : Option < RuleConfiguration < biome_rule_options :: no_return_assign :: NoReturnAssignOptions >> , # [doc = "Disallow javascript: URLs in HTML.\nSee <https://biomejs.dev/linter/rules/no-script-url>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_script_url : Option < RuleConfiguration < biome_rule_options :: no_script_url :: NoScriptUrlOptions >> , # [doc = "Disallow variable declarations from shadowing variables declared in the outer scope.\nSee <https://biomejs.dev/linter/rules/no-shadow>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_shadow : Option < RuleConfiguration < biome_rule_options :: no_shadow :: NoShadowOptions >> , # [doc = "Prevent the usage of synchronous scripts.\nSee <https://biomejs.dev/linter/rules/no-sync-scripts>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_sync_scripts : Option < RuleConfiguration < biome_rule_options :: no_sync_scripts :: NoSyncScriptsOptions >> , # [doc = "Disallow ternary operators.\nSee <https://biomejs.dev/linter/rules/no-ternary>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_ternary : Option < RuleConfiguration < biome_rule_options :: no_ternary :: NoTernaryOptions >> , # [doc = "Disallow the use of undeclared environment variables.\nSee <https://biomejs.dev/linter/rules/no-undeclared-env-vars>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_undeclared_env_vars : Option < RuleConfiguration < biome_rule_options :: no_undeclared_env_vars :: NoUndeclaredEnvVarsOptions >> , # [doc = "Disallow unknown DOM properties.\nSee <https://biomejs.dev/linter/rules/no-unknown-attribute>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unknown_attribute : Option < RuleConfiguration < biome_rule_options :: no_unknown_attribute :: NoUnknownAttributeOptions >> , # [doc = "Disallow unnecessary type-based conditions that can be statically determined as redundant.\nSee <https://biomejs.dev/linter/rules/no-unnecessary-conditions>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unnecessary_conditions : Option < RuleConfiguration < biome_rule_options :: no_unnecessary_conditions :: NoUnnecessaryConditionsOptions >> , # [doc = "Warn when importing non-existing exports.\nSee <https://biomejs.dev/linter/rules/no-unresolved-imports>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unresolved_imports : Option < RuleConfiguration < biome_rule_options :: no_unresolved_imports :: NoUnresolvedImportsOptions >> , # [doc = "Disallow expression statements that are neither a function call nor an assignment.\nSee <https://biomejs.dev/linter/rules/no-unused-expressions>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unused_expressions : Option < RuleConfiguration < biome_rule_options :: no_unused_expressions :: NoUnusedExpressionsOptions >> , # [doc = "Disallow unused catch bindings.\nSee <https://biomejs.dev/linter/rules/no-useless-catch-binding>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_useless_catch_binding : Option < RuleFixConfiguration < biome_rule_options :: no_useless_catch_binding :: NoUselessCatchBindingOptions >> , # [doc = "Disallow the use of useless undefined.\nSee <https://biomejs.dev/linter/rules/no-useless-undefined>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_useless_undefined : Option < RuleFixConfiguration < biome_rule_options :: no_useless_undefined :: NoUselessUndefinedOptions >> , # [doc = "Enforce that Vue component data options are declared as functions.\nSee <https://biomejs.dev/linter/rules/no-vue-data-object-declaration>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_data_object_declaration : Option < RuleFixConfiguration < biome_rule_options :: no_vue_data_object_declaration :: NoVueDataObjectDeclarationOptions >> , # [doc = "Disallow duplicate keys in Vue component data, methods, computed properties, and other options.\nSee <https://biomejs.dev/linter/rules/no-vue-duplicate-keys>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_duplicate_keys : Option < RuleConfiguration < biome_rule_options :: no_vue_duplicate_keys :: NoVueDuplicateKeysOptions >> , # [doc = "Disallow reserved keys in Vue component data and computed properties.\nSee <https://biomejs.dev/linter/rules/no-vue-reserved-keys>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_reserved_keys : Option < RuleConfiguration < biome_rule_options :: no_vue_reserved_keys :: NoVueReservedKeysOptions >> , # [doc = "Disallow reserved names to be used as props.\nSee <https://biomejs.dev/linter/rules/no-vue-reserved-props>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_reserved_props : Option < RuleConfiguration < biome_rule_options :: no_vue_reserved_props :: NoVueReservedPropsOptions >> , # [doc = "Disallow destructuring of props passed to setup in Vue projects.\nSee <https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_setup_props_reactivity_loss : Option < RuleConfiguration < biome_rule_options :: no_vue_setup_props_reactivity_loss :: NoVueSetupPropsReactivityLossOptions >> , # [doc = "Disallow using v-if and v-for directives on the same element.\nSee <https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_v_if_with_v_for : Option < RuleConfiguration < biome_rule_options :: no_vue_v_if_with_v_for :: NoVueVIfWithVForOptions >> , # [doc = "Require Array#sort and Array#toSorted calls to always provide a compareFunction.\nSee <https://biomejs.dev/linter/rules/use-array-sort-compare>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_array_sort_compare : Option < RuleConfiguration < biome_rule_options :: use_array_sort_compare :: UseArraySortCompareOptions >> , # [doc = "Enforce that await is only used on Promise values.\nSee <https://biomejs.dev/linter/rules/use-await-thenable>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_await_thenable : Option < RuleConfiguration < biome_rule_options :: use_await_thenable :: UseAwaitThenableOptions >> , # [doc = "Enforce consistent arrow function bodies.\nSee <https://biomejs.dev/linter/rules/use-consistent-arrow-return>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_arrow_return : Option < RuleFixConfiguration < biome_rule_options :: use_consistent_arrow_return :: UseConsistentArrowReturnOptions >> , # [doc = "Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.\nSee <https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_graphql_descriptions : Option < RuleConfiguration < biome_rule_options :: use_consistent_graphql_descriptions :: UseConsistentGraphqlDescriptionsOptions >> , # [doc = "Require the @deprecated directive to specify a deletion date.\nSee <https://biomejs.dev/linter/rules/use-deprecated-date>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_deprecated_date : Option < RuleConfiguration < biome_rule_options :: use_deprecated_date :: UseDeprecatedDateOptions >> , # [doc = "Require destructuring from arrays and/or objects.\nSee <https://biomejs.dev/linter/rules/use-destructuring>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_destructuring : Option < RuleConfiguration < biome_rule_options :: use_destructuring :: UseDestructuringOptions >> , # [doc = "Require switch-case statements to be exhaustive.\nSee <https://biomejs.dev/linter/rules/use-exhaustive-switch-cases>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_exhaustive_switch_cases : Option < RuleFixConfiguration < biome_rule_options :: use_exhaustive_switch_cases :: UseExhaustiveSwitchCasesOptions >> , # [doc = "Enforce types in functions, methods, variables, and parameters.\nSee <https://biomejs.dev/linter/rules/use-explicit-type>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_explicit_type : Option < RuleConfiguration < biome_rule_options :: use_explicit_type :: UseExplicitTypeOptions >> , # [doc = "Enforce the use of Array.prototype.find() over Array.prototype.filter() followed by [0] when looking for a single result.\nSee <https://biomejs.dev/linter/rules/use-find>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_find : Option < RuleConfiguration < biome_rule_options :: use_find :: UseFindOptions >> , # [doc = "Enforce a maximum number of parameters in function definitions.\nSee <https://biomejs.dev/linter/rules/use-max-params>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_max_params : Option < RuleConfiguration < biome_rule_options :: use_max_params :: UseMaxParamsOptions >> , # [doc = "Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.\nSee <https://biomejs.dev/linter/rules/use-qwik-method-usage>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_qwik_method_usage : Option < RuleConfiguration < biome_rule_options :: use_qwik_method_usage :: UseQwikMethodUsageOptions >> , # [doc = "Disallow unserializable expressions in Qwik dollar ($) scopes.\nSee <https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_qwik_valid_lexical_scope : Option < RuleConfiguration < biome_rule_options :: use_qwik_valid_lexical_scope :: UseQwikValidLexicalScopeOptions >> , # [doc = "Enforce RegExp#exec over String#match if no global flag is provided.\nSee <https://biomejs.dev/linter/rules/use-regexp-exec>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_regexp_exec : Option < RuleConfiguration < biome_rule_options :: use_regexp_exec :: UseRegexpExecOptions >> , # [doc = "Enforce the presence of required scripts in package.json.\nSee <https://biomejs.dev/linter/rules/use-required-scripts>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_required_scripts : Option < RuleConfiguration < biome_rule_options :: use_required_scripts :: UseRequiredScriptsOptions >> , # [doc = "Enforce the sorting of CSS utility classes.\nSee <https://biomejs.dev/linter/rules/use-sorted-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_sorted_classes : Option < RuleFixConfiguration < biome_rule_options :: use_sorted_classes :: UseSortedClassesOptions >> , # [doc = "Enforce the use of the spread operator over .apply().\nSee <https://biomejs.dev/linter/rules/use-spread>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_spread : Option < RuleFixConfiguration < biome_rule_options :: use_spread :: UseSpreadOptions >> , # [doc = "Require all argument names for fields & directives to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-argument-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_argument_names : Option < RuleConfiguration < biome_rule_options :: use_unique_argument_names :: UseUniqueArgumentNamesOptions >> , # [doc = "Require all fields of a type to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-field-definition-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_field_definition_names : Option < RuleConfiguration < biome_rule_options :: use_unique_field_definition_names :: UseUniqueFieldDefinitionNamesOptions >> , # [doc = "Enforce unique operation names across a GraphQL document.\nSee <https://biomejs.dev/linter/rules/use-unique-graphql-operation-name>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_graphql_operation_name : Option < RuleConfiguration < biome_rule_options :: use_unique_graphql_operation_name :: UseUniqueGraphqlOperationNameOptions >> , # [doc = "Require fields within an input object to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-input-field-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_input_field_names : Option < RuleConfiguration < biome_rule_options :: use_unique_input_field_names :: UseUniqueInputFieldNamesOptions >> , # [doc = "Require all variable definitions to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-variable-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_variable_names : Option < RuleConfiguration < biome_rule_options :: use_unique_variable_names :: UseUniqueVariableNamesOptions >> , # [doc = "Enforce consistent defineProps declaration style.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_define_props_declaration : Option < RuleConfiguration < biome_rule_options :: use_vue_consistent_define_props_declaration :: UseVueConsistentDefinePropsDeclarationOptions >> , # [doc = "Enforce a consistent style for v-bind in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_v_bind_style : Option < RuleFixConfiguration < biome_rule_options :: use_vue_consistent_v_bind_style :: UseVueConsistentVBindStyleOptions >> , # [doc = "Enforce a consistent style for v-on in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_v_on_style : Option < RuleFixConfiguration < biome_rule_options :: use_vue_consistent_v_on_style :: UseVueConsistentVOnStyleOptions >> , # [doc = "Enforce specific order of Vue compiler macros.\nSee <https://biomejs.dev/linter/rules/use-vue-define-macros-order>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_define_macros_order : Option < RuleFixConfiguration < biome_rule_options :: use_vue_define_macros_order :: UseVueDefineMacrosOrderOptions >> , # [doc = "Enforce hyphenated (kebab-case) attribute names in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_hyphenated_attributes : Option < RuleFixConfiguration < biome_rule_options :: use_vue_hyphenated_attributes :: UseVueHyphenatedAttributesOptions >> , # [doc = "Enforce multi-word component names in Vue components.\nSee <https://biomejs.dev/linter/rules/use-vue-multi-word-component-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_multi_word_component_names : Option < RuleConfiguration < biome_rule_options :: use_vue_multi_word_component_names :: UseVueMultiWordComponentNamesOptions >> , # [doc = "Enforce valid Vue \\<template> root usage.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-template-root>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_template_root : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_template_root :: UseVueValidTemplateRootOptions >> , # [doc = "Forbids v-bind directives with missing arguments or invalid modifiers.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-bind>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_bind : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_bind :: UseVueValidVBindOptions >> , # [doc = "Enforce valid v-cloak Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-cloak>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_cloak : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_cloak :: UseVueValidVCloakOptions >> , # [doc = "Enforce valid usage of v-else.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-else>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_else : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_else :: UseVueValidVElseOptions >> , # [doc = "Enforce valid v-else-if directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-else-if>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_else_if : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_else_if :: UseVueValidVElseIfOptions >> , # [doc = "Enforce valid v-html directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-html>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_html : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_html :: UseVueValidVHtmlOptions >> , # [doc = "Enforces valid v-if usage for Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-if>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_if : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_if :: UseVueValidVIfOptions >> , # [doc = "Enforce valid v-on directives with proper arguments, modifiers, and handlers.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-on>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_on : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_on :: UseVueValidVOnOptions >> , # [doc = "Enforce valid v-once Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-once>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_once : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_once :: UseVueValidVOnceOptions >> , # [doc = "Enforce valid v-pre Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-pre>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_pre : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_pre :: UseVueValidVPreOptions >> , # [doc = "Enforce valid v-text Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-text>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_text : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_text :: UseVueValidVTextOptions >> }
+pub struct Nursery { # [doc = r" Enables the recommended rules for this group"] # [serde (skip_serializing_if = "Option::is_none")] pub recommended : Option < bool > , # [doc = "Disallow using the negative dash prefix with arbitrary values.\nSee <https://biomejs.dev/linter/rules/enforces-negative-arbitrary-values>"] # [serde (skip_serializing_if = "Option::is_none")] pub enforces_negative_arbitrary_values : Option < RuleFixConfiguration < biome_rule_options :: enforces_negative_arbitrary_values :: EnforcesNegativeArbitraryValuesOptions >> , # [doc = "Disallow ambiguous anchor descriptions.\nSee <https://biomejs.dev/linter/rules/no-ambiguous-anchor-text>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_ambiguous_anchor_text : Option < RuleConfiguration < biome_rule_options :: no_ambiguous_anchor_text :: NoAmbiguousAnchorTextOptions >> , # [doc = "Disallow arbitrary values in Tailwind CSS classes.\nSee <https://biomejs.dev/linter/rules/no-arbitrary-tailwind-value>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_arbitrary_tailwind_value : Option < RuleConfiguration < biome_rule_options :: no_arbitrary_tailwind_value :: NoArbitraryTailwindValueOptions >> , # [doc = "Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.\nSee <https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_before_interactive_script_outside_document : Option < RuleConfiguration < biome_rule_options :: no_before_interactive_script_outside_document :: NoBeforeInteractiveScriptOutsideDocumentOptions >> , # [doc = "Disallow conflicting Tailwind CSS classes in the same element.\nSee <https://biomejs.dev/linter/rules/no-conflicting-tailwind-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_conflicting_tailwind_classes : Option < RuleFixConfiguration < biome_rule_options :: no_conflicting_tailwind_classes :: NoConflictingTailwindClassesOptions >> , # [doc = "Disallow continue statements.\nSee <https://biomejs.dev/linter/rules/no-continue>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_continue : Option < RuleConfiguration < biome_rule_options :: no_continue :: NoContinueOptions >> , # [doc = "Restrict imports of deprecated exports.\nSee <https://biomejs.dev/linter/rules/no-deprecated-imports>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_deprecated_imports : Option < RuleConfiguration < biome_rule_options :: no_deprecated_imports :: NoDeprecatedImportsOptions >> , # [doc = "Disallow deprecated Tailwind CSS classes and suggest modern replacements.\nSee <https://biomejs.dev/linter/rules/no-deprecated-tailwind-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_deprecated_tailwind_classes : Option < RuleFixConfiguration < biome_rule_options :: no_deprecated_tailwind_classes :: NoDeprecatedTailwindClassesOptions >> , # [doc = "Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: \"bundledDependencies\", \"bundleDependencies\", \"dependencies\", \"devDependencies\", \"overrides\", \"optionalDependencies\", and \"peerDependencies\".\nSee <https://biomejs.dev/linter/rules/no-duplicate-dependencies>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_duplicate_dependencies : Option < RuleConfiguration < biome_rule_options :: no_duplicate_dependencies :: NoDuplicateDependenciesOptions >> , # [doc = "Disallow duplicate CSS utility classes.\nSee <https://biomejs.dev/linter/rules/no-duplicate-tailwind-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_duplicate_tailwind_classes : Option < RuleFixConfiguration < biome_rule_options :: no_duplicate_tailwind_classes :: NoDuplicateTailwindClassesOptions >> , # [doc = "Disallow JSX prop spreading the same identifier multiple times.\nSee <https://biomejs.dev/linter/rules/no-duplicated-spread-props>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_duplicated_spread_props : Option < RuleConfiguration < biome_rule_options :: no_duplicated_spread_props :: NoDuplicatedSpreadPropsOptions >> , # [doc = "Disallow empty sources.\nSee <https://biomejs.dev/linter/rules/no-empty-source>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_empty_source : Option < RuleConfiguration < biome_rule_options :: no_empty_source :: NoEmptySourceOptions >> , # [doc = "Require the use of === or !== for comparison with null.\nSee <https://biomejs.dev/linter/rules/no-equals-to-null>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_equals_to_null : Option < RuleFixConfiguration < biome_rule_options :: no_equals_to_null :: NoEqualsToNullOptions >> , # [doc = "Require Promise-like statements to be handled appropriately.\nSee <https://biomejs.dev/linter/rules/no-floating-promises>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_floating_promises : Option < RuleFixConfiguration < biome_rule_options :: no_floating_promises :: NoFloatingPromisesOptions >> , # [doc = "Disallow iterating using a for-in loop.\nSee <https://biomejs.dev/linter/rules/no-for-in>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_for_in : Option < RuleConfiguration < biome_rule_options :: no_for_in :: NoForInOptions >> , # [doc = "Prevent import cycles.\nSee <https://biomejs.dev/linter/rules/no-import-cycles>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_import_cycles : Option < RuleConfiguration < biome_rule_options :: no_import_cycles :: NoImportCyclesOptions >> , # [doc = "Disallows the usage of the unary operators ++ and --.\nSee <https://biomejs.dev/linter/rules/no-increment-decrement>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_increment_decrement : Option < RuleConfiguration < biome_rule_options :: no_increment_decrement :: NoIncrementDecrementOptions >> , # [doc = "Disallow string literals inside JSX elements.\nSee <https://biomejs.dev/linter/rules/no-jsx-literals>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_jsx_literals : Option < RuleConfiguration < biome_rule_options :: no_jsx_literals :: NoJsxLiteralsOptions >> , # [doc = "Disallow .bind(), arrow functions, or function expressions in JSX props.\nSee <https://biomejs.dev/linter/rules/no-jsx-props-bind>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_jsx_props_bind : Option < RuleConfiguration < biome_rule_options :: no_jsx_props_bind :: NoJsxPropsBindOptions >> , # [doc = "Prevent problematic leaked values from being rendered.\nSee <https://biomejs.dev/linter/rules/no-leaked-render>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_leaked_render : Option < RuleConfiguration < biome_rule_options :: no_leaked_render :: NoLeakedRenderOptions >> , # [doc = "Disallow Promises to be used in places where they are almost certainly a mistake.\nSee <https://biomejs.dev/linter/rules/no-misused-promises>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_misused_promises : Option < RuleFixConfiguration < biome_rule_options :: no_misused_promises :: NoMisusedPromisesOptions >> , # [doc = "Disallow use of chained assignment expressions.\nSee <https://biomejs.dev/linter/rules/no-multi-assign>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_multi_assign : Option < RuleConfiguration < biome_rule_options :: no_multi_assign :: NoMultiAssignOptions >> , # [doc = "Disallow creating multiline strings by escaping newlines.\nSee <https://biomejs.dev/linter/rules/no-multi-str>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_multi_str : Option < RuleConfiguration < biome_rule_options :: no_multi_str :: NoMultiStrOptions >> , # [doc = "Prevent client components from being async functions.\nSee <https://biomejs.dev/linter/rules/no-next-async-client-component>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_next_async_client_component : Option < RuleConfiguration < biome_rule_options :: no_next_async_client_component :: NoNextAsyncClientComponentOptions >> , # [doc = "Disallow function parameters that are only used in recursive calls.\nSee <https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_parameters_only_used_in_recursion : Option < RuleFixConfiguration < biome_rule_options :: no_parameters_only_used_in_recursion :: NoParametersOnlyUsedInRecursionOptions >> , # [doc = "Disallow the use of the deprecated __proto__ object property.\nSee <https://biomejs.dev/linter/rules/no-proto>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_proto : Option < RuleConfiguration < biome_rule_options :: no_proto :: NoProtoOptions >> , # [doc = "Replaces usages of forwardRef with passing ref as a prop.\nSee <https://biomejs.dev/linter/rules/no-react-forward-ref>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_react_forward_ref : Option < RuleFixConfiguration < biome_rule_options :: no_react_forward_ref :: NoReactForwardRefOptions >> , # [doc = "Disallow specific Tailwind CSS classes based on configurable patterns.\nSee <https://biomejs.dev/linter/rules/no-restricted-tailwind-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_restricted_tailwind_classes : Option < RuleFixConfiguration < biome_rule_options :: no_restricted_tailwind_classes :: NoRestrictedTailwindClassesOptions >> , # [doc = "Disallow assignments in return statements.\nSee <https://biomejs.dev/linter/rules/no-return-assign>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_return_assign : Option < RuleConfiguration < biome_rule_options :: no_return_assign :: NoReturnAssignOptions >> , # [doc = "Disallow javascript: URLs in HTML.\nSee <https://biomejs.dev/linter/rules/no-script-url>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_script_url : Option < RuleConfiguration < biome_rule_options :: no_script_url :: NoScriptUrlOptions >> , # [doc = "Disallow variable declarations from shadowing variables declared in the outer scope.\nSee <https://biomejs.dev/linter/rules/no-shadow>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_shadow : Option < RuleConfiguration < biome_rule_options :: no_shadow :: NoShadowOptions >> , # [doc = "Prevent the usage of synchronous scripts.\nSee <https://biomejs.dev/linter/rules/no-sync-scripts>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_sync_scripts : Option < RuleConfiguration < biome_rule_options :: no_sync_scripts :: NoSyncScriptsOptions >> , # [doc = "Disallow ternary operators.\nSee <https://biomejs.dev/linter/rules/no-ternary>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_ternary : Option < RuleConfiguration < biome_rule_options :: no_ternary :: NoTernaryOptions >> , # [doc = "Disallow the use of undeclared environment variables.\nSee <https://biomejs.dev/linter/rules/no-undeclared-env-vars>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_undeclared_env_vars : Option < RuleConfiguration < biome_rule_options :: no_undeclared_env_vars :: NoUndeclaredEnvVarsOptions >> , # [doc = "Disallow unknown DOM properties.\nSee <https://biomejs.dev/linter/rules/no-unknown-attribute>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unknown_attribute : Option < RuleConfiguration < biome_rule_options :: no_unknown_attribute :: NoUnknownAttributeOptions >> , # [doc = "Disallow unnecessary arbitrary values that have standard Tailwind equivalents.\nSee <https://biomejs.dev/linter/rules/no-unnecessary-arbitrary-value>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unnecessary_arbitrary_value : Option < RuleFixConfiguration < biome_rule_options :: no_unnecessary_arbitrary_value :: NoUnnecessaryArbitraryValueOptions >> , # [doc = "Disallow unnecessary type-based conditions that can be statically determined as redundant.\nSee <https://biomejs.dev/linter/rules/no-unnecessary-conditions>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unnecessary_conditions : Option < RuleConfiguration < biome_rule_options :: no_unnecessary_conditions :: NoUnnecessaryConditionsOptions >> , # [doc = "Disallow unnecessary whitespace in Tailwind CSS class strings.\nSee <https://biomejs.dev/linter/rules/no-unnecessary-tailwind-whitespace>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unnecessary_tailwind_whitespace : Option < RuleFixConfiguration < biome_rule_options :: no_unnecessary_tailwind_whitespace :: NoUnnecessaryTailwindWhitespaceOptions >> , # [doc = "Detects potentially unregistered or unknown Tailwind CSS classes.\nSee <https://biomejs.dev/linter/rules/no-unregistered-tailwind-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unregistered_tailwind_classes : Option < RuleConfiguration < biome_rule_options :: no_unregistered_tailwind_classes :: NoUnregisteredTailwindClassesOptions >> , # [doc = "Warn when importing non-existing exports.\nSee <https://biomejs.dev/linter/rules/no-unresolved-imports>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unresolved_imports : Option < RuleConfiguration < biome_rule_options :: no_unresolved_imports :: NoUnresolvedImportsOptions >> , # [doc = "Disallow expression statements that are neither a function call nor an assignment.\nSee <https://biomejs.dev/linter/rules/no-unused-expressions>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_unused_expressions : Option < RuleConfiguration < biome_rule_options :: no_unused_expressions :: NoUnusedExpressionsOptions >> , # [doc = "Disallow unused catch bindings.\nSee <https://biomejs.dev/linter/rules/no-useless-catch-binding>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_useless_catch_binding : Option < RuleFixConfiguration < biome_rule_options :: no_useless_catch_binding :: NoUselessCatchBindingOptions >> , # [doc = "Disallow the use of useless undefined.\nSee <https://biomejs.dev/linter/rules/no-useless-undefined>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_useless_undefined : Option < RuleFixConfiguration < biome_rule_options :: no_useless_undefined :: NoUselessUndefinedOptions >> , # [doc = "Enforce that Vue component data options are declared as functions.\nSee <https://biomejs.dev/linter/rules/no-vue-data-object-declaration>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_data_object_declaration : Option < RuleFixConfiguration < biome_rule_options :: no_vue_data_object_declaration :: NoVueDataObjectDeclarationOptions >> , # [doc = "Disallow duplicate keys in Vue component data, methods, computed properties, and other options.\nSee <https://biomejs.dev/linter/rules/no-vue-duplicate-keys>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_duplicate_keys : Option < RuleConfiguration < biome_rule_options :: no_vue_duplicate_keys :: NoVueDuplicateKeysOptions >> , # [doc = "Disallow reserved keys in Vue component data and computed properties.\nSee <https://biomejs.dev/linter/rules/no-vue-reserved-keys>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_reserved_keys : Option < RuleConfiguration < biome_rule_options :: no_vue_reserved_keys :: NoVueReservedKeysOptions >> , # [doc = "Disallow reserved names to be used as props.\nSee <https://biomejs.dev/linter/rules/no-vue-reserved-props>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_reserved_props : Option < RuleConfiguration < biome_rule_options :: no_vue_reserved_props :: NoVueReservedPropsOptions >> , # [doc = "Disallow destructuring of props passed to setup in Vue projects.\nSee <https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_setup_props_reactivity_loss : Option < RuleConfiguration < biome_rule_options :: no_vue_setup_props_reactivity_loss :: NoVueSetupPropsReactivityLossOptions >> , # [doc = "Disallow using v-if and v-for directives on the same element.\nSee <https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for>"] # [serde (skip_serializing_if = "Option::is_none")] pub no_vue_v_if_with_v_for : Option < RuleConfiguration < biome_rule_options :: no_vue_v_if_with_v_for :: NoVueVIfWithVForOptions >> , # [doc = "Require Array#sort and Array#toSorted calls to always provide a compareFunction.\nSee <https://biomejs.dev/linter/rules/use-array-sort-compare>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_array_sort_compare : Option < RuleConfiguration < biome_rule_options :: use_array_sort_compare :: UseArraySortCompareOptions >> , # [doc = "Enforce that await is only used on Promise values.\nSee <https://biomejs.dev/linter/rules/use-await-thenable>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_await_thenable : Option < RuleConfiguration < biome_rule_options :: use_await_thenable :: UseAwaitThenableOptions >> , # [doc = "Enforce consistent arrow function bodies.\nSee <https://biomejs.dev/linter/rules/use-consistent-arrow-return>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_arrow_return : Option < RuleFixConfiguration < biome_rule_options :: use_consistent_arrow_return :: UseConsistentArrowReturnOptions >> , # [doc = "Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.\nSee <https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_graphql_descriptions : Option < RuleConfiguration < biome_rule_options :: use_consistent_graphql_descriptions :: UseConsistentGraphqlDescriptionsOptions >> , # [doc = "Enforce consistent placement of the important modifier (!) in Tailwind CSS classes.\nSee <https://biomejs.dev/linter/rules/use-consistent-tailwind-important-position>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_tailwind_important_position : Option < RuleFixConfiguration < biome_rule_options :: use_consistent_tailwind_important_position :: UseConsistentTailwindImportantPositionOptions >> , # [doc = "Enforce consistent line wrapping in Tailwind CSS class strings.\nSee <https://biomejs.dev/linter/rules/use-consistent-tailwind-line-wrapping>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_tailwind_line_wrapping : Option < RuleFixConfiguration < biome_rule_options :: use_consistent_tailwind_line_wrapping :: UseConsistentTailwindLineWrappingOptions >> , # [doc = "Enforce consistent CSS variable syntax in Tailwind CSS arbitrary values.\nSee <https://biomejs.dev/linter/rules/use-consistent-tailwind-variable-syntax>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_consistent_tailwind_variable_syntax : Option < RuleFixConfiguration < biome_rule_options :: use_consistent_tailwind_variable_syntax :: UseConsistentTailwindVariableSyntaxOptions >> , # [doc = "Require the @deprecated directive to specify a deletion date.\nSee <https://biomejs.dev/linter/rules/use-deprecated-date>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_deprecated_date : Option < RuleConfiguration < biome_rule_options :: use_deprecated_date :: UseDeprecatedDateOptions >> , # [doc = "Require destructuring from arrays and/or objects.\nSee <https://biomejs.dev/linter/rules/use-destructuring>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_destructuring : Option < RuleConfiguration < biome_rule_options :: use_destructuring :: UseDestructuringOptions >> , # [doc = "Require switch-case statements to be exhaustive.\nSee <https://biomejs.dev/linter/rules/use-exhaustive-switch-cases>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_exhaustive_switch_cases : Option < RuleFixConfiguration < biome_rule_options :: use_exhaustive_switch_cases :: UseExhaustiveSwitchCasesOptions >> , # [doc = "Enforce types in functions, methods, variables, and parameters.\nSee <https://biomejs.dev/linter/rules/use-explicit-type>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_explicit_type : Option < RuleConfiguration < biome_rule_options :: use_explicit_type :: UseExplicitTypeOptions >> , # [doc = "Enforce the use of Array.prototype.find() over Array.prototype.filter() followed by [0] when looking for a single result.\nSee <https://biomejs.dev/linter/rules/use-find>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_find : Option < RuleConfiguration < biome_rule_options :: use_find :: UseFindOptions >> , # [doc = "Enforce a maximum number of parameters in function definitions.\nSee <https://biomejs.dev/linter/rules/use-max-params>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_max_params : Option < RuleConfiguration < biome_rule_options :: use_max_params :: UseMaxParamsOptions >> , # [doc = "Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.\nSee <https://biomejs.dev/linter/rules/use-qwik-method-usage>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_qwik_method_usage : Option < RuleConfiguration < biome_rule_options :: use_qwik_method_usage :: UseQwikMethodUsageOptions >> , # [doc = "Disallow unserializable expressions in Qwik dollar ($) scopes.\nSee <https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_qwik_valid_lexical_scope : Option < RuleConfiguration < biome_rule_options :: use_qwik_valid_lexical_scope :: UseQwikValidLexicalScopeOptions >> , # [doc = "Enforce RegExp#exec over String#match if no global flag is provided.\nSee <https://biomejs.dev/linter/rules/use-regexp-exec>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_regexp_exec : Option < RuleConfiguration < biome_rule_options :: use_regexp_exec :: UseRegexpExecOptions >> , # [doc = "Enforce the presence of required scripts in package.json.\nSee <https://biomejs.dev/linter/rules/use-required-scripts>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_required_scripts : Option < RuleConfiguration < biome_rule_options :: use_required_scripts :: UseRequiredScriptsOptions >> , # [doc = "Enforce the sorting of CSS utility classes.\nSee <https://biomejs.dev/linter/rules/use-sorted-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_sorted_classes : Option < RuleFixConfiguration < biome_rule_options :: use_sorted_classes :: UseSortedClassesOptions >> , # [doc = "Enforce the use of the spread operator over .apply().\nSee <https://biomejs.dev/linter/rules/use-spread>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_spread : Option < RuleFixConfiguration < biome_rule_options :: use_spread :: UseSpreadOptions >> , # [doc = "Enforce using shorthand Tailwind CSS classes when all sides have the same value.\nSee <https://biomejs.dev/linter/rules/use-tailwind-shorthand-classes>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_tailwind_shorthand_classes : Option < RuleFixConfiguration < biome_rule_options :: use_tailwind_shorthand_classes :: UseTailwindShorthandClassesOptions >> , # [doc = "Require all argument names for fields & directives to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-argument-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_argument_names : Option < RuleConfiguration < biome_rule_options :: use_unique_argument_names :: UseUniqueArgumentNamesOptions >> , # [doc = "Require all fields of a type to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-field-definition-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_field_definition_names : Option < RuleConfiguration < biome_rule_options :: use_unique_field_definition_names :: UseUniqueFieldDefinitionNamesOptions >> , # [doc = "Enforce unique operation names across a GraphQL document.\nSee <https://biomejs.dev/linter/rules/use-unique-graphql-operation-name>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_graphql_operation_name : Option < RuleConfiguration < biome_rule_options :: use_unique_graphql_operation_name :: UseUniqueGraphqlOperationNameOptions >> , # [doc = "Require fields within an input object to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-input-field-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_input_field_names : Option < RuleConfiguration < biome_rule_options :: use_unique_input_field_names :: UseUniqueInputFieldNamesOptions >> , # [doc = "Require all variable definitions to be unique.\nSee <https://biomejs.dev/linter/rules/use-unique-variable-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_unique_variable_names : Option < RuleConfiguration < biome_rule_options :: use_unique_variable_names :: UseUniqueVariableNamesOptions >> , # [doc = "Enforce consistent defineProps declaration style.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_define_props_declaration : Option < RuleConfiguration < biome_rule_options :: use_vue_consistent_define_props_declaration :: UseVueConsistentDefinePropsDeclarationOptions >> , # [doc = "Enforce a consistent style for v-bind in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_v_bind_style : Option < RuleFixConfiguration < biome_rule_options :: use_vue_consistent_v_bind_style :: UseVueConsistentVBindStyleOptions >> , # [doc = "Enforce a consistent style for v-on in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_consistent_v_on_style : Option < RuleFixConfiguration < biome_rule_options :: use_vue_consistent_v_on_style :: UseVueConsistentVOnStyleOptions >> , # [doc = "Enforce specific order of Vue compiler macros.\nSee <https://biomejs.dev/linter/rules/use-vue-define-macros-order>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_define_macros_order : Option < RuleFixConfiguration < biome_rule_options :: use_vue_define_macros_order :: UseVueDefineMacrosOrderOptions >> , # [doc = "Enforce hyphenated (kebab-case) attribute names in Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_hyphenated_attributes : Option < RuleFixConfiguration < biome_rule_options :: use_vue_hyphenated_attributes :: UseVueHyphenatedAttributesOptions >> , # [doc = "Enforce multi-word component names in Vue components.\nSee <https://biomejs.dev/linter/rules/use-vue-multi-word-component-names>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_multi_word_component_names : Option < RuleConfiguration < biome_rule_options :: use_vue_multi_word_component_names :: UseVueMultiWordComponentNamesOptions >> , # [doc = "Enforce valid Vue \\<template> root usage.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-template-root>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_template_root : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_template_root :: UseVueValidTemplateRootOptions >> , # [doc = "Forbids v-bind directives with missing arguments or invalid modifiers.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-bind>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_bind : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_bind :: UseVueValidVBindOptions >> , # [doc = "Enforce valid v-cloak Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-cloak>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_cloak : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_cloak :: UseVueValidVCloakOptions >> , # [doc = "Enforce valid usage of v-else.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-else>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_else : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_else :: UseVueValidVElseOptions >> , # [doc = "Enforce valid v-else-if directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-else-if>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_else_if : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_else_if :: UseVueValidVElseIfOptions >> , # [doc = "Enforce valid v-html directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-html>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_html : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_html :: UseVueValidVHtmlOptions >> , # [doc = "Enforces valid v-if usage for Vue templates.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-if>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_if : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_if :: UseVueValidVIfOptions >> , # [doc = "Enforce valid v-on directives with proper arguments, modifiers, and handlers.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-on>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_on : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_on :: UseVueValidVOnOptions >> , # [doc = "Enforce valid v-once Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-once>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_once : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_once :: UseVueValidVOnceOptions >> , # [doc = "Enforce valid v-pre Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-pre>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_pre : Option < RuleFixConfiguration < biome_rule_options :: use_vue_valid_v_pre :: UseVueValidVPreOptions >> , # [doc = "Enforce valid v-text Vue directives.\nSee <https://biomejs.dev/linter/rules/use-vue-valid-v-text>"] # [serde (skip_serializing_if = "Option::is_none")] pub use_vue_valid_v_text : Option < RuleConfiguration < biome_rule_options :: use_vue_valid_v_text :: UseVueValidVTextOptions >> }
 impl Nursery {
     const GROUP_NAME: &'static str = "nursery";
     pub(crate) const GROUP_RULES: &'static [&'static str] = &[
+        "enforcesNegativeArbitraryValues",
         "noAmbiguousAnchorText",
+        "noArbitraryTailwindValue",
         "noBeforeInteractiveScriptOutsideDocument",
+        "noConflictingTailwindClasses",
         "noContinue",
         "noDeprecatedImports",
+        "noDeprecatedTailwindClasses",
         "noDuplicateDependencies",
+        "noDuplicateTailwindClasses",
         "noDuplicatedSpreadProps",
         "noEmptySource",
         "noEqualsToNull",
@@ -4926,6 +4987,7 @@ impl Nursery {
         "noParametersOnlyUsedInRecursion",
         "noProto",
         "noReactForwardRef",
+        "noRestrictedTailwindClasses",
         "noReturnAssign",
         "noScriptUrl",
         "noShadow",
@@ -4933,7 +4995,10 @@ impl Nursery {
         "noTernary",
         "noUndeclaredEnvVars",
         "noUnknownAttribute",
+        "noUnnecessaryArbitraryValue",
         "noUnnecessaryConditions",
+        "noUnnecessaryTailwindWhitespace",
+        "noUnregisteredTailwindClasses",
         "noUnresolvedImports",
         "noUnusedExpressions",
         "noUselessCatchBinding",
@@ -4948,6 +5013,9 @@ impl Nursery {
         "useAwaitThenable",
         "useConsistentArrowReturn",
         "useConsistentGraphqlDescriptions",
+        "useConsistentTailwindImportantPosition",
+        "useConsistentTailwindLineWrapping",
+        "useConsistentTailwindVariableSyntax",
         "useDeprecatedDate",
         "useDestructuring",
         "useExhaustiveSwitchCases",
@@ -4960,6 +5028,7 @@ impl Nursery {
         "useRequiredScripts",
         "useSortedClasses",
         "useSpread",
+        "useTailwindShorthandClasses",
         "useUniqueArgumentNames",
         "useUniqueFieldDefinitionNames",
         "useUniqueGraphqlOperationName",
@@ -4984,9 +5053,9 @@ impl Nursery {
         "useVueValidVText",
     ];
     const RECOMMENDED_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]),
-        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[55]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[67]),
     ];
     const ALL_RULES_AS_FILTERS: &'static [RuleFilter<'static>] = &[
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]),
@@ -5067,6 +5136,19 @@ impl Nursery {
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[75]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[76]),
         RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[77]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[78]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[79]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[80]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[81]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[82]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[83]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[84]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[85]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[86]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[87]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[88]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[89]),
+        RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[90]),
     ];
 }
 impl RuleGroupExt for Nursery {
@@ -5078,789 +5160,919 @@ impl RuleGroupExt for Nursery {
     }
     fn get_enabled_rules(&self) -> FxHashSet<RuleFilter<'static>> {
         let mut index_set = FxHashSet::default();
-        if let Some(rule) = self.no_ambiguous_anchor_text.as_ref()
+        if let Some(rule) = self.enforces_negative_arbitrary_values.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]));
         }
-        if let Some(rule) = self.no_before_interactive_script_outside_document.as_ref()
+        if let Some(rule) = self.no_ambiguous_anchor_text.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]));
         }
-        if let Some(rule) = self.no_continue.as_ref()
+        if let Some(rule) = self.no_arbitrary_tailwind_value.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]));
         }
-        if let Some(rule) = self.no_deprecated_imports.as_ref()
+        if let Some(rule) = self.no_before_interactive_script_outside_document.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]));
         }
-        if let Some(rule) = self.no_duplicate_dependencies.as_ref()
+        if let Some(rule) = self.no_conflicting_tailwind_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[4]));
         }
-        if let Some(rule) = self.no_duplicated_spread_props.as_ref()
+        if let Some(rule) = self.no_continue.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]));
         }
-        if let Some(rule) = self.no_empty_source.as_ref()
+        if let Some(rule) = self.no_deprecated_imports.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]));
         }
-        if let Some(rule) = self.no_equals_to_null.as_ref()
+        if let Some(rule) = self.no_deprecated_tailwind_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
         }
-        if let Some(rule) = self.no_floating_promises.as_ref()
+        if let Some(rule) = self.no_duplicate_dependencies.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]));
         }
-        if let Some(rule) = self.no_for_in.as_ref()
+        if let Some(rule) = self.no_duplicate_tailwind_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]));
         }
-        if let Some(rule) = self.no_import_cycles.as_ref()
+        if let Some(rule) = self.no_duplicated_spread_props.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
         }
-        if let Some(rule) = self.no_increment_decrement.as_ref()
+        if let Some(rule) = self.no_empty_source.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
         }
-        if let Some(rule) = self.no_jsx_literals.as_ref()
+        if let Some(rule) = self.no_equals_to_null.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
         }
-        if let Some(rule) = self.no_jsx_props_bind.as_ref()
+        if let Some(rule) = self.no_floating_promises.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
         }
-        if let Some(rule) = self.no_leaked_render.as_ref()
+        if let Some(rule) = self.no_for_in.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
         }
-        if let Some(rule) = self.no_misused_promises.as_ref()
+        if let Some(rule) = self.no_import_cycles.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
         }
-        if let Some(rule) = self.no_multi_assign.as_ref()
+        if let Some(rule) = self.no_increment_decrement.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
         }
-        if let Some(rule) = self.no_multi_str.as_ref()
+        if let Some(rule) = self.no_jsx_literals.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
         }
-        if let Some(rule) = self.no_next_async_client_component.as_ref()
+        if let Some(rule) = self.no_jsx_props_bind.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
         }
-        if let Some(rule) = self.no_parameters_only_used_in_recursion.as_ref()
+        if let Some(rule) = self.no_leaked_render.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
         }
-        if let Some(rule) = self.no_proto.as_ref()
+        if let Some(rule) = self.no_misused_promises.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
         }
-        if let Some(rule) = self.no_react_forward_ref.as_ref()
+        if let Some(rule) = self.no_multi_assign.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
         }
-        if let Some(rule) = self.no_return_assign.as_ref()
+        if let Some(rule) = self.no_multi_str.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
         }
-        if let Some(rule) = self.no_script_url.as_ref()
+        if let Some(rule) = self.no_next_async_client_component.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
         }
-        if let Some(rule) = self.no_shadow.as_ref()
+        if let Some(rule) = self.no_parameters_only_used_in_recursion.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
         }
-        if let Some(rule) = self.no_sync_scripts.as_ref()
+        if let Some(rule) = self.no_proto.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
         }
-        if let Some(rule) = self.no_ternary.as_ref()
+        if let Some(rule) = self.no_react_forward_ref.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
         }
-        if let Some(rule) = self.no_undeclared_env_vars.as_ref()
+        if let Some(rule) = self.no_restricted_tailwind_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
         }
-        if let Some(rule) = self.no_unknown_attribute.as_ref()
+        if let Some(rule) = self.no_return_assign.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
         }
-        if let Some(rule) = self.no_unnecessary_conditions.as_ref()
+        if let Some(rule) = self.no_script_url.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]));
         }
-        if let Some(rule) = self.no_unresolved_imports.as_ref()
+        if let Some(rule) = self.no_shadow.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]));
         }
-        if let Some(rule) = self.no_unused_expressions.as_ref()
+        if let Some(rule) = self.no_sync_scripts.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[31]));
         }
-        if let Some(rule) = self.no_useless_catch_binding.as_ref()
+        if let Some(rule) = self.no_ternary.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[32]));
         }
-        if let Some(rule) = self.no_useless_undefined.as_ref()
+        if let Some(rule) = self.no_undeclared_env_vars.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[33]));
         }
-        if let Some(rule) = self.no_vue_data_object_declaration.as_ref()
+        if let Some(rule) = self.no_unknown_attribute.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[34]));
         }
-        if let Some(rule) = self.no_vue_duplicate_keys.as_ref()
+        if let Some(rule) = self.no_unnecessary_arbitrary_value.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[35]));
         }
-        if let Some(rule) = self.no_vue_reserved_keys.as_ref()
+        if let Some(rule) = self.no_unnecessary_conditions.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[36]));
         }
-        if let Some(rule) = self.no_vue_reserved_props.as_ref()
+        if let Some(rule) = self.no_unnecessary_tailwind_whitespace.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[37]));
         }
-        if let Some(rule) = self.no_vue_setup_props_reactivity_loss.as_ref()
+        if let Some(rule) = self.no_unregistered_tailwind_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
         }
-        if let Some(rule) = self.no_vue_v_if_with_v_for.as_ref()
+        if let Some(rule) = self.no_unresolved_imports.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
         }
-        if let Some(rule) = self.use_array_sort_compare.as_ref()
+        if let Some(rule) = self.no_unused_expressions.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[40]));
         }
-        if let Some(rule) = self.use_await_thenable.as_ref()
+        if let Some(rule) = self.no_useless_catch_binding.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[41]));
         }
-        if let Some(rule) = self.use_consistent_arrow_return.as_ref()
+        if let Some(rule) = self.no_useless_undefined.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[42]));
         }
-        if let Some(rule) = self.use_consistent_graphql_descriptions.as_ref()
+        if let Some(rule) = self.no_vue_data_object_declaration.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]));
         }
-        if let Some(rule) = self.use_deprecated_date.as_ref()
+        if let Some(rule) = self.no_vue_duplicate_keys.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[44]));
         }
-        if let Some(rule) = self.use_destructuring.as_ref()
+        if let Some(rule) = self.no_vue_reserved_keys.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[45]));
         }
-        if let Some(rule) = self.use_exhaustive_switch_cases.as_ref()
+        if let Some(rule) = self.no_vue_reserved_props.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[46]));
         }
-        if let Some(rule) = self.use_explicit_type.as_ref()
+        if let Some(rule) = self.no_vue_setup_props_reactivity_loss.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
         }
-        if let Some(rule) = self.use_find.as_ref()
+        if let Some(rule) = self.no_vue_v_if_with_v_for.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
         }
-        if let Some(rule) = self.use_max_params.as_ref()
+        if let Some(rule) = self.use_array_sort_compare.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
         }
-        if let Some(rule) = self.use_qwik_method_usage.as_ref()
+        if let Some(rule) = self.use_await_thenable.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
         }
-        if let Some(rule) = self.use_qwik_valid_lexical_scope.as_ref()
+        if let Some(rule) = self.use_consistent_arrow_return.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
         }
-        if let Some(rule) = self.use_regexp_exec.as_ref()
+        if let Some(rule) = self.use_consistent_graphql_descriptions.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
         }
-        if let Some(rule) = self.use_required_scripts.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_important_position.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
         }
-        if let Some(rule) = self.use_sorted_classes.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_line_wrapping.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
         }
-        if let Some(rule) = self.use_spread.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_variable_syntax.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[55]));
         }
-        if let Some(rule) = self.use_unique_argument_names.as_ref()
+        if let Some(rule) = self.use_deprecated_date.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[56]));
         }
-        if let Some(rule) = self.use_unique_field_definition_names.as_ref()
+        if let Some(rule) = self.use_destructuring.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[57]));
         }
-        if let Some(rule) = self.use_unique_graphql_operation_name.as_ref()
+        if let Some(rule) = self.use_exhaustive_switch_cases.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[58]));
         }
-        if let Some(rule) = self.use_unique_input_field_names.as_ref()
+        if let Some(rule) = self.use_explicit_type.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[59]));
         }
-        if let Some(rule) = self.use_unique_variable_names.as_ref()
+        if let Some(rule) = self.use_find.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[60]));
         }
-        if let Some(rule) = self.use_vue_consistent_define_props_declaration.as_ref()
+        if let Some(rule) = self.use_max_params.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[61]));
         }
-        if let Some(rule) = self.use_vue_consistent_v_bind_style.as_ref()
+        if let Some(rule) = self.use_qwik_method_usage.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[62]));
         }
-        if let Some(rule) = self.use_vue_consistent_v_on_style.as_ref()
+        if let Some(rule) = self.use_qwik_valid_lexical_scope.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[63]));
         }
-        if let Some(rule) = self.use_vue_define_macros_order.as_ref()
+        if let Some(rule) = self.use_regexp_exec.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[64]));
         }
-        if let Some(rule) = self.use_vue_hyphenated_attributes.as_ref()
+        if let Some(rule) = self.use_required_scripts.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[65]));
         }
-        if let Some(rule) = self.use_vue_multi_word_component_names.as_ref()
+        if let Some(rule) = self.use_sorted_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[66]));
         }
-        if let Some(rule) = self.use_vue_valid_template_root.as_ref()
+        if let Some(rule) = self.use_spread.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[67]));
         }
-        if let Some(rule) = self.use_vue_valid_v_bind.as_ref()
+        if let Some(rule) = self.use_tailwind_shorthand_classes.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[68]));
         }
-        if let Some(rule) = self.use_vue_valid_v_cloak.as_ref()
+        if let Some(rule) = self.use_unique_argument_names.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[69]));
         }
-        if let Some(rule) = self.use_vue_valid_v_else.as_ref()
+        if let Some(rule) = self.use_unique_field_definition_names.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[70]));
         }
-        if let Some(rule) = self.use_vue_valid_v_else_if.as_ref()
+        if let Some(rule) = self.use_unique_graphql_operation_name.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[71]));
         }
-        if let Some(rule) = self.use_vue_valid_v_html.as_ref()
+        if let Some(rule) = self.use_unique_input_field_names.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[72]));
         }
-        if let Some(rule) = self.use_vue_valid_v_if.as_ref()
+        if let Some(rule) = self.use_unique_variable_names.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[73]));
         }
-        if let Some(rule) = self.use_vue_valid_v_on.as_ref()
+        if let Some(rule) = self.use_vue_consistent_define_props_declaration.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[74]));
         }
-        if let Some(rule) = self.use_vue_valid_v_once.as_ref()
+        if let Some(rule) = self.use_vue_consistent_v_bind_style.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[75]));
         }
-        if let Some(rule) = self.use_vue_valid_v_pre.as_ref()
+        if let Some(rule) = self.use_vue_consistent_v_on_style.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[76]));
         }
-        if let Some(rule) = self.use_vue_valid_v_text.as_ref()
+        if let Some(rule) = self.use_vue_define_macros_order.as_ref()
             && rule.is_enabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[77]));
+        }
+        if let Some(rule) = self.use_vue_hyphenated_attributes.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[78]));
+        }
+        if let Some(rule) = self.use_vue_multi_word_component_names.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[79]));
+        }
+        if let Some(rule) = self.use_vue_valid_template_root.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[80]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_bind.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[81]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_cloak.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[82]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_else.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[83]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_else_if.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[84]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_html.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[85]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_if.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[86]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_on.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[87]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_once.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[88]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_pre.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[89]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_text.as_ref()
+            && rule.is_enabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[90]));
         }
         index_set
     }
     fn get_disabled_rules(&self) -> FxHashSet<RuleFilter<'static>> {
         let mut index_set = FxHashSet::default();
-        if let Some(rule) = self.no_ambiguous_anchor_text.as_ref()
+        if let Some(rule) = self.enforces_negative_arbitrary_values.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[0]));
         }
-        if let Some(rule) = self.no_before_interactive_script_outside_document.as_ref()
+        if let Some(rule) = self.no_ambiguous_anchor_text.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[1]));
         }
-        if let Some(rule) = self.no_continue.as_ref()
+        if let Some(rule) = self.no_arbitrary_tailwind_value.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[2]));
         }
-        if let Some(rule) = self.no_deprecated_imports.as_ref()
+        if let Some(rule) = self.no_before_interactive_script_outside_document.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[3]));
         }
-        if let Some(rule) = self.no_duplicate_dependencies.as_ref()
+        if let Some(rule) = self.no_conflicting_tailwind_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[4]));
         }
-        if let Some(rule) = self.no_duplicated_spread_props.as_ref()
+        if let Some(rule) = self.no_continue.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[5]));
         }
-        if let Some(rule) = self.no_empty_source.as_ref()
+        if let Some(rule) = self.no_deprecated_imports.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[6]));
         }
-        if let Some(rule) = self.no_equals_to_null.as_ref()
+        if let Some(rule) = self.no_deprecated_tailwind_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[7]));
         }
-        if let Some(rule) = self.no_floating_promises.as_ref()
+        if let Some(rule) = self.no_duplicate_dependencies.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[8]));
         }
-        if let Some(rule) = self.no_for_in.as_ref()
+        if let Some(rule) = self.no_duplicate_tailwind_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[9]));
         }
-        if let Some(rule) = self.no_import_cycles.as_ref()
+        if let Some(rule) = self.no_duplicated_spread_props.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[10]));
         }
-        if let Some(rule) = self.no_increment_decrement.as_ref()
+        if let Some(rule) = self.no_empty_source.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[11]));
         }
-        if let Some(rule) = self.no_jsx_literals.as_ref()
+        if let Some(rule) = self.no_equals_to_null.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[12]));
         }
-        if let Some(rule) = self.no_jsx_props_bind.as_ref()
+        if let Some(rule) = self.no_floating_promises.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[13]));
         }
-        if let Some(rule) = self.no_leaked_render.as_ref()
+        if let Some(rule) = self.no_for_in.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[14]));
         }
-        if let Some(rule) = self.no_misused_promises.as_ref()
+        if let Some(rule) = self.no_import_cycles.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[15]));
         }
-        if let Some(rule) = self.no_multi_assign.as_ref()
+        if let Some(rule) = self.no_increment_decrement.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[16]));
         }
-        if let Some(rule) = self.no_multi_str.as_ref()
+        if let Some(rule) = self.no_jsx_literals.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[17]));
         }
-        if let Some(rule) = self.no_next_async_client_component.as_ref()
+        if let Some(rule) = self.no_jsx_props_bind.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[18]));
         }
-        if let Some(rule) = self.no_parameters_only_used_in_recursion.as_ref()
+        if let Some(rule) = self.no_leaked_render.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[19]));
         }
-        if let Some(rule) = self.no_proto.as_ref()
+        if let Some(rule) = self.no_misused_promises.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[20]));
         }
-        if let Some(rule) = self.no_react_forward_ref.as_ref()
+        if let Some(rule) = self.no_multi_assign.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[21]));
         }
-        if let Some(rule) = self.no_return_assign.as_ref()
+        if let Some(rule) = self.no_multi_str.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[22]));
         }
-        if let Some(rule) = self.no_script_url.as_ref()
+        if let Some(rule) = self.no_next_async_client_component.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[23]));
         }
-        if let Some(rule) = self.no_shadow.as_ref()
+        if let Some(rule) = self.no_parameters_only_used_in_recursion.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[24]));
         }
-        if let Some(rule) = self.no_sync_scripts.as_ref()
+        if let Some(rule) = self.no_proto.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[25]));
         }
-        if let Some(rule) = self.no_ternary.as_ref()
+        if let Some(rule) = self.no_react_forward_ref.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[26]));
         }
-        if let Some(rule) = self.no_undeclared_env_vars.as_ref()
+        if let Some(rule) = self.no_restricted_tailwind_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[27]));
         }
-        if let Some(rule) = self.no_unknown_attribute.as_ref()
+        if let Some(rule) = self.no_return_assign.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[28]));
         }
-        if let Some(rule) = self.no_unnecessary_conditions.as_ref()
+        if let Some(rule) = self.no_script_url.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[29]));
         }
-        if let Some(rule) = self.no_unresolved_imports.as_ref()
+        if let Some(rule) = self.no_shadow.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[30]));
         }
-        if let Some(rule) = self.no_unused_expressions.as_ref()
+        if let Some(rule) = self.no_sync_scripts.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[31]));
         }
-        if let Some(rule) = self.no_useless_catch_binding.as_ref()
+        if let Some(rule) = self.no_ternary.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[32]));
         }
-        if let Some(rule) = self.no_useless_undefined.as_ref()
+        if let Some(rule) = self.no_undeclared_env_vars.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[33]));
         }
-        if let Some(rule) = self.no_vue_data_object_declaration.as_ref()
+        if let Some(rule) = self.no_unknown_attribute.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[34]));
         }
-        if let Some(rule) = self.no_vue_duplicate_keys.as_ref()
+        if let Some(rule) = self.no_unnecessary_arbitrary_value.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[35]));
         }
-        if let Some(rule) = self.no_vue_reserved_keys.as_ref()
+        if let Some(rule) = self.no_unnecessary_conditions.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[36]));
         }
-        if let Some(rule) = self.no_vue_reserved_props.as_ref()
+        if let Some(rule) = self.no_unnecessary_tailwind_whitespace.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[37]));
         }
-        if let Some(rule) = self.no_vue_setup_props_reactivity_loss.as_ref()
+        if let Some(rule) = self.no_unregistered_tailwind_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[38]));
         }
-        if let Some(rule) = self.no_vue_v_if_with_v_for.as_ref()
+        if let Some(rule) = self.no_unresolved_imports.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[39]));
         }
-        if let Some(rule) = self.use_array_sort_compare.as_ref()
+        if let Some(rule) = self.no_unused_expressions.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[40]));
         }
-        if let Some(rule) = self.use_await_thenable.as_ref()
+        if let Some(rule) = self.no_useless_catch_binding.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[41]));
         }
-        if let Some(rule) = self.use_consistent_arrow_return.as_ref()
+        if let Some(rule) = self.no_useless_undefined.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[42]));
         }
-        if let Some(rule) = self.use_consistent_graphql_descriptions.as_ref()
+        if let Some(rule) = self.no_vue_data_object_declaration.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[43]));
         }
-        if let Some(rule) = self.use_deprecated_date.as_ref()
+        if let Some(rule) = self.no_vue_duplicate_keys.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[44]));
         }
-        if let Some(rule) = self.use_destructuring.as_ref()
+        if let Some(rule) = self.no_vue_reserved_keys.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[45]));
         }
-        if let Some(rule) = self.use_exhaustive_switch_cases.as_ref()
+        if let Some(rule) = self.no_vue_reserved_props.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[46]));
         }
-        if let Some(rule) = self.use_explicit_type.as_ref()
+        if let Some(rule) = self.no_vue_setup_props_reactivity_loss.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[47]));
         }
-        if let Some(rule) = self.use_find.as_ref()
+        if let Some(rule) = self.no_vue_v_if_with_v_for.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[48]));
         }
-        if let Some(rule) = self.use_max_params.as_ref()
+        if let Some(rule) = self.use_array_sort_compare.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[49]));
         }
-        if let Some(rule) = self.use_qwik_method_usage.as_ref()
+        if let Some(rule) = self.use_await_thenable.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[50]));
         }
-        if let Some(rule) = self.use_qwik_valid_lexical_scope.as_ref()
+        if let Some(rule) = self.use_consistent_arrow_return.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[51]));
         }
-        if let Some(rule) = self.use_regexp_exec.as_ref()
+        if let Some(rule) = self.use_consistent_graphql_descriptions.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[52]));
         }
-        if let Some(rule) = self.use_required_scripts.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_important_position.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[53]));
         }
-        if let Some(rule) = self.use_sorted_classes.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_line_wrapping.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[54]));
         }
-        if let Some(rule) = self.use_spread.as_ref()
+        if let Some(rule) = self.use_consistent_tailwind_variable_syntax.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[55]));
         }
-        if let Some(rule) = self.use_unique_argument_names.as_ref()
+        if let Some(rule) = self.use_deprecated_date.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[56]));
         }
-        if let Some(rule) = self.use_unique_field_definition_names.as_ref()
+        if let Some(rule) = self.use_destructuring.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[57]));
         }
-        if let Some(rule) = self.use_unique_graphql_operation_name.as_ref()
+        if let Some(rule) = self.use_exhaustive_switch_cases.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[58]));
         }
-        if let Some(rule) = self.use_unique_input_field_names.as_ref()
+        if let Some(rule) = self.use_explicit_type.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[59]));
         }
-        if let Some(rule) = self.use_unique_variable_names.as_ref()
+        if let Some(rule) = self.use_find.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[60]));
         }
-        if let Some(rule) = self.use_vue_consistent_define_props_declaration.as_ref()
+        if let Some(rule) = self.use_max_params.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[61]));
         }
-        if let Some(rule) = self.use_vue_consistent_v_bind_style.as_ref()
+        if let Some(rule) = self.use_qwik_method_usage.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[62]));
         }
-        if let Some(rule) = self.use_vue_consistent_v_on_style.as_ref()
+        if let Some(rule) = self.use_qwik_valid_lexical_scope.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[63]));
         }
-        if let Some(rule) = self.use_vue_define_macros_order.as_ref()
+        if let Some(rule) = self.use_regexp_exec.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[64]));
         }
-        if let Some(rule) = self.use_vue_hyphenated_attributes.as_ref()
+        if let Some(rule) = self.use_required_scripts.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[65]));
         }
-        if let Some(rule) = self.use_vue_multi_word_component_names.as_ref()
+        if let Some(rule) = self.use_sorted_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[66]));
         }
-        if let Some(rule) = self.use_vue_valid_template_root.as_ref()
+        if let Some(rule) = self.use_spread.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[67]));
         }
-        if let Some(rule) = self.use_vue_valid_v_bind.as_ref()
+        if let Some(rule) = self.use_tailwind_shorthand_classes.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[68]));
         }
-        if let Some(rule) = self.use_vue_valid_v_cloak.as_ref()
+        if let Some(rule) = self.use_unique_argument_names.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[69]));
         }
-        if let Some(rule) = self.use_vue_valid_v_else.as_ref()
+        if let Some(rule) = self.use_unique_field_definition_names.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[70]));
         }
-        if let Some(rule) = self.use_vue_valid_v_else_if.as_ref()
+        if let Some(rule) = self.use_unique_graphql_operation_name.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[71]));
         }
-        if let Some(rule) = self.use_vue_valid_v_html.as_ref()
+        if let Some(rule) = self.use_unique_input_field_names.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[72]));
         }
-        if let Some(rule) = self.use_vue_valid_v_if.as_ref()
+        if let Some(rule) = self.use_unique_variable_names.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[73]));
         }
-        if let Some(rule) = self.use_vue_valid_v_on.as_ref()
+        if let Some(rule) = self.use_vue_consistent_define_props_declaration.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[74]));
         }
-        if let Some(rule) = self.use_vue_valid_v_once.as_ref()
+        if let Some(rule) = self.use_vue_consistent_v_bind_style.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[75]));
         }
-        if let Some(rule) = self.use_vue_valid_v_pre.as_ref()
+        if let Some(rule) = self.use_vue_consistent_v_on_style.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[76]));
         }
-        if let Some(rule) = self.use_vue_valid_v_text.as_ref()
+        if let Some(rule) = self.use_vue_define_macros_order.as_ref()
             && rule.is_disabled()
         {
             index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[77]));
+        }
+        if let Some(rule) = self.use_vue_hyphenated_attributes.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[78]));
+        }
+        if let Some(rule) = self.use_vue_multi_word_component_names.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[79]));
+        }
+        if let Some(rule) = self.use_vue_valid_template_root.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[80]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_bind.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[81]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_cloak.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[82]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_else.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[83]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_else_if.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[84]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_html.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[85]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_if.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[86]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_on.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[87]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_once.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[88]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_pre.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[89]));
+        }
+        if let Some(rule) = self.use_vue_valid_v_text.as_ref()
+            && rule.is_disabled()
+        {
+            index_set.insert(RuleFilter::Rule(Self::GROUP_NAME, Self::GROUP_RULES[90]));
         }
         index_set
     }
@@ -5892,12 +6104,24 @@ impl RuleGroupExt for Nursery {
         rule_name: &str,
     ) -> Option<(RulePlainConfiguration, Option<RuleOptions>)> {
         match rule_name {
+            "enforcesNegativeArbitraryValues" => self
+                .enforces_negative_arbitrary_values
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "noAmbiguousAnchorText" => self
                 .no_ambiguous_anchor_text
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
+            "noArbitraryTailwindValue" => self
+                .no_arbitrary_tailwind_value
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "noBeforeInteractiveScriptOutsideDocument" => self
                 .no_before_interactive_script_outside_document
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "noConflictingTailwindClasses" => self
+                .no_conflicting_tailwind_classes
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
             "noContinue" => self
@@ -5908,8 +6132,16 @@ impl RuleGroupExt for Nursery {
                 .no_deprecated_imports
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
+            "noDeprecatedTailwindClasses" => self
+                .no_deprecated_tailwind_classes
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "noDuplicateDependencies" => self
                 .no_duplicate_dependencies
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "noDuplicateTailwindClasses" => self
+                .no_duplicate_tailwind_classes
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
             "noDuplicatedSpreadProps" => self
@@ -5980,6 +6212,10 @@ impl RuleGroupExt for Nursery {
                 .no_react_forward_ref
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
+            "noRestrictedTailwindClasses" => self
+                .no_restricted_tailwind_classes
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "noReturnAssign" => self
                 .no_return_assign
                 .as_ref()
@@ -6008,8 +6244,20 @@ impl RuleGroupExt for Nursery {
                 .no_unknown_attribute
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
+            "noUnnecessaryArbitraryValue" => self
+                .no_unnecessary_arbitrary_value
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "noUnnecessaryConditions" => self
                 .no_unnecessary_conditions
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "noUnnecessaryTailwindWhitespace" => self
+                .no_unnecessary_tailwind_whitespace
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "noUnregisteredTailwindClasses" => self
+                .no_unregistered_tailwind_classes
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
             "noUnresolvedImports" => self
@@ -6068,6 +6316,18 @@ impl RuleGroupExt for Nursery {
                 .use_consistent_graphql_descriptions
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
+            "useConsistentTailwindImportantPosition" => self
+                .use_consistent_tailwind_important_position
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "useConsistentTailwindLineWrapping" => self
+                .use_consistent_tailwind_line_wrapping
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "useConsistentTailwindVariableSyntax" => self
+                .use_consistent_tailwind_variable_syntax
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
             "useDeprecatedDate" => self
                 .use_deprecated_date
                 .as_ref()
@@ -6114,6 +6374,10 @@ impl RuleGroupExt for Nursery {
                 .map(|conf| (conf.level(), conf.get_options())),
             "useSpread" => self
                 .use_spread
+                .as_ref()
+                .map(|conf| (conf.level(), conf.get_options())),
+            "useTailwindShorthandClasses" => self
+                .use_tailwind_shorthand_classes
                 .as_ref()
                 .map(|conf| (conf.level(), conf.get_options())),
             "useUniqueArgumentNames" => self
@@ -6212,11 +6476,16 @@ impl From<GroupPlainConfiguration> for Nursery {
     fn from(value: GroupPlainConfiguration) -> Self {
         Self {
             recommended: None,
+            enforces_negative_arbitrary_values: Some(value.into()),
             no_ambiguous_anchor_text: Some(value.into()),
+            no_arbitrary_tailwind_value: Some(value.into()),
             no_before_interactive_script_outside_document: Some(value.into()),
+            no_conflicting_tailwind_classes: Some(value.into()),
             no_continue: Some(value.into()),
             no_deprecated_imports: Some(value.into()),
+            no_deprecated_tailwind_classes: Some(value.into()),
             no_duplicate_dependencies: Some(value.into()),
+            no_duplicate_tailwind_classes: Some(value.into()),
             no_duplicated_spread_props: Some(value.into()),
             no_empty_source: Some(value.into()),
             no_equals_to_null: Some(value.into()),
@@ -6234,6 +6503,7 @@ impl From<GroupPlainConfiguration> for Nursery {
             no_parameters_only_used_in_recursion: Some(value.into()),
             no_proto: Some(value.into()),
             no_react_forward_ref: Some(value.into()),
+            no_restricted_tailwind_classes: Some(value.into()),
             no_return_assign: Some(value.into()),
             no_script_url: Some(value.into()),
             no_shadow: Some(value.into()),
@@ -6241,7 +6511,10 @@ impl From<GroupPlainConfiguration> for Nursery {
             no_ternary: Some(value.into()),
             no_undeclared_env_vars: Some(value.into()),
             no_unknown_attribute: Some(value.into()),
+            no_unnecessary_arbitrary_value: Some(value.into()),
             no_unnecessary_conditions: Some(value.into()),
+            no_unnecessary_tailwind_whitespace: Some(value.into()),
+            no_unregistered_tailwind_classes: Some(value.into()),
             no_unresolved_imports: Some(value.into()),
             no_unused_expressions: Some(value.into()),
             no_useless_catch_binding: Some(value.into()),
@@ -6256,6 +6529,9 @@ impl From<GroupPlainConfiguration> for Nursery {
             use_await_thenable: Some(value.into()),
             use_consistent_arrow_return: Some(value.into()),
             use_consistent_graphql_descriptions: Some(value.into()),
+            use_consistent_tailwind_important_position: Some(value.into()),
+            use_consistent_tailwind_line_wrapping: Some(value.into()),
+            use_consistent_tailwind_variable_syntax: Some(value.into()),
             use_deprecated_date: Some(value.into()),
             use_destructuring: Some(value.into()),
             use_exhaustive_switch_cases: Some(value.into()),
@@ -6268,6 +6544,7 @@ impl From<GroupPlainConfiguration> for Nursery {
             use_required_scripts: Some(value.into()),
             use_sorted_classes: Some(value.into()),
             use_spread: Some(value.into()),
+            use_tailwind_shorthand_classes: Some(value.into()),
             use_unique_argument_names: Some(value.into()),
             use_unique_field_definition_names: Some(value.into()),
             use_unique_graphql_operation_name: Some(value.into()),

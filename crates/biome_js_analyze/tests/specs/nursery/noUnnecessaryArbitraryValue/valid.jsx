@@ -1,0 +1,27 @@
+/* should not generate diagnostics */
+
+// Standard Tailwind utilities (no arbitrary values)
+<div class="m-4 p-4 w-full" />;
+<div class="text-sm opacity-50 rounded-lg" />;
+<div class="z-10 gap-6 h-screen" />;
+
+// Arbitrary values without standard equivalents
+<div class="w-[137px]" />;
+<div class="h-[calc(100vh-64px)]" />;
+<div class="text-[#bada55]" />;
+<div class="bg-[var(--custom-color)]" />;
+<div class="grid-cols-[1fr_2fr_1fr]" />;
+<div class="m-[17px]" />;
+<div class="p-[13.5rem]" />;
+<div class="opacity-[0.33]" />;
+
+// Pure arbitrary properties
+<div class="[mask-type:alpha]" />;
+<div class="[--custom-property:value]" />;
+
+// Non-Tailwind classes (should be ignored)
+<div class="custom-class" />;
+<div class="my-component" />;
+
+// Mixed classes
+<div class="flex items-center w-[200px] p-4" />;

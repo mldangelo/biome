@@ -57,5 +57,8 @@ Available commands:
                               configuration file.
     eslint                    It attempts to find the ESLint configuration file in the working
                               directory, and update the Biome's configuration file as a result.
+    tailwind                  It attempts to find the Tailwind CSS configuration file
+                              (tailwind.config.js/ts) and extract theme values into Biome's
+                              configuration.
 
 ```

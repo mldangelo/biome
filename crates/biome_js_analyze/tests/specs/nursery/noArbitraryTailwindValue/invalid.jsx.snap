@@ -1,0 +1,108 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid - arbitrary values should be forbidden
+<div class="w-[100px]" />;
+<div class="bg-[#ff0000]" />;
+<div class="text-[14px] p-[10px]" />;
+<div class="hover:w-[50%]" />;
+<div className="m-[1.5rem]" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/noArbitraryTailwindValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Arbitrary Tailwind CSS value detected: `w-[100px]`
+  
+    1 │ // Invalid - arbitrary values should be forbidden
+  > 2 │ <div class="w-[100px]" />;
+      │            ^^^^^^^^^^^
+    3 │ <div class="bg-[#ff0000]" />;
+    4 │ <div class="text-[14px] p-[10px]" />;
+  
+  i Arbitrary values can lead to inconsistent designs. Consider extending your Tailwind configuration instead.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/noArbitraryTailwindValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Arbitrary Tailwind CSS value detected: `bg-[#ff0000]`
+  
+    1 │ // Invalid - arbitrary values should be forbidden
+    2 │ <div class="w-[100px]" />;
+  > 3 │ <div class="bg-[#ff0000]" />;
+      │            ^^^^^^^^^^^^^^
+    4 │ <div class="text-[14px] p-[10px]" />;
+    5 │ <div class="hover:w-[50%]" />;
+  
+  i Arbitrary values can lead to inconsistent designs. Consider extending your Tailwind configuration instead.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:4:12 lint/nursery/noArbitraryTailwindValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Arbitrary Tailwind CSS values detected: `text-[14px]`, `p-[10px]`
+  
+    2 │ <div class="w-[100px]" />;
+    3 │ <div class="bg-[#ff0000]" />;
+  > 4 │ <div class="text-[14px] p-[10px]" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^
+    5 │ <div class="hover:w-[50%]" />;
+    6 │ <div className="m-[1.5rem]" />;
+  
+  i Arbitrary values can lead to inconsistent designs. Consider extending your Tailwind configuration instead.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:5:12 lint/nursery/noArbitraryTailwindValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Arbitrary Tailwind CSS value detected: `hover:w-[50%]`
+  
+    3 │ <div class="bg-[#ff0000]" />;
+    4 │ <div class="text-[14px] p-[10px]" />;
+  > 5 │ <div class="hover:w-[50%]" />;
+      │            ^^^^^^^^^^^^^^^
+    6 │ <div className="m-[1.5rem]" />;
+    7 │ 
+  
+  i Arbitrary values can lead to inconsistent designs. Consider extending your Tailwind configuration instead.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:6:16 lint/nursery/noArbitraryTailwindValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Arbitrary Tailwind CSS value detected: `m-[1.5rem]`
+  
+    4 │ <div class="text-[14px] p-[10px]" />;
+    5 │ <div class="hover:w-[50%]" />;
+  > 6 │ <div className="m-[1.5rem]" />;
+      │                ^^^^^^^^^^^^
+    7 │ 
+  
+  i Arbitrary values can lead to inconsistent designs. Consider extending your Tailwind configuration instead.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```

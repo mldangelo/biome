@@ -1,0 +1,297 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid: deprecated flex-shrink
+<div class="flex-shrink" />;
+<div class="flex-shrink-0" />;
+
+// Invalid: deprecated flex-grow
+<div class="flex-grow" />;
+<div class="flex-grow-0" />;
+
+// Invalid: deprecated overflow utilities
+<div class="overflow-ellipsis" />;
+<div class="overflow-clip" />;
+
+// Invalid: deprecated decoration utilities
+<div class="decoration-slice" />;
+<div class="decoration-clone" />;
+
+// Invalid: with variants
+<div class="hover:flex-shrink" />;
+<div class="focus:hover:flex-grow-0" />;
+
+// Invalid: mixed deprecated and valid classes
+<div class="flex-shrink p-4 flex-grow" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `flex-shrink` → `shrink`.
+  
+    1 │ // Invalid: deprecated flex-shrink
+  > 2 │ <div class="flex-shrink" />;
+      │            ^^^^^^^^^^^^^
+    3 │ <div class="flex-shrink-0" />;
+    4 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    2 │ <div·class="flex-shrink"·/>;
+      │             -----           
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `flex-shrink-0` → `shrink-0`.
+  
+    1 │ // Invalid: deprecated flex-shrink
+    2 │ <div class="flex-shrink" />;
+  > 3 │ <div class="flex-shrink-0" />;
+      │            ^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // Invalid: deprecated flex-grow
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    3 │ <div·class="flex-shrink-0"·/>;
+      │             -----             
+
+```
+
+```
+invalid.jsx:6:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `flex-grow` → `grow`.
+  
+    5 │ // Invalid: deprecated flex-grow
+  > 6 │ <div class="flex-grow" />;
+      │            ^^^^^^^^^^^
+    7 │ <div class="flex-grow-0" />;
+    8 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    6 │ <div·class="flex-grow"·/>;
+      │             -----         
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `flex-grow-0` → `grow-0`.
+  
+    5 │ // Invalid: deprecated flex-grow
+    6 │ <div class="flex-grow" />;
+  > 7 │ <div class="flex-grow-0" />;
+      │            ^^^^^^^^^^^^^
+    8 │ 
+    9 │ // Invalid: deprecated overflow utilities
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    7 │ <div·class="flex-grow-0"·/>;
+      │             -----           
+
+```
+
+```
+invalid.jsx:10:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `overflow-ellipsis` → `text-ellipsis`.
+  
+     9 │ // Invalid: deprecated overflow utilities
+  > 10 │ <div class="overflow-ellipsis" />;
+       │            ^^^^^^^^^^^^^^^^^^^
+    11 │ <div class="overflow-clip" />;
+    12 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+     8  8 │   
+     9  9 │   // Invalid: deprecated overflow utilities
+    10    │ - <div·class="overflow-ellipsis"·/>;
+       10 │ + <div·class="text-ellipsis"·/>;
+    11 11 │   <div class="overflow-clip" />;
+    12 12 │   
+  
+
+```
+
+```
+invalid.jsx:11:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `overflow-clip` → `text-clip`.
+  
+     9 │ // Invalid: deprecated overflow utilities
+    10 │ <div class="overflow-ellipsis" />;
+  > 11 │ <div class="overflow-clip" />;
+       │            ^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ // Invalid: deprecated decoration utilities
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+     9  9 │   // Invalid: deprecated overflow utilities
+    10 10 │   <div class="overflow-ellipsis" />;
+    11    │ - <div·class="overflow-clip"·/>;
+       11 │ + <div·class="text-clip"·/>;
+    12 12 │   
+    13 13 │   // Invalid: deprecated decoration utilities
+  
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `decoration-slice` → `box-decoration-slice`.
+  
+    13 │ // Invalid: deprecated decoration utilities
+  > 14 │ <div class="decoration-slice" />;
+       │            ^^^^^^^^^^^^^^^^^^
+    15 │ <div class="decoration-clone" />;
+    16 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    14 │ <div·class="box-decoration-slice"·/>;
+       │             ++++                     
+
+```
+
+```
+invalid.jsx:15:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `decoration-clone` → `box-decoration-clone`.
+  
+    13 │ // Invalid: deprecated decoration utilities
+    14 │ <div class="decoration-slice" />;
+  > 15 │ <div class="decoration-clone" />;
+       │            ^^^^^^^^^^^^^^^^^^
+    16 │ 
+    17 │ // Invalid: with variants
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    15 │ <div·class="box-decoration-clone"·/>;
+       │             ++++                     
+
+```
+
+```
+invalid.jsx:18:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `hover:flex-shrink` → `hover:shrink`.
+  
+    17 │ // Invalid: with variants
+  > 18 │ <div class="hover:flex-shrink" />;
+       │            ^^^^^^^^^^^^^^^^^^^
+    19 │ <div class="focus:hover:flex-grow-0" />;
+    20 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    16 16 │   
+    17 17 │   // Invalid: with variants
+    18    │ - <div·class="hover:flex-shrink"·/>;
+       18 │ + <div·class="hover:shrink"·/>;
+    19 19 │   <div class="focus:hover:flex-grow-0" />;
+    20 20 │   
+  
+
+```
+
+```
+invalid.jsx:19:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `focus:hover:flex-grow-0` → `focus:hover:grow-0`.
+  
+    17 │ // Invalid: with variants
+    18 │ <div class="hover:flex-shrink" />;
+  > 19 │ <div class="focus:hover:flex-grow-0" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^
+    20 │ 
+    21 │ // Invalid: mixed deprecated and valid classes
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    17 17 │   // Invalid: with variants
+    18 18 │   <div class="hover:flex-shrink" />;
+    19    │ - <div·class="focus:hover:flex-grow-0"·/>;
+       19 │ + <div·class="focus:hover:grow-0"·/>;
+    20 20 │   
+    21 21 │   // Invalid: mixed deprecated and valid classes
+  
+
+```
+
+```
+invalid.jsx:22:12 lint/nursery/noDeprecatedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Deprecated Tailwind CSS class(es) found: `flex-shrink` → `shrink`, `flex-grow` → `grow`.
+  
+    21 │ // Invalid: mixed deprecated and valid classes
+  > 22 │ <div class="flex-shrink p-4 flex-grow" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    23 │ 
+  
+  i Use the modern replacement class(es) for better compatibility.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Safe fix: Replace with modern Tailwind CSS class(es).
+  
+    22 │ <div·class="flex-shrink·p-4·flex-grow"·/>;
+       │             -----           -----         
+
+```

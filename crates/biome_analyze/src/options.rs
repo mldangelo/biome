@@ -1,5 +1,6 @@
 use camino::Utf8PathBuf;
 use rustc_hash::FxHashMap;
+use std::collections::BTreeMap;
 
 use crate::{FixKind, Rule, RuleKey};
 use std::any::{Any, TypeId};
@@ -77,6 +78,9 @@ pub struct AnalyzerConfiguration {
 
     /// Whether the CSS files contain CSS Modules
     css_modules: bool,
+
+    /// Tailwind CSS configuration for lint rules
+    tailwind: TailwindAnalyzerConfig,
 }
 
 impl AnalyzerConfiguration {
@@ -115,6 +119,11 @@ impl AnalyzerConfiguration {
 
     pub fn with_css_modules(mut self, css_modules: bool) -> Self {
         self.css_modules = css_modules;
+        self
+    }
+
+    pub fn with_tailwind(mut self, tailwind: TailwindAnalyzerConfig) -> Self {
+        self.tailwind = tailwind;
         self
     }
 }
@@ -194,6 +203,10 @@ impl AnalyzerOptions {
     pub fn css_modules(&self) -> bool {
         self.configuration.css_modules
     }
+
+    pub fn tailwind(&self) -> &TailwindAnalyzerConfig {
+        &self.configuration.tailwind
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default)]
@@ -241,4 +254,32 @@ pub enum JsxRuntime {
     #[default]
     Transparent,
     ReactClassic,
+}
+
+/// Tailwind CSS configuration for analyzer rules.
+///
+/// This struct holds custom Tailwind theme values that can be used
+/// by lint rules to provide more accurate suggestions.
+#[derive(Clone, Debug, Default)]
+pub struct TailwindAnalyzerConfig {
+    /// Custom spacing scale (CSS value -> Tailwind suffix)
+    pub spacing: Option<BTreeMap<String, String>>,
+
+    /// Custom opacity scale
+    pub opacity: Option<BTreeMap<String, String>>,
+
+    /// Custom z-index scale
+    pub z_index: Option<BTreeMap<String, String>>,
+
+    /// Custom font-size scale
+    pub font_size: Option<BTreeMap<String, String>>,
+
+    /// Custom border-radius scale
+    pub border_radius: Option<BTreeMap<String, String>>,
+
+    /// Additional utilities that support negative values
+    pub negatable: Option<Vec<String>>,
+
+    /// Class patterns to ignore
+    pub ignored_classes: Option<Vec<String>>,
 }

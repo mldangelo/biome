@@ -1,0 +1,159 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: regex.jsx
+---
+# Input
+```jsx
+// Test regex pattern matching
+
+// Match bg-red-* classes
+<div class="bg-red-500" />;
+<div class="bg-red-100" />;
+<div class="hover:bg-red-500" />;
+
+// Match text-xs and text-sm
+<div class="text-xs" />;
+<div class="text-sm" />;
+
+// Should not match (doesn't match pattern)
+<div class="bg-blue-500 text-lg" />;
+
+// Mixed: some match, some don't
+<div class="flex bg-red-500 text-xs p-4" />;
+
+```
+
+# Diagnostics
+```
+regex.jsx:4:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `bg-red-500`.
+  
+    3 │ // Match bg-red-* classes
+  > 4 │ <div class="bg-red-500" />;
+      │            ^^^^^^^^^^^^
+    5 │ <div class="bg-red-100" />;
+    6 │ <div class="hover:bg-red-500" />;
+  
+  i Use semantic color tokens instead of red backgrounds
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    4 │ <div·class="bg-red-500"·/>;
+      │             ----------     
+
+```
+
+```
+regex.jsx:5:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `bg-red-100`.
+  
+    3 │ // Match bg-red-* classes
+    4 │ <div class="bg-red-500" />;
+  > 5 │ <div class="bg-red-100" />;
+      │            ^^^^^^^^^^^^
+    6 │ <div class="hover:bg-red-500" />;
+    7 │ 
+  
+  i Use semantic color tokens instead of red backgrounds
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    5 │ <div·class="bg-red-100"·/>;
+      │             ----------     
+
+```
+
+```
+regex.jsx:6:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `hover:bg-red-500`.
+  
+    4 │ <div class="bg-red-500" />;
+    5 │ <div class="bg-red-100" />;
+  > 6 │ <div class="hover:bg-red-500" />;
+      │            ^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // Match text-xs and text-sm
+  
+  i Use semantic color tokens instead of red backgrounds
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    6 │ <div·class="hover:bg-red-500"·/>;
+      │             ----------------     
+
+```
+
+```
+regex.jsx:9:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `text-xs`.
+  
+     8 │ // Match text-xs and text-sm
+   > 9 │ <div class="text-xs" />;
+       │            ^^^^^^^^^
+    10 │ <div class="text-sm" />;
+    11 │ 
+  
+  i Use 'text-small' utility instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    9 │ <div·class="text-xs"·/>;
+      │             -------     
+
+```
+
+```
+regex.jsx:10:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `text-sm`.
+  
+     8 │ // Match text-xs and text-sm
+     9 │ <div class="text-xs" />;
+  > 10 │ <div class="text-sm" />;
+       │            ^^^^^^^^^
+    11 │ 
+    12 │ // Should not match (doesn't match pattern)
+  
+  i Use 'text-small' utility instead
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    10 │ <div·class="text-sm"·/>;
+       │             -------     
+
+```
+
+```
+regex.jsx:16:12 lint/nursery/noRestrictedTailwindClasses  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Restricted Tailwind CSS class(es) found: `bg-red-500`, `text-xs`.
+  
+    15 │ // Mixed: some match, some don't
+  > 16 │ <div class="flex bg-red-500 text-xs p-4" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    17 │ 
+  
+  i This class has been restricted in the project configuration.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+  i Unsafe fix: Remove or replace restricted class(es).
+  
+    16 │ <div·class="flex·bg-red-500·text-xs·p-4"·/>;
+       │                  -------------------        
+
+```

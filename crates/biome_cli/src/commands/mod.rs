@@ -623,11 +623,18 @@ pub enum MigrateSubCommand {
         #[bpaf(long("include-nursery"))]
         include_nursery: bool,
     },
+    /// It attempts to find the Tailwind CSS configuration file (tailwind.config.js/ts) and extract theme values into Biome's configuration.
+    #[bpaf(command)]
+    Tailwind,
 }
 
 impl MigrateSubCommand {
     pub const fn is_prettier(&self) -> bool {
         matches!(self, Self::Prettier)
+    }
+
+    pub const fn is_tailwind(&self) -> bool {
+        matches!(self, Self::Tailwind)
     }
 }
 

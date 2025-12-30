@@ -15,7 +15,7 @@ use crate::settings::{
 use crate::workspace::{
     CodeAction, DocumentFileSource, FixFileResult, GetSyntaxTreeResult, PullActionsResult,
 };
-use biome_analyze::options::PreferredQuote;
+use biome_analyze::options::{PreferredQuote, TailwindAnalyzerConfig};
 use biome_analyze::{AnalysisFilter, AnalyzerConfiguration, AnalyzerOptions, ControlFlow, Never};
 use biome_configuration::css::{
     CssAllowWrongLineCommentsEnabled, CssAssistConfiguration, CssAssistEnabled,
@@ -234,6 +234,20 @@ impl ServiceLanguage for CssLanguage {
             })
             .unwrap_or_default();
 
+        // Convert TailwindConfiguration to TailwindAnalyzerConfig
+        let tailwind_config = {
+            let tw = global.tailwind();
+            TailwindAnalyzerConfig {
+                spacing: tw.spacing.clone(),
+                opacity: tw.opacity.clone(),
+                z_index: tw.z_index.clone(),
+                font_size: tw.font_size.clone(),
+                border_radius: tw.border_radius.clone(),
+                negatable: tw.negatable.clone(),
+                ignored_classes: tw.ignored_classes.clone(),
+            }
+        };
+
         let configuration = AnalyzerConfiguration::default()
             .with_rules(to_analyzer_rules(global, file_path.as_path()))
             .with_preferred_quote(preferred_quote)
@@ -244,7 +258,8 @@ impl ServiceLanguage for CssLanguage {
                     .parser
                     .css_modules_enabled
                     .is_some_and(|css_modules_enabled| css_modules_enabled.into()),
-            );
+            )
+            .with_tailwind(tailwind_config);
 
         AnalyzerOptions::default()
             .with_file_path(file_path.as_path())
