@@ -1,0 +1,255 @@
+---
+source: crates/biome_js_analyze/tests/spec_tests.rs
+expression: invalid.jsx
+---
+# Input
+```jsx
+// Invalid - duplicate variants
+<div class="hover:hover:bg-red-500" />;
+<div class="focus:focus:text-white" />;
+<div class="sm:sm:flex" />;
+
+// Invalid - conflicting responsive variants
+<div class="sm:md:flex" />;
+<div class="lg:xl:hidden" />;
+
+// Invalid - conflicting max-width variants
+<div class="max-sm:max-md:flex" />;
+
+// Invalid - mutually exclusive positional variants
+<div class="first:last:text-bold" />;
+<div class="odd:even:bg-gray-100" />;
+<div class="first-of-type:last-of-type:text-lg" />;
+
+// Invalid - duplicate with named groups (should normalize)
+<div class="group-hover/a:group-hover/b:text-white" />;
+
+// Invalid - multiple issues in one class string
+<div class="hover:hover:bg-red-500 sm:md:flex first:last:text-bold" />;
+
+```
+
+# Diagnostics
+```
+invalid.jsx:2:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    1 │ // Invalid - duplicate variants
+  > 2 │ <div class="hover:hover:bg-red-500" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ <div class="focus:focus:text-white" />;
+    4 │ <div class="sm:sm:flex" />;
+  
+  i The class hover:hover:bg-red-500 has a duplicate `hover` variant.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:3:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    1 │ // Invalid - duplicate variants
+    2 │ <div class="hover:hover:bg-red-500" />;
+  > 3 │ <div class="focus:focus:text-white" />;
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ <div class="sm:sm:flex" />;
+    5 │ 
+  
+  i The class focus:focus:text-white has a duplicate `focus` variant.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:4:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    2 │ <div class="hover:hover:bg-red-500" />;
+    3 │ <div class="focus:focus:text-white" />;
+  > 4 │ <div class="sm:sm:flex" />;
+      │            ^^^^^^^^^^^^
+    5 │ 
+    6 │ // Invalid - conflicting responsive variants
+  
+  i The class sm:sm:flex has a duplicate `sm` variant.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:7:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    6 │ // Invalid - conflicting responsive variants
+  > 7 │ <div class="sm:md:flex" />;
+      │            ^^^^^^^^^^^^
+    8 │ <div class="lg:xl:hidden" />;
+    9 │ 
+  
+  i The class sm:md:flex has conflicting responsive breakpoints `sm` and `md`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:8:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+     6 │ // Invalid - conflicting responsive variants
+     7 │ <div class="sm:md:flex" />;
+   > 8 │ <div class="lg:xl:hidden" />;
+       │            ^^^^^^^^^^^^^^
+     9 │ 
+    10 │ // Invalid - conflicting max-width variants
+  
+  i The class lg:xl:hidden has conflicting responsive breakpoints `lg` and `xl`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:11:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    10 │ // Invalid - conflicting max-width variants
+  > 11 │ <div class="max-sm:max-md:flex" />;
+       │            ^^^^^^^^^^^^^^^^^^^^
+    12 │ 
+    13 │ // Invalid - mutually exclusive positional variants
+  
+  i The class max-sm:max-md:flex has conflicting max-width breakpoints `max-sm` and `max-md`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:14:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    13 │ // Invalid - mutually exclusive positional variants
+  > 14 │ <div class="first:last:text-bold" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^
+    15 │ <div class="odd:even:bg-gray-100" />;
+    16 │ <div class="first-of-type:last-of-type:text-lg" />;
+  
+  i The class first:last:text-bold has mutually exclusive variants `first` and `last`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:15:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    13 │ // Invalid - mutually exclusive positional variants
+    14 │ <div class="first:last:text-bold" />;
+  > 15 │ <div class="odd:even:bg-gray-100" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^
+    16 │ <div class="first-of-type:last-of-type:text-lg" />;
+    17 │ 
+  
+  i The class odd:even:bg-gray-100 has mutually exclusive variants `odd` and `even`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:16:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    14 │ <div class="first:last:text-bold" />;
+    15 │ <div class="odd:even:bg-gray-100" />;
+  > 16 │ <div class="first-of-type:last-of-type:text-lg" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    17 │ 
+    18 │ // Invalid - duplicate with named groups (should normalize)
+  
+  i The class first-of-type:last-of-type:text-lg has mutually exclusive variants `first-of-type` and `last-of-type`.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:19:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class contains an invalid variant combination.
+  
+    18 │ // Invalid - duplicate with named groups (should normalize)
+  > 19 │ <div class="group-hover/a:group-hover/b:text-white" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    20 │ 
+    21 │ // Invalid - multiple issues in one class string
+  
+  i The class group-hover/a:group-hover/b:text-white has a duplicate `group-hover/b` variant.
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```
+
+```
+invalid.jsx:22:12 lint/nursery/noInvalidTailwindVariantCombination ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i This class string contains invalid variant combinations.
+  
+    21 │ // Invalid - multiple issues in one class string
+  > 22 │ <div class="hover:hover:bg-red-500 sm:md:flex first:last:text-bold" />;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    23 │ 
+  
+  i `hover:hover:bg-red-500`: a duplicate `hover` variant; `sm:md:flex`: conflicting responsive breakpoints `sm` and `md`; `first:last:text-bold`: mutually exclusive variants `first` and `last`
+  
+  i Invalid variant combinations produce unexpected CSS or no CSS at all.
+  
+  i This rule belongs to the nursery group, which means it is not yet stable and may change in the future. Visit https://biomejs.dev/linter/#nursery for more information.
+  
+
+```

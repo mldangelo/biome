@@ -1,0 +1,22 @@
+<!-- Invalid: duplicate variants -->
+<div class="hover:hover:bg-red-500"></div>
+<div class="focus:focus:text-white"></div>
+<div class="sm:sm:flex"></div>
+
+<!-- Invalid: conflicting responsive variants -->
+<div class="sm:md:flex"></div>
+<div class="lg:xl:hidden"></div>
+
+<!-- Invalid: conflicting max-width variants -->
+<div class="max-sm:max-md:flex"></div>
+
+<!-- Invalid: mutually exclusive positional variants -->
+<div class="first:last:text-bold"></div>
+<div class="odd:even:bg-gray-100"></div>
+<div class="first-of-type:last-of-type:text-lg"></div>
+
+<!-- Invalid: duplicate with named groups (should normalize) -->
+<div class="group-hover/a:group-hover/b:text-white"></div>
+
+<!-- Invalid: multiple issues in one class string -->
+<div class="hover:hover:bg-red-500 sm:md:flex first:last:text-bold"></div>

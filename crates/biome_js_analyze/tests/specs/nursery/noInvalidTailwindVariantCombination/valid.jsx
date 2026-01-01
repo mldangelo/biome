@@ -1,0 +1,33 @@
+/* should not generate diagnostics */
+
+// Valid - single variants
+<div class="hover:bg-red-500" />;
+<div class="focus:text-white" />;
+<div class="sm:flex" />;
+
+// Valid - separate responsive variants (different classes)
+<div class="sm:flex md:block lg:hidden" />;
+
+// Valid - combining different types of variants
+<div class="hover:focus:bg-red-500" />;
+<div class="sm:hover:flex" />;
+<div class="group-hover:text-white" />;
+<div class="group-hover:peer-focus:text-white" />;
+
+// Valid - responsive + positional (different categories)
+<div class="sm:first:flex" />;
+<div class="md:odd:bg-gray-100" />;
+
+// Valid - theme + state variants
+<div class="dark:hover:bg-gray-800" />;
+<div class="dark:focus:text-white" />;
+
+// Valid - different responsive and max-responsive
+<div class="sm:max-md:flex" />;
+
+// Valid - no variants at all
+<div class="flex p-4 m-2" />;
+
+// Valid - arbitrary variants
+<div class="[&:hover]:bg-red-500" />;
+<div class="[@media(min-width:400px)]:flex" />;
