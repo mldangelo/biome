@@ -5247,13 +5247,6 @@
 						{ "type": "null" }
 					]
 				},
-				"noDuplicateClasses": {
-					"description": "Disallow duplicate CSS classes.\nSee <https://biomejs.dev/linter/rules/no-duplicate-classes>",
-					"anyOf": [
-						{ "$ref": "#/$defs/UseSortedClassesConfiguration" },
-						{ "type": "null" }
-					]
-				},
 				"noDuplicateDependencies": {
 					"description": "Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: \"bundledDependencies\", \"bundleDependencies\", \"dependencies\", \"devDependencies\", \"overrides\", \"optionalDependencies\", and \"peerDependencies\".\nSee <https://biomejs.dev/linter/rules/no-duplicate-dependencies>",
 					"anyOf": [
