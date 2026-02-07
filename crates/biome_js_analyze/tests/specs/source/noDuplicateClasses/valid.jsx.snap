@@ -41,4 +41,11 @@ cn({ "flex p-4": isActive });
 // Valid: case-sensitive (CSS classes are case-sensitive)
 <div class="Flex flex" />;
 
+// Valid: utility function calls with duplicates but no `functions` option configured
+cn("flex flex");
+clsx("p-4 m-2 p-4");
+
+// Valid: object member names with duplicates but no `functions` option configured
+cn({ "flex flex": isActive });
+
 ```

@@ -131,7 +131,10 @@ impl AnyClassStringLike {
         }
     }
 
-    /// Get the text value of this class string node.
+    /// Returns the inner text content of this class string node, excluding quotes.
+    ///
+    /// For string literals and JSX strings, this strips the surrounding quotes.
+    /// For template chunks, this returns the raw chunk text.
     pub fn value(&self) -> Option<TokenText> {
         match &self {
             Self::JsStringLiteralExpression(node) => node.inner_string_text().ok(),
